@@ -4,7 +4,7 @@
   "description": "Clone of jane.com to showcase my web development skills",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
