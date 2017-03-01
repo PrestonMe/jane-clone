@@ -36,6 +36,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        // update to use sass
         test: /\.css$/,
         use: [
           'style-loader',

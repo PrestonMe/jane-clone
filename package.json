@@ -4,9 +4,13 @@
   "description": "Clone of jane.com to showcase my web development skills",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
+    "lint": "eslint js/**/*.js webpack.config.js",
     "build": "webpack",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build -- --watch",
+    "dev": "webpack-dev-server",
+    "test": "NODE_ENV=test jest",
+    "update-test": "npm run test -- -u",
+    "cover": "npm run test -- --coverage"
   },
   "repository": {
     "type": "git",

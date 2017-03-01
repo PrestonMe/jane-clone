@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 var Nav = React.createClass({
   render: function() {
     return (
       <div>
         <h1>
-          {this.props.title}
+          The Title
         </h1>
       </div>
     )
