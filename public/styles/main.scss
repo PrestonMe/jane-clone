@@ -4,6 +4,11 @@ body {
     font-family: sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .nav {
   z-index: 5;
   background-color: #FFF;
@@ -11,6 +16,11 @@ body {
   width: 100%;
   font-size: 14px;
   height: 65px;
+  .active {
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    padding-bottom: 3px;
+  }
   .nav-left {
     display: flex;
     align-items: center;
@@ -104,18 +114,8 @@ body {
   width: 100%;
 }
 
-.background {
-  background-color: $background;
-}
-
 .main {
   width: 100%;
-}
-
-.all-deals {
-  position: relative;
-  padding-top: 80px;
-  height: 140vh;
 }
 
 .footer {
@@ -196,4 +196,32 @@ body {
       width: 65px;
     }
   }
+}
+
+.shop {
+  position: relative;
+  padding-top: 15px;
+  height: 140vh;
+  background-color: $background;
+  .ads {
+    max-width: 1300px;
+    margin: 15px auto;
+      .small-ad {
+        width: 295px;
+        margin: 0px 15px;
+        display: inline-block;
+        vertical-align: top;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+    .large-ad {
+      width: 620px;
+      margin: 0px 15px;
+      display: inline-block;
+      img {
+        max-width: 100%;
+      }
+    }
 }

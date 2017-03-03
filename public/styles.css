@@ -1,6 +1,10 @@
 body {
   font-family: sans-serif; }
 
+a {
+  text-decoration: none;
+  color: inherit; }
+
 .nav {
   z-index: 5;
   background-color: #FFF;
@@ -8,6 +12,10 @@ body {
   width: 100%;
   font-size: 14px;
   height: 65px; }
+  .nav .active {
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    padding-bottom: 3px; }
   .nav .nav-left {
     display: flex;
     align-items: center;
@@ -81,16 +89,8 @@ body {
   height: 140vh;
   width: 100%; }
 
-.background {
-  background-color: #F3F3F3; }
-
 .main {
   width: 100%; }
-
-.all-deals {
-  position: relative;
-  padding-top: 80px;
-  height: 140vh; }
 
 .footer {
   background-color: #FFF; }
@@ -149,5 +149,27 @@ body {
     .footer .bottom img {
       height: 20px;
       width: 65px; }
+
+.shop {
+  position: relative;
+  padding-top: 15px;
+  height: 140vh;
+  background-color: #F3F3F3; }
+  .shop .ads {
+    max-width: 1300px;
+    margin: 15px auto; }
+    .shop .ads .small-ad {
+      width: 295px;
+      margin: 0px 15px;
+      display: inline-block;
+      vertical-align: top; }
+      .shop .ads .small-ad img {
+        max-width: 100%; }
+  .shop .large-ad {
+    width: 620px;
+    margin: 0px 15px;
+    display: inline-block; }
+    .shop .large-ad img {
+      max-width: 100%; }
 
 /*# sourceMappingURL=styles.css.map*/

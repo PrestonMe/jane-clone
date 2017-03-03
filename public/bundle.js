@@ -11410,12 +11410,8 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(220);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_nav__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_footer__ = __webpack_require__(110);
 
 // import { render } from 'react-dom'
-
-
 
 
 
@@ -11428,9 +11424,7 @@ var App = function App() {
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'main' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_nav__["a" /* default */], null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/', component: __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__["a" /* default */] }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/', component: __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__["a" /* default */] })
     )
   );
 };
@@ -11460,6 +11454,8 @@ module.exports = __webpack_require__(155);
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(110);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11469,24 +11465,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import { Link } from 'react-router'
 
+
+
 var AllDeals = function (_React$Component) {
   _inherits(AllDeals, _React$Component);
 
-  function AllDeals() {
+  function AllDeals(props) {
     _classCallCheck(this, AllDeals);
 
-    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    console.log(_this);
+    return _this;
   }
 
   AllDeals.prototype.render = function render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      { className: 'background all-deals' },
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
-        null,
-        'The Title'
-      )
+        'div',
+        { className: 'shop' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'ads' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'small-ad' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/jane-app.jpg' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'small-ad' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/spring.jpg' })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'large-ad' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/spree.jpg' })
+          )
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__footer__["a" /* default */], null)
     );
   };
 
@@ -11699,6 +11720,8 @@ var Footer = function (_React$Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11706,7 +11729,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-// import { Link } from 'react-router'
+
 
 var Nav = function (_React$Component) {
   _inherits(Nav, _React$Component);
@@ -11716,16 +11739,30 @@ var Nav = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
-    _this.state = { isHide: false };
+    console.log(_this);
+    _this.state = {
+      isHide: false,
+      selected: _this.props.pathname
+    };
     _this.hideBar = _this.hideBar.bind(_this);
+    _this.isActive = _this.isActive.bind(_this);
+    _this.setFilter = _this.setFilter.bind(_this);
     return _this;
   }
 
   Nav.prototype.hideBar = function hideBar() {
     var isHide = this.state.isHide;
 
-    window.scrollY > this.prev && window.scrollY > 100 ? !isHide && this.setState({ isHide: true }) : isHide && this.setState({ isHide: false });
+    window.scrollY > this.prev && window.scrollY > 50 ? !isHide && this.setState({ isHide: true }) : isHide && this.setState({ isHide: false });
     this.prev = window.scrollY;
+  };
+
+  Nav.prototype.setFilter = function setFilter(filter) {
+    this.setState({ selected: filter });
+  };
+
+  Nav.prototype.isActive = function isActive(value) {
+    return value === this.state.selected ? 'active' : '';
   };
 
   Nav.prototype.componentDidMount = function componentDidMount() {
@@ -11790,57 +11827,101 @@ var Nav = function (_React$Component) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'CLOTHING'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/clothing'), onClick: this.setFilter.bind(this, '/clothing'), to: '/clothing' },
+                'CLOTHING'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'ACCESSORIES'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/accessories'), onClick: this.setFilter.bind(this, '/accessories'), to: '/accessories' },
+                'ACCESSORIES'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'HOME DECOR'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/home-decor'), onClick: this.setFilter.bind(this, '/home-decor'), to: '/home-decor' },
+                'HOME DECOR'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'BABY'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/baby'), onClick: this.setFilter.bind(this, '/baby'), to: '/baby' },
+                'BABY'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'KIDS'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/kids'), onClick: this.setFilter.bind(this, '/kids'), to: '/kids' },
+                'KIDS'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'MISC'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/misc'), onClick: this.setFilter.bind(this, '/misc'), to: '/misc' },
+                'MISC'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'ALL DEALS'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/'), onClick: this.setFilter.bind(this, '/'), to: '/' },
+                'ALL DEALS'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'NEW DEALS'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/new'), onClick: this.setFilter.bind(this, '/new'), to: '/new' },
+                'NEW DEALS'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'ENDING SOON'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/ending-soon'), onClick: this.setFilter.bind(this, '/ending-soon'), to: '/ending-soon' },
+                'ENDING SOON'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'POPULAR'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/popular'), onClick: this.setFilter.bind(this, '/popular'), to: '/popular' },
+                'POPULAR'
+              )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'li',
               null,
-              'SNEAK PEEKS'
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                { className: this.isActive('/sneak-peaks'), onClick: this.setFilter.bind(this, '/sneak-peaks'), to: '/sneak-peaks' },
+                'SNEAK PEEKS'
+              )
             )
           )
         )
