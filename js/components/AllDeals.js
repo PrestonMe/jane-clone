@@ -2,6 +2,8 @@ import React from 'react'
 // import { Link } from 'react-router'
 import Nav from './nav'
 import Footer from './footer'
+import LargeProduct from './largeproduct'
+import SmallProduct from './smallproduct'
 
 class AllDeals extends React.Component {
   constructor (props) {
@@ -22,6 +24,138 @@ class AllDeals extends React.Component {
             </div>
             <div className='large-ad'>
               <img src='../../public/img/spree.jpg' />
+            </div>
+          </div>
+          <div className='products-container'>
+            <LargeProduct />
+            <div className='large-product-container'>
+              <img src='../../public/img/accessories/Lbtqsng.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <SmallProduct />
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msbb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msbb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msbb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msbb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msbb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Msfb.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='small-product-container'>
+              <img src='../../public/img/accessories/Mujgs.jpg' />
+              <div className='product-summary'>
+                <div className='product-sum-left'>
+                  <div className='product-name small'>Leather Crossbody Bags | 13 styles</div>
+                  <span className='sale-price'>$15.99 </span>
+                  <span className='retail-price'>$20.99</span>
+                </div>
+                <div className='product-sum-right'>
+                  <button className='like'>
+                    <img src='../public/img/icons/heart.svg' />
+                    <span>136</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

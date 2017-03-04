@@ -205,8 +205,74 @@ b {
 .shop {
   position: relative;
   padding-top: 15px;
-  height: 140vh;
   background-color: $background;
+  .products-container {
+    max-width: 1300px;
+    margin: 15px auto;
+    display: flex;
+    flex-wrap: wrap;
+    .product-summary {
+      padding: 9px 20px 0px;
+      height: 51px;
+      background-color: #FFF;
+      display: flex;
+      justify-content: space-between;
+      .product-sum-left {
+        margin-top: 8px;
+      }
+        .small {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 180px;
+        }
+        .like {
+          margin-top: 8px;
+          background: white;
+          padding: 6px 10px;
+          border: 1px solid #d9d3d3;
+          border-radius: 3px;
+          color: #999;
+          font-size: 12px;
+          display: flex;
+          img {
+            align-self: center;
+            width: 10px;
+            margin-right: 2px;
+          }
+        }
+        .product-name {
+          font-size: 13px;
+          color: #999;
+        }
+      .sale-price {
+        color: #FF8188;
+        font-size: 12px;
+        clear: both;
+      }
+      .retail-price {
+        color: #999;
+        text-decoration:line-through;
+        font-size: 12px;
+      }
+    }
+    .large-product-container {
+      width: 620px;
+      margin: 15px 15px;
+      img {
+        width: 620px;
+        display: block;
+      }
+     }
+     .small-product-container {
+       width: 295px;
+       margin: 15px 15px;
+       img {
+         width: 295px;
+         display: block;
+       }
+      }
+    }
   .ads {
     max-width: 1300px;
     margin: 15px auto;
