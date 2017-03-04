@@ -172,4 +172,77 @@ a {
     .shop .large-ad img {
       max-width: 100%; }
 
+.base {
+  background: #F3F3F3;
+  height: 100%; }
+  .base .logon {
+    background: #F3F3F3; }
+    .base .logon .login-pane {
+      background: #FFF;
+      width: 270px;
+      height: 429px;
+      padding: 30px 40px 40px 40px;
+      margin: 30px auto; }
+      .base .logon .login-pane img {
+        display: block;
+        width: 180px;
+        margin: 20px auto 40px auto; }
+      .base .logon .login-pane .fb-auth {
+        background: #4f6eae;
+        border-color: #47639c;
+        border-bottom: 3px solid #47639c;
+        border-radius: 3px;
+        color: #FFF;
+        width: 100%;
+        padding: 10px 20px 8px;
+        line-height: 25px;
+        text-align: center;
+        border-right: 0px;
+        font-weight: bold;
+        font-size: 15px; }
+      .base .logon .login-pane .or {
+        margin: 20px 60px;
+        text-align: center;
+        font-style: italic;
+        font-weight: 600; }
+      .base .logon .login-pane .or::after {
+        display: inline-block;
+        content: "";
+        border-top: 1px solid #d6d6d6;
+        width: 50px;
+        height: 3px;
+        transform: translateX(15px); }
+      .base .logon .login-pane .or::before {
+        display: inline-block;
+        content: "";
+        border-top: 1px solid #d6d6d6;
+        width: 50px;
+        height: 3px;
+        transform: translateX(-15px); }
+      .base .logon .login-pane .login-form .login-btn {
+        background-color: #68D2C3;
+        border-bottom: 3px solid #58b9ab;
+        border-right: 0px;
+        border-left: 0px;
+        border-top: 0px;
+        padding: 10px 20px 8px;
+        width: 100%;
+        border-radius: 3px;
+        height: 45px;
+        margin-bottom: 20px;
+        color: #FFF; }
+      .base .logon .login-pane .login-form .input-wrapper {
+        width: 270px; }
+        .base .logon .login-pane .login-form .input-wrapper input {
+          box-sizing: border-box;
+          width: 100%;
+          margin: 10px 0px;
+          padding: 10px 16px;
+          border-radius: 3px;
+          border: 1px solid #d6d6d6; }
+      .base .logon .login-pane .login-form p {
+        color: #7cd8cb;
+        text-align: center;
+        margin-bottom: 10px; }
+
 /*# sourceMappingURL=styles.css.map*/

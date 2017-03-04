@@ -48,7 +48,7 @@ class Nav extends React.Component {
             <p>FAVORITES</p>
             <img src='../public/img/icons/shopping-bag.svg' />
             <p>MY BAG</p>
-            <p className='login'>LOG IN</p>
+            <p className='login'><Link to='/logon' >LOG IN</Link></p>
           </div>
 
           <div className='logo'>
