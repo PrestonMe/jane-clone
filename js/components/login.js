@@ -30,7 +30,7 @@ class MyAccount extends React.Component {
                     <input placeholder='Email Address' />
                     <input placeholder='Password' />
                   </div>
-                  <button className='login-btn'>LOG IN</button>
+                  <button className='btn'>LOG IN</button>
                   <p>Forgot your password?</p>
                   <p>New? Sign up.</p>
                 </form>
