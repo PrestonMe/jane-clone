@@ -1,15 +1,22 @@
 import React from 'react'
+// import axios from 'axios'
 // import { Link } from 'react-router'
 import Nav from './nav'
 import Footer from './footer'
 import LargeProduct from './largeproduct'
 import SmallProduct from './smallproduct'
 
+const { object } = React.PropTypes
+
 class AllDeals extends React.Component {
-  constructor (props) {
-    super(props)
-    console.log(this)
+  // constructor (props) {
+  //   super(props)
+  // }
+
+  componentDidMount () {
+
   }
+
   render () {
     return (
       <div>
@@ -163,6 +170,10 @@ class AllDeals extends React.Component {
       </div>
     )
   }
+}
+
+AllDeals.propTypes = {
+  location: object
 }
 
 export default AllDeals

@@ -1,17 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router'
+const { string } = React.PropTypes
 
 class Nav extends React.Component {
   constructor (props) {
     super(props)
-    console.log(this)
     this.state = {
-      isHide: false,
-      selected: this.props.pathname
+      isHide: false
     }
     this.hideBar = this.hideBar.bind(this)
     this.isActive = this.isActive.bind(this)
-    this.setFilter = this.setFilter.bind(this)
   }
   hideBar () {
     let {isHide} = this.state
@@ -19,11 +17,8 @@ class Nav extends React.Component {
     : isHide && this.setState({isHide: false})
     this.prev = window.scrollY
   }
-  setFilter (filter) {
-    this.setState({selected: filter})
-  }
   isActive (value) {
-    return value === this.state.selected ? 'active' : ''
+    return value === this.props.pathname ? 'active' : ''
   }
   componentDidMount () {
     window.addEventListener('scroll', this.hideBar)
@@ -57,17 +52,17 @@ class Nav extends React.Component {
 
           <div>
             <ul className={'links ' + classAdd}>
-              <li><Link className={this.isActive('/clothing')} onClick={this.setFilter.bind(this, '/clothing')} to='/clothing'>CLOTHING</Link></li>
-              <li><Link className={this.isActive('/accessories')} onClick={this.setFilter.bind(this, '/accessories')} to='/accessories'>ACCESSORIES</Link></li>
-              <li><Link className={this.isActive('/home-decor')} onClick={this.setFilter.bind(this, '/home-decor')} to='/home-decor'>HOME DECOR</Link></li>
-              <li><Link className={this.isActive('/baby')} onClick={this.setFilter.bind(this, '/baby')} to='/baby'>BABY</Link></li>
-              <li><Link className={this.isActive('/kids')} onClick={this.setFilter.bind(this, '/kids')} to='/kids'>KIDS</Link></li>
-              <li><Link className={this.isActive('/misc')} onClick={this.setFilter.bind(this, '/misc')} to='/misc'>MISC</Link></li>
-              <li><Link className={this.isActive('/')} onClick={this.setFilter.bind(this, '/')} to='/'>ALL DEALS</Link></li>
-              <li><Link className={this.isActive('/new')} onClick={this.setFilter.bind(this, '/new')} to='/new'>NEW DEALS</Link></li>
-              <li><Link className={this.isActive('/ending-soon')} onClick={this.setFilter.bind(this, '/ending-soon')} to='/ending-soon'>ENDING SOON</Link></li>
-              <li><Link className={this.isActive('/popular')} onClick={this.setFilter.bind(this, '/popular')} to='/popular'>POPULAR</Link></li>
-              <li><Link className={this.isActive('/sneak-peaks')} onClick={this.setFilter.bind(this, '/sneak-peaks')} to='/sneak-peaks'>SNEAK PEEKS</Link></li>
+              <li><Link className={this.isActive('/clothing')} to='/clothing'>CLOTHING</Link></li>
+              <li><Link className={this.isActive('/accessories')} to='/accessories'>ACCESSORIES</Link></li>
+              <li><Link className={this.isActive('/home-decor')} to='/home-decor'>HOME DECOR</Link></li>
+              <li><Link className={this.isActive('/baby')} to='/baby'>BABY</Link></li>
+              <li><Link className={this.isActive('/kids')} to='/kids'>KIDS</Link></li>
+              <li><Link className={this.isActive('/misc')} to='/misc'>MISC</Link></li>
+              <li><Link className={this.isActive('/')} to='/'>ALL DEALS</Link></li>
+              <li><Link className={this.isActive('/new')} to='/new'>NEW DEALS</Link></li>
+              <li><Link className={this.isActive('/ending-soon')} to='/ending-soon'>ENDING SOON</Link></li>
+              <li><Link className={this.isActive('/popular')} to='/popular'>POPULAR</Link></li>
+              <li><Link className={this.isActive('/sneak-peaks')} to='/sneak-peaks'>SNEAK PEEKS</Link></li>
             </ul>
           </div>
 
@@ -78,6 +73,10 @@ class Nav extends React.Component {
       </div>
     )
   }
+}
+
+Nav.propTypes = {
+  pathname: string
 }
 
 export default Nav

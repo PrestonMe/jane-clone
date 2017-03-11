@@ -1,9 +1,9 @@
 import React from 'react'
 
 class LargeProduct extends React.Component {
-  constructor(props){
-    super (props)
-  }
+  // constructor(props){
+  //   super (props)
+  // }
   render () {
     return (
       <div className='large-product-container'>
