@@ -5,6 +5,7 @@ class LargeProduct extends React.Component {
   //   super (props)
   // }
   render () {
+    console.log('large component', this.props, this.state)
     return (
       <div className='large-product-container'>
         <img src='../../public/img/accessories/Lleathercbb.jpg' />
