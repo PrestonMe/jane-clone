@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 class SmallProduct extends React.Component {
   // constructor(props){
@@ -7,10 +8,10 @@ class SmallProduct extends React.Component {
   render () {
     return (
       <div className='small-product-container'>
-        <img src={this.props.burl} />
+        <Link to={`/productpage/${this.props.id}`}><img src={this.props.burl} /></Link>
         <div className='product-summary'>
           <div className='product-sum-left'>
-            <div className='product-name small'>{this.props.name}</div>
+            <Link to={`/productpage/${this.props.id}`}><div className='product-name small'>{this.props.name}</div></Link>
             <span className='sale-price'>{this.props.sale} </span>
             <span className='retail-price'>{this.props.price}</span>
           </div>

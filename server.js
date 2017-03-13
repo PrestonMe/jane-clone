@@ -37,6 +37,13 @@ server.get('/products', function(req, res, next) {
   })
 })
 
+server.get('/product/:id', function(req, res, next) {
+  console.log(req.params, typeof req.params.id)
+  db.get_product(req.params.id, function(err, products) {
+    res.json(products);
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

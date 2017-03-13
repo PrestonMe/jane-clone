@@ -9,8 +9,8 @@ The <b>leather strap crossbody</b>  is a triple compartment bag with 2 open comp
 
 The <b>gold chain strap crossbody bags</b>  are single compartment with a zipper top. Strap and tassle are also removable. ',
 'Beautiful Faux Leather
-Chain Strap Bags- 9¼" x 11¾"
-Leather Strap Bags-8¾" x 6¼"
+Chain Strap Bags"
+Leather Strap Bags"
 Removable Straps', 20.99, 15.99, 'styles', 34,
   '/accessories', './public/img/accessories/Lleathercbb.jpg', null, './public/img/accessories/thumbnails/lcbb1.jpg',
 10, 'The Teal Mill', './public/img/vendor/tealmill.jpg');
