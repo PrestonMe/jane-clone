@@ -5,20 +5,19 @@ class LargeProduct extends React.Component {
   //   super (props)
   // }
   render () {
-    console.log('large component', this.props, this.state)
     return (
       <div className='large-product-container'>
-        <img src='../../public/img/accessories/Lleathercbb.jpg' />
+        <img src={this.props.burl} />
         <div className='product-summary'>
           <div className='product-sum-left'>
-            <div className='product-name'>Leather Crossbody Bags | 13 styles</div>
-            <span className='sale-price'>$15.99 </span>
-            <span className='retail-price'>$20.99</span>
+            <div className='product-name'>{this.props.name}</div>
+            <span className='sale-price'>{this.props.sale} </span>
+            <span className='retail-price'>{this.props.price}</span>
           </div>
           <div className='product-sum-right'>
             <button className='like'>
               <img src='../public/img/icons/heart.svg' />
-              <span>136</span>
+              <span>{this.props.favorites}</span>
             </button>
           </div>
         </div>
