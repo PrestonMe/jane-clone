@@ -15,16 +15,13 @@ class Product extends React.Component {
   componentDidMount () {
     axios.get('/product/' + this.props.params.id
     ).then(res => {
-        console.log('response', res)
+      console.log(res.data)
       const product = res.data
-      this.setState({ product });
-      console.log('product', product[0].details.split('"'))
+      this.setState({ product })
       })
   }
 
   render () {
-    console.log(this.state,this.state.product[0]);
-
     return !this.state.product[0] ?
     (<div>
       <Nav {...this.props.location} />
@@ -36,12 +33,12 @@ class Product extends React.Component {
             <div className='item-container'>
               <div className='left-item'>
                 <img src={`../${this.state.product[0].burl}`} />
-                <div className='carousel'>
+                {/* <div className='carousel'>
                   <img src={`../${this.state.product[0].thumb}`} />
                 </div>
                 <div className='sale-info'>
                   savings time left amount sold
-                </div>
+                </div> */}
               </div>
               <div className='right-item'>
                 <h1>{this.state.product[0].name}</h1>
@@ -62,7 +59,7 @@ class Product extends React.Component {
                   <span> Seller usually ships within 3 days.</span>
                 </div>
                 <form className='add-to-cart'>
-                  <input value='1'></input>
+                  <input defaultValue='1'></input>
                   <button>ADD TO BAG</button>
                 </form>
                 <div className='footer social-media'>
@@ -106,6 +103,33 @@ class Product extends React.Component {
               </div>
             </div>
 
+            <div className='item-container'>
+              <div className='product-description'>
+                <h1>PRODUCT DESCRIPTION</h1>
+                <span>{this.state.product[0].description}</span>
+                <div className='product-details'>
+                  <p>PRODUCT DETAILS</p>
+                  <ul>
+                    {this.state.product[0].details.split('"').map(detail => {
+                      return (
+                        <Details detail={detail} key={detail} />
+                      )
+                    })}
+                  </ul>
+                </div>
+              </div>
+              <div className='seller-info'>
+                <h1>SELLER</h1>
+                <div className='seller'>
+                  <img src={`../${this.state.product[0].sellerimg}`} />
+                  <span>{this.state.product[0].seller}</span>
+                </div>
+                  <h1>SHIPPING</h1>
+                  <p>$4.99 for the first item and $3.99 for each additional item. US only. Estimated to ship by Mon, Mar 20. Seller usually ships within 4 business days.</p>
+                  <h1>FINE PRINT</h1>
+                  <p>Please make sure that your size and color is correct since we can't make changes to the order. Note that colors may be slightly due to individual monitor settings. See Jane's return policy.</p>
+              </div>
+            </div>
           </div>
         <Footer />
       </div>

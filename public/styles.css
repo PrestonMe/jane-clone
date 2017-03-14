@@ -234,6 +234,55 @@ b {
     padding: 40px;
     display: flex;
     justify-content: space-between; }
+    .shop .item-container b {
+      font-weight: bold; }
+    .shop .item-container .product-description {
+      width: 700px;
+      padding-right: 30px; }
+      .shop .item-container .product-description .product-details {
+        margin-top: 15px; }
+        .shop .item-container .product-description .product-details p {
+          margin-bottom: 10px;
+          font-size: 15px; }
+        .shop .item-container .product-description .product-details ul {
+          list-style: initial;
+          list-style-position: inside; }
+          .shop .item-container .product-description .product-details ul li {
+            font-size: 14px;
+            color: #afabab;
+            line-height: 20px; }
+      .shop .item-container .product-description h1 {
+        margin-bottom: 15px;
+        font-size: 15px; }
+      .shop .item-container .product-description span {
+        color: #afabab;
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 20px; }
+    .shop .item-container .seller-info {
+      width: 370px;
+      padding-left: 30px;
+      border-left: 1px solid #EEE; }
+      .shop .item-container .seller-info h1 {
+        margin-bottom: 15px;
+        font-size: 15px; }
+      .shop .item-container .seller-info p {
+        color: #afabab;
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 20px; }
+      .shop .item-container .seller-info .seller {
+        position: relative;
+        margin-bottom: 15px; }
+        .shop .item-container .seller-info .seller span {
+          color: #afabab;
+          margin-left: 20px;
+          position: absolute;
+          top: 40%;
+          font-size: 13px; }
+      .shop .item-container .seller-info img {
+        width: 80px;
+        border-radius: 50px; }
     .shop .item-container .left-item img {
       width: 620px; }
     .shop .item-container .left-item .carousel {
