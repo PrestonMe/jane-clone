@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router'
 import Nav from './nav'
 import Footer from './footer'
+
 const { object } = React.PropTypes
 
 class MyAccount extends React.Component {
@@ -26,18 +28,17 @@ class MyAccount extends React.Component {
             </div>
             <div>
               <form className='login-form'>
-                <div className='input-wrapper'>
+                <div className='input-wrapper login'>
                   <input placeholder='Email Address' />
                   <input placeholder='Password' />
                 </div>
                 <button className='btn'>LOG IN</button>
                 <p>Forgot your password?</p>
-                <p>New? Sign up.</p>
+                <Link to='/signup'><p>New? Sign up.</p></Link>
               </form>
             </div>
           </div>
         </div>
-
         <Footer />
       </div>
     )

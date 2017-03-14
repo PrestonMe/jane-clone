@@ -1,1 +1,1 @@
-export const SET_SEARCH_TERM = 'SET_SEARCH_TERM'
+export const LOGIN_USER = 'LOGIN_USER'

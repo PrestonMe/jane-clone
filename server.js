@@ -5,6 +5,8 @@ const ReactDOMServer = require('react-dom/server')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
+const config = require('./config')
+const session = require('express-session')
 // renders our entire app out to a long string which is then shipped
 // down as html
 const ReactRouter = require('react-router')
@@ -30,6 +32,12 @@ server.set('db', massiveInstance);
 var db = server.get('db')
 
 server.use('/public', express.static('./public'))
+
+server.use(session({
+  secret: config.secret,
+  resave: false,
+  saveUninitialized: true
+}))
 
 server.get('/products', function(req, res, next) {
   db.get_products(req.query.path, function(err, products) {

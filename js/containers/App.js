@@ -7,6 +7,7 @@ import AllDeals from '../components/AllDeals'
 import MyAccount from '../components/login'
 import Cart from '../components/cart'
 import Product from '../components/product'
+import SignUp from '../components/signup'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <div className='main'>
         <Match exactly pattern='/cart' component={Cart} />
         <Match exactly pattern='/logon' component={MyAccount} />
+        <Match exactly pattern='/signup' component={SignUp} />
         <Match exactly pattern='/' component={AllDeals} />
         <Match exactly pattern='/clothing' component={AllDeals} />
         <Match exactly pattern='/accessories' component={AllDeals} />
