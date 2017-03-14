@@ -254,7 +254,7 @@ b {
       .shop .item-container .product-description h1 {
         margin-bottom: 15px;
         font-size: 15px; }
-      .shop .item-container .product-description span {
+      .shop .item-container .product-description .description p {
         color: #afabab;
         margin-bottom: 15px;
         font-size: 14px;

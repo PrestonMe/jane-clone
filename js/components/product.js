@@ -1,8 +1,12 @@
 import React from 'react'
+// import Scroll from 'react-scroll'
 import axios from 'axios'
+// import { Link } from 'react-router'
 import Nav from './nav'
 import Footer from './footer'
 import Details from './details'
+
+// const scroll = Scroll.animateScroll;
 
 class Product extends React.Component {
   constructor (props) {
@@ -22,6 +26,12 @@ class Product extends React.Component {
   }
 
   render () {
+    if(this.state.product[0]){
+      var seller = this.state.product[0].sellerimg
+      ? '../' + this.state.product[0].sellerimg
+      : '../public/img/vendor/none.jpg'
+    }
+
     return !this.state.product[0] ?
     (<div>
       <Nav {...this.props.location} />
@@ -92,13 +102,15 @@ class Product extends React.Component {
                 <div className='product-details'>
                   <p>PRODUCT DETAILS</p>
                   <ul>
-                    {this.state.product[0].details.split('"').map(detail => {
+                    {this.state.product[0].details.split('@').map(detail => {
                       return (
                         <Details detail={detail} key={detail} />
                       )
                     })}
                   </ul>
-                  <p className='read-more'>Read More</p>
+                  {/* <Link to='product_description'>
+                    <p className='read-more'>Read More</p>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -106,11 +118,17 @@ class Product extends React.Component {
             <div className='item-container'>
               <div className='product-description'>
                 <h1>PRODUCT DESCRIPTION</h1>
-                <span>{this.state.product[0].description}</span>
+                <div className='description'>
+                  {this.state.product[0].description.split('\\n').map(desc => {
+                    return (
+                        <p key={desc}>{desc}</p>
+                    )
+                  })}
+                </div>
                 <div className='product-details'>
                   <p>PRODUCT DETAILS</p>
                   <ul>
-                    {this.state.product[0].details.split('"').map(detail => {
+                    {this.state.product[0].details.split('@').map(detail => {
                       return (
                         <Details detail={detail} key={detail} />
                       )
@@ -121,7 +139,7 @@ class Product extends React.Component {
               <div className='seller-info'>
                 <h1>SELLER</h1>
                 <div className='seller'>
-                  <img src={`../${this.state.product[0].sellerimg}`} />
+                  <img src={seller} />
                   <span>{this.state.product[0].seller}</span>
                 </div>
                   <h1>SHIPPING</h1>
