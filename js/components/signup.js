@@ -12,19 +12,20 @@ class SignUp extends React.Component {
       password: '',
       verifyPassword: '',
       validator: {
-        name: false,
-        email: false,
-        password: false,
-        verifyPassword: false
+        name: null,
+        email: null,
+        password: null,
+        verifyPassword: null
       }
     }
     this.setValue = this.setValue.bind(this)
     this.submit = this.submit.bind(this)
     this.handleFieldChange = this.handleFieldChange.bind(this)
+    this.isInvalid = this.isInvalid.bind(this)
   }
 
   handleFieldChange (e) {
-    let obj = this.state;
+    let obj = this.state
 
     if(e.target.name === 'name'){
       if(!e.target.value && this.state.validator.name) {
@@ -38,35 +39,34 @@ class SignUp extends React.Component {
     } else if (e.target.name === 'email') {
       // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(e.target.value)) {
-          if(this.state.validator.email) {
+        if(!re.test(e.target.value) && e.target.value) {
+          if(this.state.validator.email || this.state.validator.email === null) {
             obj.validator.email = false;
             this.setState(obj)
           }
-          // Don't forget to enter your email.
-          //active class will run as long as
-        } else if (!this.state.validator.email) {
+        } else if (!this.state.validator.email && e.target.value) {
           obj.validator.email = true;
           this.setState(obj)
         }
     } else if (e.target.name === 'password') {
       // sets verifypassword to false if password field is changed
-      if(e.target.value !== this.state.verifyPassword && this.state.validator.verifyPassword) {
+      if(e.target.value !== this.state.verifyPassword && this.state.validator.verifyPassword && this.state.validator.verifyPassword !== null) {
         obj.validator.verifyPassword = false
       }
 
       if(e.target.value && e.target.value.length < 8) {
-        if(this.state.validator.password) {
+        if(this.state.validator.password || this.state.validator.password === null) {
           obj.validator.password = false;
           this.setState(obj)
         }
-        // Don't forget to come up with a great new password just for Jane! Make sure it's at least 8 characters.
       } else if (e.target.value.length > 7 && !this.state.validator.password) {
         // automatically sets verify password to true if both fields match
         if(this.state.verifyPassword === e.target.value && !this.state.validator.verifyPassword) {
-            obj.validator.verifyPassword = true;
+            obj.validator.verifyPassword = true
         }
         obj.validator.password = true
+        this.setState(obj)
+      } else {
         this.setState(obj)
       }
     } else if (e.target.name === 'verifyPassword') {
@@ -74,15 +74,21 @@ class SignUp extends React.Component {
         if(this.state.validator.verifyPassword) {
           obj.validator.verifyPassword = false
           this.setState(obj)
+        } else if (e.target.value && this.state.validator.verifyPassword === null) {
+          obj.validator.verifyPassword = false
+          this.setState(obj)
         }
-        // Enter your password one more time to make sure we got it right.
       } else if (this.state.verifyPassword === this.state.password) {
-        if(this.state.verifyPassword && !this.state.validator.verifyPassword) {
+        if(!this.state.validator.verifyPassword && this.state.validator.password) {
           obj.validator.verifyPassword = true
+          this.setState(obj)
+        } else if (e.target.value && this.state.validator.verifyPassword === null){
+          obj.validator.verifyPassword = false
           this.setState(obj)
         }
       }
     }
+    console.log(this.state.validator)
   }
 
   setValue (event) {
@@ -93,12 +99,25 @@ class SignUp extends React.Component {
 
   submit (e) {
     e.preventDefault()
-    console.log(this.state)
-
+    let obj = this.state;
+    console.log(100, obj)
+    if(obj.validator.name && obj.validator.email
+       && obj.validator.password && obj.validator.verifyPassword) {
+      console.log('ready for launch')
+    } else {
+      for(let key in obj.validator) {
+        if(!obj.validator[key]) {
+          obj.validator[key] = false
+          console.log(key, ' is not valid')
+        }
+      }
+      this.setState(obj)
+    }
   }
 
-
-
+  isInvalid (value) {
+    return value === false ? 'invalid' : '';
+  }
 
   render () {
     return (
@@ -119,29 +138,45 @@ class SignUp extends React.Component {
               <form className='login-form' onSubmit={this.submit}>
                 <div className='input-wrapper sign-up'>
                   <input
+                    className={this.isInvalid(this.state.validator.name)}
                     onBlur={this.handleFieldChange}
                     name='name'
                     onChange={this.setValue}
                     value={this.state.name}
                     placeholder='Full Name' />
+                    <p
+                      className={this.state.validator.name === false ? 'error' : 'hide'}
+                      >Don't forget to enter your name.</p>
                   <input
+                    className={this.isInvalid(this.state.validator.email)}
                     onBlur={this.handleFieldChange}
                     name='email'
                     onChange={this.setValue}
                     value={this.state.email}
                     placeholder='Email Address' />
+                    <p
+                      className={this.state.validator.email === false ? 'error' : 'hide'}
+                      >Don't forget to enter your email.</p>
                   <input
+                    className={this.isInvalid(this.state.validator.password)}
                     onBlur={this.handleFieldChange}
                     name='password'
                     onChange={this.setValue}
                     value={this.state.password}
                     placeholder='Password' />
+                    <p
+                      className={this.state.validator.password === false ? 'error' : 'hide'}
+                      >Don't forget to come up with a great new password just for Jane! Make sure it's at least 8 characters.</p>
                   <input
+                    className={this.isInvalid(this.state.validator.verifyPassword)}
                     onBlur={this.handleFieldChange}
                     name='verifyPassword'
                     onChange={this.setValue}
                     value={this.state.verifyPassword}
                     placeholder='Confirm Password' />
+                    <p
+                      className={this.state.validator.verifyPassword === false ? 'error' : 'hide'}
+                      >Enter your password one more time to make sure we got it right.</p>
                 </div>
                 <button className='btn btn-sign-up'>SIGN ME UP!</button>
               </form>

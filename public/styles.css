@@ -435,6 +435,16 @@ b {
         margin: 10px 0px; }
       .base .logon .login-pane .login-form .sign-up input {
         margin: 5px 0px; }
+      .base .logon .login-pane .login-form .sign-up .invalid {
+        border-color: red; }
+      .base .logon .login-pane .login-form .sign-up .error {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: left;
+        line-height: 20px; }
+      .base .logon .login-pane .login-form .sign-up .hide {
+        display: none; }
       .base .logon .login-pane .login-form .input-wrapper {
         width: 270px; }
         .base .logon .login-pane .login-form .input-wrapper input {

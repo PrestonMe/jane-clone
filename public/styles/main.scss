@@ -560,6 +560,19 @@ b {
           input {
             margin: 5px 0px;
           }
+          .invalid {
+            border-color: red;
+          }
+          .error {
+            color: red;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: left;
+            line-height: 20px;
+          }
+          .hide {
+            display: none;
+          }
         }
         .input-wrapper {
           width: 270px;
