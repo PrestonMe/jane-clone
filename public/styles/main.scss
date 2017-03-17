@@ -551,9 +551,34 @@ b {
         transform: translateX(-15px);
       }
       .login-form {
+        .invalid-login {
+          border: 1px solid #ffced0;
+          color: #ff4e58;
+          border-radius: 5px;
+          padding: 20px;
+          text-align: left;
+          font-size: 14px;
+          line-height: 20px;
+        }
+        .hide {
+          display: none;
+        }
         .login {
           input {
             margin: 10px 0px;
+          }
+          .invalid {
+            border-color: red;
+          }
+          .error {
+            color: red;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: left;
+            line-height: 20px;
+          }
+          .hide {
+            display: none;
           }
         }
         .sign-up {

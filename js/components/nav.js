@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
 const { string } = React.PropTypes
 
 class Nav extends React.Component {
@@ -43,7 +44,11 @@ class Nav extends React.Component {
             <p>FAVORITES</p>
             <img src='../public/img/icons/shopping-bag.svg' />
             <p><Link to='/cart'>MY BAG</Link></p>
-            <p className='login'><Link to='/logon' >LOG IN</Link></p>
+            {
+              this.props.loggedIn ?
+               <p>My Account</p> : 
+              <p className='login'><Link to='/logon' >LOG IN</Link></p>
+            }
           </div>
 
           <div className='logo'>
@@ -79,4 +84,10 @@ Nav.propTypes = {
   pathname: string
 }
 
-export default Nav
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+export default connect(mapStateToProps)(Nav)

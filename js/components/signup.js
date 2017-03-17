@@ -19,7 +19,8 @@ class SignUp extends React.Component {
         name: null,
         email: null,
         password: null,
-        verifyPassword: null
+        verifyPassword: null,
+        login: null
       }
     }
     this.setValue = this.setValue.bind(this)
@@ -114,18 +115,13 @@ class SignUp extends React.Component {
            }
          ).then(res => {
              if(res.data === 'Success') {
-                // Set user logged in on store, as well
-                // as setting user data in store, their name and email
-                // redirect to all deals page
+                // Set user data in store, their name and email
                 this.props.dispatch(login(true))
                 this.context.router.transitionTo('/')
              } else {
-               console.log('account already exists')
-               // notify user that the email is Already
-               // being used by an account
+               obj.validator.login = true
+               this.setState(obj)
              }
-          //  const products = res.data
-          //  this.setState({ products });
            })
     } else {
       for(let key in obj.validator) {
@@ -159,6 +155,9 @@ class SignUp extends React.Component {
             </div>
             <div>
               <form className='login-form' onSubmit={this.submit}>
+                <p
+                  className={this.state.validator.login ? 'invalid-login' : 'hide'}
+                  >An Account with that email already exists.</p>
                 <div className='input-wrapper sign-up'>
                   <input
                     className={this.isInvalid(this.state.validator.name)}
@@ -181,6 +180,7 @@ class SignUp extends React.Component {
                       className={this.state.validator.email === false ? 'error' : 'hide'}
                       >Don't forget to enter your email.</p>
                   <input
+                    type='password'
                     className={this.isInvalid(this.state.validator.password)}
                     onBlur={this.handleFieldChange}
                     name='password'
@@ -191,6 +191,7 @@ class SignUp extends React.Component {
                       className={this.state.validator.password === false ? 'error' : 'hide'}
                       >Don't forget to come up with a great new password just for Jane! Make sure it's at least 8 characters.</p>
                   <input
+                    type='password'
                     className={this.isInvalid(this.state.validator.verifyPassword)}
                     onBlur={this.handleFieldChange}
                     name='verifyPassword'

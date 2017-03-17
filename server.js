@@ -52,6 +52,17 @@ server.get('/product/:id', function(req, res, next) {
   })
 })
 
+server.get('/login/:email/:password', function(req, res, next) {
+  console.log('params', req.params)
+  db.login([req.params.email, req.params.password], function(err, response) {
+    if(response.length === 0) {
+      res.json('Login Failed')
+    } else {
+      res.json(response)
+    }
+  })
+})
+
 server.post('/signup', function(req, res, next) {
   db.find_account(req.body.data.email, function(err, response) {
     if(response.length === 0) {
@@ -63,6 +74,7 @@ server.post('/signup', function(req, res, next) {
     }
   })
 })
+
 
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()

@@ -431,8 +431,28 @@ b {
         width: 50px;
         height: 3px;
         transform: translateX(-15px); }
+      .base .logon .login-pane .login-form .invalid-login {
+        border: 1px solid #ffced0;
+        color: #ff4e58;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 20px; }
+      .base .logon .login-pane .login-form .hide {
+        display: none; }
       .base .logon .login-pane .login-form .login input {
         margin: 10px 0px; }
+      .base .logon .login-pane .login-form .login .invalid {
+        border-color: red; }
+      .base .logon .login-pane .login-form .login .error {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: left;
+        line-height: 20px; }
+      .base .logon .login-pane .login-form .login .hide {
+        display: none; }
       .base .logon .login-pane .login-form .sign-up input {
         margin: 5px 0px; }
       .base .logon .login-pane .login-form .sign-up .invalid {

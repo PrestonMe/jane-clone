@@ -3539,11 +3539,13 @@ var Footer = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(253);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -3622,7 +3624,11 @@ var Nav = function (_React$Component) {
               'MY BAG'
             )
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          this.props.loggedIn ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'My Account'
+          ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
             { className: 'login' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -3760,7 +3766,13 @@ Nav.propTypes = {
   pathname: string
 };
 
-/* harmony default export */ __webpack_exports__["a"] = Nav;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(Nav);
 
 /***/ }),
 /* 26 */
@@ -13789,8 +13801,12 @@ var LargeProduct = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__nav__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__footer__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__footer__ = __webpack_require__(24);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13802,26 +13818,88 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
 var object = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.object;
 
 var MyAccount = function (_React$Component) {
   _inherits(MyAccount, _React$Component);
 
-  function MyAccount() {
+  function MyAccount(props) {
     _classCallCheck(this, MyAccount);
 
-    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      email: '',
+      password: '',
+      validator: {
+        email: null,
+        login: null
+      }
+    };
+
+    _this.setValue = _this.setValue.bind(_this);
+    _this.submit = _this.submit.bind(_this);
+    _this.handleFieldChange = _this.handleFieldChange.bind(_this);
+    _this.isInvalid = _this.isInvalid.bind(_this);
+    return _this;
   }
 
-  // constructor (props) {
-  //   super(props)
-  //
-  // }
+  MyAccount.prototype.setValue = function setValue(event) {
+    var obj = {};
+    obj[event.target.name] = event.target.value;
+    this.setState(obj);
+  };
+
+  MyAccount.prototype.submit = function submit(e) {
+    var _this2 = this;
+
+    e.preventDefault();
+    var obj = this.state;
+    if (obj.validator.email && obj.password) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
+        if (res.data[0].email) {
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["a" /* login */])(true));
+          _this2.context.router.transitionTo('/');
+        } else {
+          obj.validator.login = true;
+          _this2.setState(obj);
+        }
+      });
+    }
+  };
+
+  MyAccount.prototype.handleFieldChange = function handleFieldChange(e) {
+    var obj = this.state;
+
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(e.target.value)) {
+      if (this.state.validator.email !== false) {
+        obj.validator.email = false;
+        console.log('getting set');
+        this.setState(obj);
+      }
+    } else {
+      if (this.state.validator.email !== true) {
+        obj.validator.email = true;
+        this.setState(obj);
+      }
+    }
+  };
+
+  MyAccount.prototype.isInvalid = function isInvalid(value) {
+    return value === false ? 'invalid' : '';
+  };
+
   MyAccount.prototype.render = function render() {
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'base' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'logon' },
@@ -13852,12 +13930,37 @@ var MyAccount = function (_React$Component) {
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'form',
-              { className: 'login-form' },
+              { className: 'login-form', onSubmit: this.submit },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                {
+                  className: this.state.validator.login ? 'invalid-login' : 'hide'
+                },
+                'Invalid email address or password. Please try again.'
+              ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'input-wrapper login' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Email Address' }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Password' })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  className: this.isInvalid(this.state.validator.email),
+                  onBlur: this.handleFieldChange,
+                  name: 'email',
+                  onChange: this.setValue,
+                  value: this.state.email,
+                  placeholder: 'Email Address' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'p',
+                  {
+                    className: this.state.validator.email === false ? 'error' : 'hide'
+                  },
+                  'Please enter a valid email address.'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  type: 'password',
+                  name: 'password',
+                  onChange: this.setValue,
+                  value: this.state.password,
+                  placeholder: 'Password' })
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
@@ -13882,18 +13985,28 @@ var MyAccount = function (_React$Component) {
           )
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__footer__["a" /* default */], null)
     );
   };
 
   return MyAccount;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
+MyAccount.contextTypes = {
+  router: object
+};
+
 MyAccount.propTypes = {
   location: object
 };
 
-/* harmony default export */ __webpack_exports__["a"] = MyAccount;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(MyAccount);
 
 /***/ }),
 /* 142 */
@@ -14236,7 +14349,8 @@ var SignUp = function (_React$Component) {
         name: null,
         email: null,
         password: null,
-        verifyPassword: null
+        verifyPassword: null,
+        login: null
       }
     };
     _this.setValue = _this.setValue.bind(_this);
@@ -14332,18 +14446,13 @@ var SignUp = function (_React$Component) {
         }
       }).then(function (res) {
         if (res.data === 'Success') {
-          // Set user logged in on store, as well
-          // as setting user data in store, their name and email
-          // redirect to all deals page
+          // Set user data in store, their name and email
           _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["a" /* login */])(true));
           _this2.context.router.transitionTo('/');
         } else {
-          console.log('account already exists');
-          // notify user that the email is Already
-          // being used by an account
+          obj.validator.login = true;
+          _this2.setState(obj);
         }
-        //  const products = res.data
-        //  this.setState({ products });
       });
     } else {
       for (var key in obj.validator) {
@@ -14397,6 +14506,13 @@ var SignUp = function (_React$Component) {
               'form',
               { className: 'login-form', onSubmit: this.submit },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                {
+                  className: this.state.validator.login ? 'invalid-login' : 'hide'
+                },
+                'An Account with that email already exists.'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'input-wrapper sign-up' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
@@ -14428,6 +14544,7 @@ var SignUp = function (_React$Component) {
                   'Don\'t forget to enter your email.'
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  type: 'password',
                   className: this.isInvalid(this.state.validator.password),
                   onBlur: this.handleFieldChange,
                   name: 'password',
@@ -14442,6 +14559,7 @@ var SignUp = function (_React$Component) {
                   'Don\'t forget to come up with a great new password just for Jane! Make sure it\'s at least 8 characters.'
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  type: 'password',
                   className: this.isInvalid(this.state.validator.verifyPassword),
                   onBlur: this.handleFieldChange,
                   name: 'verifyPassword',
