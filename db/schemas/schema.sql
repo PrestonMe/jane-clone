@@ -15,3 +15,16 @@ CREATE TABLE product (
   seller varChar(25),
   sellerImg varChar(100)
 );
+
+CREATE TABLE customer (
+  id serial primary key,
+  fullname varchar(40),
+  password varchar(30),
+  email varchar(50),
+  street varchar(30),
+  city varchar(20),
+  state varchar(2),
+  apt varchar(10),
+  zipcode varchar(10),
+  phonenumber varchar(15)
+);

@@ -12163,8 +12163,8 @@ function compose() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(289);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_symbol_observable__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ActionTypes; });
-/* harmony export (immutable) */ __webpack_exports__["a"] = createStore;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionTypes; });
+/* harmony export (immutable) */ __webpack_exports__["b"] = createStore;
 
 
 
@@ -12425,11 +12425,11 @@ function createStore(reducer, preloadedState, enhancer) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(114);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["b"]; });
 /* unused harmony reexport combineReducers */
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_4__compose__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_4__compose__["a"]; });
 
 
 
@@ -14198,8 +14198,12 @@ var Product = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__nav__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__footer__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__footer__ = __webpack_require__(24);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -14210,6 +14214,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+var object = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.object;
 
 var SignUp = function (_React$Component) {
   _inherits(SignUp, _React$Component);
@@ -14302,7 +14310,6 @@ var SignUp = function (_React$Component) {
         }
       }
     }
-    console.log(this.state.validator);
   };
 
   SignUp.prototype.setValue = function setValue(event) {
@@ -14312,16 +14319,36 @@ var SignUp = function (_React$Component) {
   };
 
   SignUp.prototype.submit = function submit(e) {
+    var _this2 = this;
+
     e.preventDefault();
     var obj = this.state;
-    console.log(100, obj);
     if (obj.validator.name && obj.validator.email && obj.validator.password && obj.validator.verifyPassword) {
-      console.log('ready for launch');
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/signup', {
+        data: {
+          name: this.state.name,
+          email: this.state.email,
+          password: this.state.password
+        }
+      }).then(function (res) {
+        if (res.data === 'Success') {
+          // Set user logged in on store, as well
+          // as setting user data in store, their name and email
+          // redirect to all deals page
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["a" /* login */])(true));
+          _this2.context.router.transitionTo('/');
+        } else {
+          console.log('account already exists');
+          // notify user that the email is Already
+          // being used by an account
+        }
+        //  const products = res.data
+        //  this.setState({ products });
+      });
     } else {
       for (var key in obj.validator) {
         if (!obj.validator[key]) {
           obj.validator[key] = false;
-          console.log(key, ' is not valid');
         }
       }
       this.setState(obj);
@@ -14333,10 +14360,11 @@ var SignUp = function (_React$Component) {
   };
 
   SignUp.prototype.render = function render() {
+    console.log(this.props.loggedIn);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'base' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__nav__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'logon' },
@@ -14450,14 +14478,24 @@ var SignUp = function (_React$Component) {
           )
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__footer__["a" /* default */], null)
     );
   };
 
   return SignUp;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["a"] = SignUp;
+SignUp.contextTypes = {
+  router: object
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(SignUp);
 
 /***/ }),
 /* 144 */
@@ -14598,7 +14636,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 
-var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* createStore */])(__WEBPACK_IMPORTED_MODULE_2__reducers_reducers__["a" /* default */], __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* compose */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a), (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : function (f) {
+var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* createStore */])(__WEBPACK_IMPORTED_MODULE_2__reducers_reducers__["a" /* default */], __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* compose */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a), (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : function (f) {
   return f;
 }
 // for getting redux devtools to work
@@ -25561,7 +25599,7 @@ function createConnect() {
   };
 }
 
-/* unused harmony default export */ var _unused_webpack_default_export = createConnect();
+/* harmony default export */ __webpack_exports__["a"] = createConnect();
 
 /***/ }),
 /* 248 */
@@ -25588,7 +25626,7 @@ function whenMapDispatchToPropsIsMissing(mapDispatchToProps) {
 
 function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
   return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsConstant */])(function (dispatch) {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* bindActionCreators */])(mapDispatchToProps, dispatch);
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* bindActionCreators */])(mapDispatchToProps, dispatch);
   }) : undefined;
 }
 
@@ -25821,7 +25859,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__connect_connect__ = __webpack_require__(247);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["a"]; });
 /* unused harmony reexport connectAdvanced */
-/* unused harmony reexport connect */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__connect_connect__["a"]; });
 
 
 
@@ -30639,7 +30677,7 @@ function getUndefinedStateErrorMessage(key, action) {
 
 function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
   var reducerKeys = Object.keys(reducers);
-  var argumentName = action && action.type === __WEBPACK_IMPORTED_MODULE_0__createStore__["b" /* ActionTypes */].INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
+  var argumentName = action && action.type === __WEBPACK_IMPORTED_MODULE_0__createStore__["a" /* ActionTypes */].INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
 
   if (reducerKeys.length === 0) {
     return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
@@ -30665,7 +30703,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
 function assertReducerSanity(reducers) {
   Object.keys(reducers).forEach(function (key) {
     var reducer = reducers[key];
-    var initialState = reducer(undefined, { type: __WEBPACK_IMPORTED_MODULE_0__createStore__["b" /* ActionTypes */].INIT });
+    var initialState = reducer(undefined, { type: __WEBPACK_IMPORTED_MODULE_0__createStore__["a" /* ActionTypes */].INIT });
 
     if (typeof initialState === 'undefined') {
       throw new Error('Reducer "' + key + '" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined.');
@@ -30673,7 +30711,7 @@ function assertReducerSanity(reducers) {
 
     var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');
     if (typeof reducer(undefined, { type: type }) === 'undefined') {
-      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + __WEBPACK_IMPORTED_MODULE_0__createStore__["b" /* ActionTypes */].INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
+      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + __WEBPACK_IMPORTED_MODULE_0__createStore__["a" /* ActionTypes */].INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
     }
   });
 }
@@ -30971,6 +31009,28 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPA
   null,
   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__App__["a" /* default */], null)
 ), document.getElementById('app'));
+
+/***/ }),
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(136);
+/* harmony export (immutable) */ __webpack_exports__["a"] = login;
+
+
+function login(loggedIn) {
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* LOGIN_USER */], loggedIn: loggedIn };
+}
+
+// a function that you call and returns a correctly shaped actioncreators
+// it's useufl to seprate this out into pieces using an actions
+// and actionscreators file instead of putting them on the u.i. to
+// avoid using these two files
 
 /***/ })
 /******/ ]);

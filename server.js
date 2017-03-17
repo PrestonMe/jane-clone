@@ -52,6 +52,18 @@ server.get('/product/:id', function(req, res, next) {
   })
 })
 
+server.post('/signup', function(req, res, next) {
+  db.find_account(req.body.data.email, function(err, response) {
+    if(response.length === 0) {
+      db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
+        res.json('Success')
+      })
+    } else {
+      res.json('Account Already Exists!')
+    }
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

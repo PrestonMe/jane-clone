@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router'
+import axios from 'axios'
+import { connect } from 'react-redux'
+import { login } from '../actions/actionCreators'
 import Nav from './nav'
 import Footer from './footer'
+const { object } = React.PropTypes
 
 class SignUp extends React.Component {
   constructor (props) {
@@ -88,7 +92,6 @@ class SignUp extends React.Component {
         }
       }
     }
-    console.log(this.state.validator)
   }
 
   setValue (event) {
@@ -100,15 +103,34 @@ class SignUp extends React.Component {
   submit (e) {
     e.preventDefault()
     let obj = this.state;
-    console.log(100, obj)
     if(obj.validator.name && obj.validator.email
        && obj.validator.password && obj.validator.verifyPassword) {
-      console.log('ready for launch')
+         axios.post('/signup', {
+             data: {
+               name: this.state.name,
+               email: this.state.email,
+               password: this.state.password
+             }
+           }
+         ).then(res => {
+             if(res.data === 'Success') {
+                // Set user logged in on store, as well
+                // as setting user data in store, their name and email
+                // redirect to all deals page
+                this.props.dispatch(login(true))
+                this.context.router.transitionTo('/')
+             } else {
+               console.log('account already exists')
+               // notify user that the email is Already
+               // being used by an account
+             }
+          //  const products = res.data
+          //  this.setState({ products });
+           })
     } else {
       for(let key in obj.validator) {
         if(!obj.validator[key]) {
           obj.validator[key] = false
-          console.log(key, ' is not valid')
         }
       }
       this.setState(obj)
@@ -120,6 +142,7 @@ class SignUp extends React.Component {
   }
 
   render () {
+    console.log(this.props.loggedIn)
     return (
       <div className='base'>
         <Nav />
@@ -192,4 +215,14 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp
+SignUp.contextTypes = {
+  router: object
+}
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+export default connect(mapStateToProps)(SignUp)
