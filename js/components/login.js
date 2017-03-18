@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
 import axios from 'axios'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { login } from '../actions/actionCreators'
 import Nav from './nav'
@@ -38,8 +38,9 @@ class MyAccount extends React.Component {
     if(obj.validator.email && obj.password) {
       axios.get('/login/' + this.state.email + '/' + this.state.password
       ).then(res => {
-        if(res.data[0].email) {
-          this.props.dispatch(login(true))
+        let user = res.data[0]
+        if(user.email) {
+          this.props.dispatch(login(true, user.fullname, user.id))
           this.context.router.transitionTo('/')
         } else {
           obj.validator.login = true

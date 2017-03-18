@@ -3540,11 +3540,13 @@ var Footer = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__account_popup__ = __webpack_require__(299);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -3560,10 +3562,12 @@ var Nav = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
     _this.state = {
-      isHide: false
+      isHide: false,
+      accountMenu: false
     };
     _this.hideBar = _this.hideBar.bind(_this);
     _this.isActive = _this.isActive.bind(_this);
+    _this.toggleAccountMenu = _this.toggleAccountMenu.bind(_this);
     return _this;
   }
 
@@ -3578,6 +3582,13 @@ var Nav = function (_React$Component) {
     return value === this.props.pathname ? 'active' : '';
   };
 
+  Nav.prototype.toggleAccountMenu = function toggleAccountMenu() {
+    console.log('running');
+    var obj = this.state;
+    obj.accountMenu = !this.state.accountMenu;
+    this.setState(obj);
+  };
+
   Nav.prototype.componentDidMount = function componentDidMount() {
     window.addEventListener('scroll', this.hideBar);
   };
@@ -3588,6 +3599,7 @@ var Nav = function (_React$Component) {
 
   Nav.prototype.render = function render() {
     var classAdd = this.state.isHide ? 'slide-in' : 'slide-out';
+    var account_menu = !this.state.accountMenu ? 'hide' : '';
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -3625,9 +3637,14 @@ var Nav = function (_React$Component) {
             )
           ),
           this.props.loggedIn ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
+            'span',
             null,
-            'My Account'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { onClick: this.toggleAccountMenu },
+              this.props.userName.toUpperCase()
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__account_popup__["a" /* default */], { 'class': account_menu, exitMenu: this.toggleAccountMenu })
           ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
             { className: 'login' },
@@ -3768,7 +3785,8 @@ Nav.propTypes = {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    userName: state.userName
   };
 };
 
@@ -13429,7 +13447,9 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGIN_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOGOUT_USER; });
 var LOGIN_USER = 'LOGIN_USER';
+var LOGOUT_USER = 'LOGOUT_USER';
 
 /***/ }),
 /* 137 */
@@ -13799,10 +13819,10 @@ var LargeProduct = function (_React$Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(298);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav__ = __webpack_require__(25);
@@ -13859,9 +13879,10 @@ var MyAccount = function (_React$Component) {
     e.preventDefault();
     var obj = this.state;
     if (obj.validator.email && obj.password) {
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
-        if (res.data[0].email) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["a" /* login */])(true));
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
+        var user = res.data[0];
+        if (user.email) {
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["b" /* login */])(true, user.fullname, user.id));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;
@@ -13973,7 +13994,7 @@ var MyAccount = function (_React$Component) {
                 'Forgot your password?'
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+                __WEBPACK_IMPORTED_MODULE_2_react_router__["Link"],
                 { to: '/signup' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'p',
@@ -14445,9 +14466,9 @@ var SignUp = function (_React$Component) {
           password: this.state.password
         }
       }).then(function (res) {
-        if (res.data === 'Success') {
-          // Set user data in store, their name and email
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["a" /* login */])(true));
+        var user = res.data[0];
+        if (user.email) {
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["b" /* login */])(true, user.fullname, user.id));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;
@@ -14714,17 +14735,27 @@ var SmallProduct = function (_React$Component) {
 
 var DEFAULT_STATE = {
   redirectUrl: '/',
-  loggedIn: false
+  loggedIn: false,
+  userId: null,
+  userName: null,
+  cartItems: null
 };
 
 var logon = function logon(state, action) {
   var newState = {};
-  Object.assign(newState, state, { loggedIn: action.loggedIn });
+  Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId });
   return newState;
 };
 // vv if state is undefined then set state
 // to default_state, this is an example
 // of an es6 default paraemeter
+var logout = function logout(state, action) {
+  var newState = {};
+  Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId });
+  console.log('state', newState);
+  return newState;
+};
+
 var rootReducer = function rootReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
   var action = arguments[1];
@@ -14732,6 +14763,8 @@ var rootReducer = function rootReducer() {
   switch (action.type) {
     case __WEBPACK_IMPORTED_MODULE_0__actions_actions__["a" /* LOGIN_USER */]:
       return logon(state, action);
+    case __WEBPACK_IMPORTED_MODULE_0__actions_actions__["b" /* LOGOUT_USER */]:
+      return logout(state, action);
     default:
       return state;
   }
@@ -31138,17 +31171,125 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPA
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(136);
-/* harmony export (immutable) */ __webpack_exports__["a"] = login;
+/* harmony export (immutable) */ __webpack_exports__["b"] = login;
+/* harmony export (immutable) */ __webpack_exports__["a"] = logout;
 
 
-function login(loggedIn) {
-  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* LOGIN_USER */], loggedIn: loggedIn };
+
+function login(loggedIn, fullName, userId) {
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* LOGIN_USER */], loggedIn: loggedIn, userName: fullName, userId: userId };
+}
+
+function logout() {
+  console.log('actionCreators');
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* LOGOUT_USER */], loggedIn: null, userName: null, userId: null };
 }
 
 // a function that you call and returns a correctly shaped actioncreators
 // it's useufl to seprate this out into pieces using an actions
 // and actionscreators file instead of putting them on the u.i. to
 // avoid using these two files
+
+/***/ }),
+/* 299 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__ = __webpack_require__(298);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var AccountMenu = function (_React$Component) {
+  _inherits(AccountMenu, _React$Component);
+
+  function AccountMenu(props) {
+    _classCallCheck(this, AccountMenu);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      isHide: false
+    };
+    _this.logout = _this.logout.bind(_this);
+    _this.exitMenu = _this.exitMenu.bind(_this);
+    return _this;
+  }
+
+  AccountMenu.prototype.exitMenu = function exitMenu() {
+    this.props.exitMenu();
+  };
+
+  AccountMenu.prototype.logout = function logout() {
+    this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* logout */])());
+  };
+
+  AccountMenu.prototype.render = function render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      { className: 'account-menu' },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'up-arrow' }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', {
+        onClick: this.exitMenu,
+        className: 'menu-background ' + this.props.class }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'menu-details' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Order History'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../public/img/icons/clock.png' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'View Account'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../public/img/icons/account.png' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            { className: 'logout', onClick: this.logout },
+            'Log Out'
+          )
+        )
+      )
+    );
+  };
+
+  return AccountMenu;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn,
+    userName: state.userName
+  };
+};
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(AccountMenu);
 
 /***/ })
 /******/ ]);

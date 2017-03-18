@@ -46,14 +46,12 @@ server.get('/products', function(req, res, next) {
 })
 
 server.get('/product/:id', function(req, res, next) {
-  console.log(req.params, typeof req.params.id)
   db.get_product(req.params.id, function(err, products) {
     res.json(products);
   })
 })
 
 server.get('/login/:email/:password', function(req, res, next) {
-  console.log('params', req.params)
   db.login([req.params.email, req.params.password], function(err, response) {
     if(response.length === 0) {
       res.json('Login Failed')
@@ -67,7 +65,7 @@ server.post('/signup', function(req, res, next) {
   db.find_account(req.body.data.email, function(err, response) {
     if(response.length === 0) {
       db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
-        res.json('Success')
+        res.json(response)
       })
     } else {
       res.json('Account Already Exists!')

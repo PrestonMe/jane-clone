@@ -54,6 +54,8 @@ b {
     margin-right: 17px;
     width: calc(100% / 3);
     float: right; }
+    .nav .nav-right .hide {
+      display: none; }
     .nav .nav-right img:nth-child(3) {
       margin-left: 10px; }
     .nav .nav-right p {
@@ -560,5 +562,49 @@ b {
     align-self: center;
     width: 10px;
     margin-right: 2px; }
+
+.account-menu {
+  position: absolute;
+  top: 0;
+  left: 0; }
+  .account-menu .up-arrow {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #FFF;
+    position: absolute;
+    right: 30px;
+    top: 52px;
+    z-index: 11; }
+  .account-menu .menu-background {
+    background: #b4adad;
+    opacity: .8;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10; }
+  .account-menu .menu-details {
+    padding: 30px;
+    background-color: #FFF;
+    width: 240px;
+    position: absolute;
+    right: 20px;
+    top: 60px;
+    z-index: 11; }
+    .account-menu .menu-details div:nth-child(-n+2) {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 20px; }
+    .account-menu .menu-details p {
+      font-size: 18px;
+      color: #585454; }
+    .account-menu .menu-details img {
+      width: 18px;
+      height: 18px; }
+    .account-menu .menu-details .logout {
+      margin-top: 25px;
+      cursor: pointer; }
 
 /*# sourceMappingURL=styles.css.map*/

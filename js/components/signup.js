@@ -114,9 +114,9 @@ class SignUp extends React.Component {
              }
            }
          ).then(res => {
-             if(res.data === 'Success') {
-                // Set user data in store, their name and email
-                this.props.dispatch(login(true))
+           let user = res.data[0]
+           if(user.email) {
+                this.props.dispatch(login(true, user.fullname, user.id))
                 this.context.router.transitionTo('/')
              } else {
                obj.validator.login = true

@@ -1,16 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import AccountMenu from './account_popup'
 const { string } = React.PropTypes
 
 class Nav extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isHide: false
+      isHide: false,
+      accountMenu: false
     }
     this.hideBar = this.hideBar.bind(this)
     this.isActive = this.isActive.bind(this)
+    this.toggleAccountMenu = this.toggleAccountMenu.bind(this)
   }
   hideBar () {
     let {isHide} = this.state
@@ -21,6 +24,14 @@ class Nav extends React.Component {
   isActive (value) {
     return value === this.props.pathname ? 'active' : ''
   }
+
+  toggleAccountMenu () {
+    console.log('running')
+    let obj = this.state;
+    obj.accountMenu = !this.state.accountMenu
+    this.setState(obj);
+  }
+
   componentDidMount () {
     window.addEventListener('scroll', this.hideBar)
   }
@@ -29,6 +40,7 @@ class Nav extends React.Component {
   }
   render () {
     let classAdd = this.state.isHide ? 'slide-in' : 'slide-out'
+    let account_menu = !this.state.accountMenu ? 'hide' : ''
     return (
       <div>
         <div className='nav'>
@@ -46,7 +58,11 @@ class Nav extends React.Component {
             <p><Link to='/cart'>MY BAG</Link></p>
             {
               this.props.loggedIn ?
-               <p>My Account</p> : 
+               <span>
+                 <p onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
+                 <AccountMenu class={account_menu} exitMenu={this.toggleAccountMenu} />
+               </span>
+                :
               <p className='login'><Link to='/logon' >LOG IN</Link></p>
             }
           </div>
@@ -86,7 +102,8 @@ Nav.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    userName: state.userName
   }
 }
 
