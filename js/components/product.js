@@ -2,6 +2,8 @@ import React from 'react'
 // import Scroll from 'react-scroll'
 import axios from 'axios'
 // import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { updateQty } from '../actions/actionCreators'
 import Nav from './nav'
 import Footer from './footer'
 import Details from './details'
@@ -12,14 +14,40 @@ class Product extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      product: {}
+      product: {},
+      qty: 1
     }
+    this.updateCart = this.updateCart.bind(this)
+    this.updateQty = this.updateQty.bind(this)
+  }
+
+  updateCart(e) {
+    e.preventDefault()
+    let user = null
+
+    if(this.props.userId) {
+        user = this.props.userId
+    }
+    console.log('running update')
+    axios.post('/addToCart/' +
+      this.state.product[0].id + '/' +
+      this.state.qty + '/' +
+      user
+    ).then(res => {
+        this.props.dispatch(updateQty(res.data[0].total))
+      })
+  }
+
+  updateQty(e) {
+    e.preventDefault()
+    let obj = this.state
+    obj.qty = e.target.value
+    this.setState(obj)
   }
 
   componentDidMount () {
     axios.get('/product/' + this.props.params.id
     ).then(res => {
-      console.log(res.data)
       const product = res.data
       this.setState({ product })
       })
@@ -43,12 +71,6 @@ class Product extends React.Component {
             <div className='item-container'>
               <div className='left-item'>
                 <img src={`../${this.state.product[0].burl}`} />
-                {/* <div className='carousel'>
-                  <img src={`../${this.state.product[0].thumb}`} />
-                </div>
-                <div className='sale-info'>
-                  savings time left amount sold
-                </div> */}
               </div>
               <div className='right-item'>
                 <h1>{this.state.product[0].name}</h1>
@@ -68,8 +90,8 @@ class Product extends React.Component {
                   <img src='../public/img/icons/truck.svg' />
                   <span> Seller usually ships within 3 days.</span>
                 </div>
-                <form className='add-to-cart'>
-                  <input defaultValue='1'></input>
+                <form className='add-to-cart' onSubmit={this.updateCart}>
+                  <input value={this.state.qty} onChange={this.updateQty}></input>
                   <button>ADD TO BAG</button>
                 </form>
                 <div className='footer social-media'>
@@ -108,9 +130,6 @@ class Product extends React.Component {
                       )
                     })}
                   </ul>
-                  {/* <Link to='product_description'>
-                    <p className='read-more'>Read More</p>
-                  </Link> */}
                 </div>
               </div>
             </div>
@@ -154,5 +173,9 @@ class Product extends React.Component {
     )
   }
 }
-
-export default Product
+const mapStateToProps = state => {
+  return {
+    userId: state.userId
+  }
+}
+export default connect(mapStateToProps)(Product)

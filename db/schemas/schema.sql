@@ -28,3 +28,10 @@ CREATE TABLE customer (
   zipcode varchar(10),
   phonenumber varchar(15)
 );
+
+CREATE TABLE cart (
+  id serial primary key,
+  qty int,
+  customer_id int references customer,
+  product_id int references product
+);

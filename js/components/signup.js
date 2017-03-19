@@ -138,10 +138,9 @@ class SignUp extends React.Component {
   }
 
   render () {
-    console.log(this.props.loggedIn)
     return (
       <div className='base'>
-        <Nav />
+        <Nav {...this.props.location}/>
         <div className='logon'>
           <div className='login-pane'>
             <img src='../../public/img/jane-logo_360.png' />

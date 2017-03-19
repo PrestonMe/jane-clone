@@ -3583,7 +3583,6 @@ var Nav = function (_React$Component) {
   };
 
   Nav.prototype.toggleAccountMenu = function toggleAccountMenu() {
-    console.log('running');
     var obj = this.state;
     obj.accountMenu = !this.state.accountMenu;
     this.setState(obj);
@@ -3636,18 +3635,25 @@ var Nav = function (_React$Component) {
               'MY BAG'
             )
           ),
+          this.props.cartTotal ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h1',
+            { className: 'cart-qty' },
+            this.props.cartTotal
+          ) : '',
           this.props.loggedIn ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
-              { onClick: this.toggleAccountMenu },
+              {
+                className: 'user',
+                onClick: this.toggleAccountMenu },
               this.props.userName.toUpperCase()
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__account_popup__["a" /* default */], { 'class': account_menu, exitMenu: this.toggleAccountMenu })
           ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
-            { className: 'login' },
+            { className: this.props.pathname === '/logon' || this.props.pathname === '/signup' ? 'login' : '' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
               { to: '/logon' },
@@ -3786,7 +3792,8 @@ Nav.propTypes = {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     loggedIn: state.loggedIn,
-    userName: state.userName
+    userName: state.userName,
+    cartTotal: state.cartItems
   };
 };
 
@@ -13448,8 +13455,10 @@ module.exports = function spread(callback) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGIN_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOGOUT_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return UPDATE_CART_TOTAL; });
 var LOGIN_USER = 'LOGIN_USER';
 var LOGOUT_USER = 'LOGOUT_USER';
+var UPDATE_CART_TOTAL = 'UPDATE_CART_TOTAL';
 
 /***/ }),
 /* 137 */
@@ -13882,7 +13891,7 @@ var MyAccount = function (_React$Component) {
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
         var user = res.data[0];
         if (user.email) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["b" /* login */])(true, user.fullname, user.id));
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;
@@ -14038,9 +14047,11 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__nav__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__footer__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__details__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__nav__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__footer__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__details__ = __webpack_require__(139);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -14051,6 +14062,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // import Scroll from 'react-scroll'
 
 // import { Link } from 'react-router'
+
+
 
 
 
@@ -14066,18 +14079,42 @@ var Product = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
     _this.state = {
-      product: {}
+      product: {},
+      qty: 1
     };
+    _this.updateCart = _this.updateCart.bind(_this);
+    _this.updateQty = _this.updateQty.bind(_this);
     return _this;
   }
 
-  Product.prototype.componentDidMount = function componentDidMount() {
+  Product.prototype.updateCart = function updateCart(e) {
     var _this2 = this;
 
+    e.preventDefault();
+    var user = null;
+
+    if (this.props.userId) {
+      user = this.props.userId;
+    }
+    console.log('running update');
+    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/addToCart/' + this.state.product[0].id + '/' + this.state.qty + '/' + user).then(function (res) {
+      _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* updateQty */])(res.data[0].total));
+    });
+  };
+
+  Product.prototype.updateQty = function updateQty(e) {
+    e.preventDefault();
+    var obj = this.state;
+    obj.qty = e.target.value;
+    this.setState(obj);
+  };
+
+  Product.prototype.componentDidMount = function componentDidMount() {
+    var _this3 = this;
+
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/product/' + this.props.params.id).then(function (res) {
-      console.log(res.data);
       var product = res.data;
-      _this2.setState({ product: product });
+      _this3.setState({ product: product });
     });
   };
 
@@ -14089,12 +14126,12 @@ var Product = function (_React$Component) {
     return !this.state.product[0] ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__nav__["a" /* default */], this.props.location),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__footer__["a" /* default */], null)
     ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'shop' },
@@ -14159,8 +14196,8 @@ var Product = function (_React$Component) {
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'form',
-              { className: 'add-to-cart' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { defaultValue: '1' }),
+              { className: 'add-to-cart', onSubmit: this.updateCart },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { value: this.state.qty, onChange: this.updateQty }),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 null,
@@ -14228,7 +14265,7 @@ var Product = function (_React$Component) {
                 'ul',
                 null,
                 this.state.product[0].details.split('@').map(function (detail) {
-                  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__details__["a" /* default */], { detail: detail, key: detail });
+                  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__details__["a" /* default */], { detail: detail, key: detail });
                 })
               )
             )
@@ -14268,7 +14305,7 @@ var Product = function (_React$Component) {
                 'ul',
                 null,
                 this.state.product[0].details.split('@').map(function (detail) {
-                  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__details__["a" /* default */], { detail: detail, key: detail });
+                  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__details__["a" /* default */], { detail: detail, key: detail });
                 })
               )
             )
@@ -14314,14 +14351,19 @@ var Product = function (_React$Component) {
           )
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__footer__["a" /* default */], null)
     );
   };
 
   return Product;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["a"] = Product;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    userId: state.userId
+  };
+};
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(Product);
 
 /***/ }),
 /* 143 */
@@ -14468,7 +14510,7 @@ var SignUp = function (_React$Component) {
       }).then(function (res) {
         var user = res.data[0];
         if (user.email) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["b" /* login */])(true, user.fullname, user.id));
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;
@@ -14490,11 +14532,10 @@ var SignUp = function (_React$Component) {
   };
 
   SignUp.prototype.render = function render() {
-    console.log(this.props.loggedIn);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'base' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'logon' },
@@ -14756,6 +14797,12 @@ var logout = function logout(state, action) {
   return newState;
 };
 
+var updateCartTotal = function updateCartTotal(state, action) {
+  var newState = {};
+  Object.assign(newState, state, { cartItems: action.cartItems });
+  return newState;
+};
+
 var rootReducer = function rootReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
   var action = arguments[1];
@@ -14765,6 +14812,8 @@ var rootReducer = function rootReducer() {
       return logon(state, action);
     case __WEBPACK_IMPORTED_MODULE_0__actions_actions__["b" /* LOGOUT_USER */]:
       return logout(state, action);
+    case __WEBPACK_IMPORTED_MODULE_0__actions_actions__["c" /* UPDATE_CART_TOTAL */]:
+      return updateCartTotal(state, action);
     default:
       return state;
   }
@@ -31171,9 +31220,9 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPA
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(136);
-/* harmony export (immutable) */ __webpack_exports__["b"] = login;
-/* harmony export (immutable) */ __webpack_exports__["a"] = logout;
-
+/* harmony export (immutable) */ __webpack_exports__["c"] = login;
+/* harmony export (immutable) */ __webpack_exports__["b"] = logout;
+/* harmony export (immutable) */ __webpack_exports__["a"] = updateQty;
 
 
 function login(loggedIn, fullName, userId) {
@@ -31181,10 +31230,12 @@ function login(loggedIn, fullName, userId) {
 }
 
 function logout() {
-  console.log('actionCreators');
   return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* LOGOUT_USER */], loggedIn: null, userName: null, userId: null };
 }
 
+function updateQty(qty) {
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["c" /* UPDATE_CART_TOTAL */], cartItems: qty };
+}
 // a function that you call and returns a correctly shaped actioncreators
 // it's useufl to seprate this out into pieces using an actions
 // and actionscreators file instead of putting them on the u.i. to
@@ -31233,7 +31284,7 @@ var AccountMenu = function (_React$Component) {
   };
 
   AccountMenu.prototype.logout = function logout() {
-    this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* logout */])());
+    this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["b" /* logout */])());
   };
 
   AccountMenu.prototype.render = function render() {
@@ -31271,9 +31322,13 @@ var AccountMenu = function (_React$Component) {
           'div',
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
-            { className: 'logout', onClick: this.logout },
-            'Log Out'
+            __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+            { to: '/logon' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { className: 'logout', onClick: this.logout },
+              'Log Out'
+            )
           )
         )
       )

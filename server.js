@@ -61,6 +61,23 @@ server.get('/login/:email/:password', function(req, res, next) {
   })
 })
 
+server.post('/addToCart/:id/:qty/:custId', function(req, res, next) {
+  let params = [req.params.id, req.params.qty, req.params.custId]
+  db.update_cart(params, function(err, response) {
+    if(response.length === 0) {
+      db.add_to_cart(params, function(err, response) {
+        db.get_cart_total_items(params[2], function(err, rep) {
+          res.json(rep)
+        })
+      })
+    } else {
+      db.get_cart_total_items(params[2], function(err, rep) {
+        res.json(rep)
+      })
+    }
+  })
+})
+
 server.post('/signup', function(req, res, next) {
   db.find_account(req.body.data.email, function(err, response) {
     if(response.length === 0) {

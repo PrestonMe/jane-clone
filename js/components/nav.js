@@ -26,7 +26,6 @@ class Nav extends React.Component {
   }
 
   toggleAccountMenu () {
-    console.log('running')
     let obj = this.state;
     obj.accountMenu = !this.state.accountMenu
     this.setState(obj);
@@ -56,14 +55,18 @@ class Nav extends React.Component {
             <p>FAVORITES</p>
             <img src='../public/img/icons/shopping-bag.svg' />
             <p><Link to='/cart'>MY BAG</Link></p>
+            {this.props.cartTotal ? <h1 className='cart-qty'>{this.props.cartTotal}</h1> : ''}
             {
               this.props.loggedIn ?
                <span>
-                 <p onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
+                 <p
+                   className='user'
+                   onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
+
                  <AccountMenu class={account_menu} exitMenu={this.toggleAccountMenu} />
                </span>
                 :
-              <p className='login'><Link to='/logon' >LOG IN</Link></p>
+              <p className={(this.props.pathname === '/logon' || this.props.pathname === '/signup') ? 'login' : ''}><Link to='/logon' >LOG IN</Link></p>
             }
           </div>
 
@@ -103,7 +106,8 @@ Nav.propTypes = {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.loggedIn,
-    userName: state.userName
+    userName: state.userName,
+    cartTotal: state.cartItems
   }
 }
 

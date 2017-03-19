@@ -54,12 +54,36 @@ b {
     margin-right: 17px;
     width: calc(100% / 3);
     float: right; }
+    .nav .nav-right .cart-qty {
+      border-radius: 50%;
+      background-color: #ff8188;
+      color: #FFF;
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      margin-left: -10px; }
+    .nav .nav-right .user {
+      cursor: pointer; }
+    .nav .nav-right .user::after {
+      border-style: solid;
+      border-width: 2px 2px 0 0;
+      display: inline-block;
+      content: '';
+      transform: rotate(135deg);
+      height: .45em;
+      width: .45em;
+      position: relative;
+      vertical-align: top;
+      left: 5px; }
     .nav .nav-right .hide {
       display: none; }
     .nav .nav-right img:nth-child(3) {
       margin-left: 10px; }
     .nav .nav-right p {
-      margin-left: 10px; }
+      margin-left: 10px;
+      margin-right: 15px; }
     .nav .nav-right .login {
       color: #68D2C3; }
   .nav .links {

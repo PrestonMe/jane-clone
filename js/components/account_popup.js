@@ -39,7 +39,7 @@ class AccountMenu extends React.Component {
             <img src='../public/img/icons/account.png'/>
           </div>
           <div>
-            <p className='logout' onClick={this.logout}>Log Out</p>
+          <Link to='/logon'><p className='logout' onClick={this.logout}>Log Out</p></Link>
           </div>
         </div>
       </div>
