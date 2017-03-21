@@ -38,9 +38,11 @@ class MyAccount extends React.Component {
     if(obj.validator.email && obj.password) {
       axios.get('/login/' + this.state.email + '/' + this.state.password
       ).then(res => {
+        console.log(res)
         let user = res.data[0]
-        if(user.email) {
-          this.props.dispatch(login(true, user.fullname, user.id))
+        console.log(user)
+        if(user.fullname) {
+          this.props.dispatch(login(true, user.fullname, user.id, user.total))
           this.context.router.transitionTo('/')
         } else {
           obj.validator.login = true

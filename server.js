@@ -56,22 +56,68 @@ server.get('/login/:email/:password', function(req, res, next) {
     if(response.length === 0) {
       res.json('Login Failed')
     } else {
-      res.json(response)
+      //checks to see if there are items in cart before user logs in
+      db.items_on_session_cart(req.sessionID, function(err, items) {
+          if(items.length) {
+            //remove items on session cart already in user cart
+            db.items_on_user_cart(response[0].id, function(err, userItems) {
+              for(let i = 0; i < items.length; i++) {
+                for(let j = 0; j < userItems.length; j++) {
+                  if(items[i].product_id === userItems[j].product_id) {
+                    items.splice(i, 1);
+                    i--;
+                    break;
+                  }
+                }
+              }
+              // inserts new items into users cart
+              if(items.length !== 0) {
+                for(let i = 0; i < items.length; i++) {
+                  db.merge_carts(response[0].id, req.sessionID, items[i].product_id, function(err, complete) {
+                    console.log('merged')
+                  })
+                }
+              }
+              // removes duplicate items on guest cart now that we are logged in
+              db.cleanup_cart(req.sessionID, function(err, cleaned) {
+                console.log('duplicate session_cart rows deleted')
+              })
+            })
+            db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+              response[0].total = rep[0].total
+              console.log('finished')
+              res.json(response)
+            })
+          } else {
+            db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+              if(!rep[0].total) {
+                response[0].total = null
+              } else {
+                response[0].total = rep[0].total
+              }
+              console.log('finished')
+              res.json(response)
+            })
+          }
+      })
     }
   })
 })
 
 server.post('/addToCart/:id/:qty/:custId', function(req, res, next) {
-  let params = [req.params.id, req.params.qty, req.params.custId]
+  if(req.params.custId === 'null') {
+    req.params.custId = null
+  }
+  let params = [req.params.qty, req.sessionID, req.params.custId, req.params.id]
   db.update_cart(params, function(err, response) {
-    if(response.length === 0) {
+    if(!response || response.length === 0) {
       db.add_to_cart(params, function(err, response) {
-        db.get_cart_total_items(params[2], function(err, rep) {
+        db.get_cart_total_items([params[1], params[2]], function(err, rep) {
           res.json(rep)
         })
       })
     } else {
-      db.get_cart_total_items(params[2], function(err, rep) {
+      db.get_cart_total_items([params[1], params[2]], function(err, rep) {
         res.json(rep)
       })
     }

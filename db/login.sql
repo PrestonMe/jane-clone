@@ -1,2 +1,2 @@
-SELECT * FROM customer
-WHERE customer.email = $1 AND customer.password = $2;
+SELECT cust.fullname, cust.id FROM customer cust
+WHERE cust.email = $1 AND cust.password = $2;

@@ -10,7 +10,7 @@ const DEFAULT_STATE = {
 
 const logon = (state, action) => {
   const newState = {}
-  Object.assign(newState, state, {loggedIn: action.loggedIn, userName: action.userName, userId: action.userId})
+  Object.assign(newState, state, {loggedIn: action.loggedIn, userName: action.userName, userId: action.userId, cartItems: action.cartItems})
   return newState
 }
                     // vv if state is undefined then set state
@@ -18,8 +18,7 @@ const logon = (state, action) => {
                     // of an es6 default paraemeter
 const logout = (state, action) => {
   const newState = {}
-  Object.assign(newState, state, {loggedIn: action.loggedIn, userName: action.userName, userId: action.userId})
-  console.log('state', newState);
+  Object.assign(newState, state, DEFAULT_STATE)
   return newState
 }
 

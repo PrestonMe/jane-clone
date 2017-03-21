@@ -28,12 +28,12 @@ class Product extends React.Component {
     if(this.props.userId) {
         user = this.props.userId
     }
-    console.log('running update')
     axios.post('/addToCart/' +
       this.state.product[0].id + '/' +
       this.state.qty + '/' +
       user
     ).then(res => {
+      console.log(res)
         this.props.dispatch(updateQty(res.data[0].total))
       })
   }

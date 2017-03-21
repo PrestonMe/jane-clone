@@ -1,0 +1,3 @@
+UPDATE cart
+SET customer_id = $1
+WHERE session_id = $2 AND product_id = $3;

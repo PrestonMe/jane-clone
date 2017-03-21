@@ -4674,12 +4674,12 @@ module.exports = __webpack_require__(122);
 /* harmony export (immutable) */ __webpack_exports__["a"] = updateQty;
 
 
-function login(loggedIn, fullName, userId) {
-  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* LOGIN_USER */], loggedIn: loggedIn, userName: fullName, userId: userId };
+function login(loggedIn, fullName, userId, cartItems) {
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* LOGIN_USER */], loggedIn: loggedIn, userName: fullName, userId: userId, cartItems: cartItems };
 }
 
 function logout() {
-  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* LOGOUT_USER */], loggedIn: null, userName: null, userId: null };
+  return { type: __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* LOGOUT_USER */] };
 }
 
 function updateQty(qty) {
@@ -13557,16 +13557,13 @@ var AllDeals = function (_React$Component) {
         path: this.props.location.pathname
       }
     }).then(function (res) {
-      console.log('response', res);
       var products = res.data;
       _this2.setState({ products: products });
     });
   };
 
   AllDeals.prototype.render = function render() {
-    console.log(this.state.products[0] ? this.state.products : null);
     var promise = this.state.products[0];
-
     return !promise ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -13784,244 +13781,269 @@ var Cart = function (_React$Component) {
               null,
               'YOUR CART'
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            this.props.cart ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'div',
-              { className: 'item-header' },
+              null,
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'item-left' },
+                { className: 'item-header' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'h2',
-                  null,
-                  'DESCRIPTION'
+                  'div',
+                  { className: 'item-left' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'DESCRIPTION'
+                  )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'item-right' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'QTY'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'SHIPPING'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'PRICE'
+                  )
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'item-right' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'h2',
-                  null,
-                  'QTY'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'h2',
-                  null,
-                  'SHIPPING'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'h2',
-                  null,
-                  'PRICE'
-                )
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'cart-item' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'cart-item-top' },
+                { className: 'cart-item' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'div',
-                  { className: 'cart-item-left' },
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/accessories/thumbnails/adrflt1.jpg' }),
+                  { className: 'cart-item-top' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'cart-item-left' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/accessories/thumbnails/adrflt1.jpg' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'div',
+                      null,
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        '$15.99 | Festival Sandals | 2 Styles'
+                      ),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'Seller: Shoetopia.com'
+                      )
+                    )
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'cart-item-right' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h2',
+                      null,
+                      '1 | ',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'span',
+                        null,
+                        'Edit'
+                      )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h2',
+                      null,
+                      '$5.99'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h2',
+                      null,
+                      '$15.99'
+                    )
+                  )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'cart-item-bottom' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'price-ship-details' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h2',
+                      null,
+                      'Estimate to ship by Tue, Mar 28.'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h2',
+                      null,
+                      '$21.98'
+                    )
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'p',
+                    null,
+                    'Seller usually ships within 2 business days.'
+                  )
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'order-total' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'order-right' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'p',
+                      'h1',
                       null,
-                      '$15.99 | Festival Sandals | 2 Styles'
+                      'TOTAL BEFORE TAX'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'p',
+                      'h1',
                       null,
-                      'Seller: Shoetopia.com'
+                      '$31.96'
                     )
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  { className: 'cart-item-right' },
+                  ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
+                    'div',
                     null,
-                    '1 | ',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'span',
+                      'h1',
                       null,
-                      'Edit'
+                      'TAX'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h1',
+                      null,
+                      '$0.00'
                     )
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    '$5.99'
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    '$15.99'
+                    'div',
+                    { className: 'final-price' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h1',
+                      null,
+                      'ORDER TOTAL:'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'h1',
+                      null,
+                      '$31.96'
+                    )
                   )
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'cart-item-bottom' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  { className: 'price-ship-details' },
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    'Estimate to ship by Tue, Mar 28.'
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h2',
-                    null,
-                    '$21.98'
-                  )
-                ),
+                { className: 'note' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'p',
                   null,
-                  'Seller usually ships within 2 business days.'
-                )
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'order-total' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'order-right' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  null,
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'TOTAL BEFORE TAX'
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    '$31.96'
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  null,
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'TAX'
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    '$0.00'
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  { className: 'final-price' },
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    'ORDER TOTAL:'
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h1',
-                    null,
-                    '$31.96'
-                  )
-                )
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'note' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'p',
-                null,
-                'Note: Each deal is charged individually. If you have multiple deals in your cart, you will see a transaction on your credit card for each deal.'
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'shipping-header' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h1',
-                null,
-                'SHIPPING ADDRESS'
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h1',
-                null,
-                'PAYMENT METHOD'
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'shipping-payment' },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'new-address' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'button',
-                  { className: 'btn-large-font btn-empty-cart' },
-                  'USE A NEW ADDRESS'
+                  'Note: Each deal is charged individually. If you have multiple deals in your cart, you will see a transaction on your credit card for each deal.'
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'payment-method' },
+                { className: 'shipping-header' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'h1',
                   null,
-                  'SELECT A PAYMENT METHOD:'
+                  'SHIPPING ADDRESS'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'h1',
+                  null,
+                  'PAYMENT METHOD'
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'shipping-payment' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'new-address' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { className: 'btn-large-font btn-empty-cart' },
+                    'USE A NEW ADDRESS'
+                  )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'div',
-                  { className: 'pay-btm' },
+                  { className: 'payment-method' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
+                    'h1',
                     null,
-                    'CARD'
+                    'SELECT A PAYMENT METHOD:'
                   ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/icons/paypal.png' }),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'button',
-                    null,
-                    'DWOLLA'
+                    'div',
+                    { className: 'pay-btm' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'button',
+                      null,
+                      'CARD'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/icons/paypal.png' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'button',
+                      null,
+                      'DWOLLA'
+                    )
                   )
                 )
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'terms-of-use' },
+              ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h1',
-                null,
-                'By completing your order, you agree to Jane.com\'s ',
+                'div',
+                { className: 'terms-of-use' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'span',
+                  'h1',
                   null,
-                  'Terms Of Use'
-                ),
-                '.'
-              )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              { className: 'complete-order' },
+                  'By completing your order, you agree to Jane.com\'s ',
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'span',
+                    null,
+                    'Terms Of Use'
+                  ),
+                  '.'
+                )
+              ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { className: 'btn-large-font btn-empty-cart max-width' },
-                'COMPLETE MY ORDER'
+                'div',
+                { className: 'complete-order' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'button',
+                  { className: 'btn-large-font btn-empty-cart max-width' },
+                  'COMPLETE MY ORDER'
+                )
+              )
+            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'You don\'t have anything in your cart yet Let\'s help you get this baby loaded!'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'btn-wrapper' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'button',
+                  { className: 'btn-empty-cart' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_3_react_router__["Link"],
+                    { to: '/' },
+                    'SHOP TODAY\'S DEALS!'
+                  )
+                )
               )
             )
           ),
@@ -14066,7 +14088,8 @@ var Cart = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    cart: state.cartItems
+    cart: state.cartItems,
+    loggedIn: state.loggedIn
   };
 };
 
@@ -14141,7 +14164,6 @@ var LargeProduct = function (_React$Component) {
   //   super (props)
   // }
   LargeProduct.prototype.render = function render() {
-    console.log(this.props.burl);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'large-product-container' },
@@ -14268,9 +14290,11 @@ var MyAccount = function (_React$Component) {
     var obj = this.state;
     if (obj.validator.email && obj.password) {
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
+        console.log(res);
         var user = res.data[0];
-        if (user.email) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id));
+        console.log(user);
+        if (user.fullname) {
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;
@@ -14475,8 +14499,8 @@ var Product = function (_React$Component) {
     if (this.props.userId) {
       user = this.props.userId;
     }
-    console.log('running update');
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/addToCart/' + this.state.product[0].id + '/' + this.state.qty + '/' + user).then(function (res) {
+      console.log(res);
       _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* updateQty */])(res.data[0].total));
     });
   };
@@ -15163,7 +15187,7 @@ var DEFAULT_STATE = {
 
 var logon = function logon(state, action) {
   var newState = {};
-  Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId });
+  Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId, cartItems: action.cartItems });
   return newState;
 };
 // vv if state is undefined then set state
@@ -15171,8 +15195,7 @@ var logon = function logon(state, action) {
 // of an es6 default paraemeter
 var logout = function logout(state, action) {
   var newState = {};
-  Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId });
-  console.log('state', newState);
+  Object.assign(newState, state, DEFAULT_STATE);
   return newState;
 };
 

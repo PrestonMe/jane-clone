@@ -23,16 +23,13 @@ class AllDeals extends React.Component {
         }
       }
     ).then(res => {
-        console.log('response', res)
       const products = res.data
       this.setState({ products });
       })
   }
 
   render () {
-    console.log(this.state.products[0] ? this.state.products : null)
-    const promise = this.state.products[0];
-
+    const promise = this.state.products[0]
     return !promise ?
       (<div>
         <Nav {...this.props.location} />

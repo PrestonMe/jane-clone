@@ -6,7 +6,6 @@ class LargeProduct extends React.Component {
   //   super (props)
   // }
   render () {
-    console.log(this.props.burl)
     return (
       <div className='large-product-container'>
         <Link to={`/productpage/${this.props.id}`}><img src={this.props.burl} /></Link>

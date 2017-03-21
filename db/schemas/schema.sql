@@ -32,6 +32,7 @@ CREATE TABLE customer (
 CREATE TABLE cart (
   id serial primary key,
   qty int,
+  session_id varchar(40),
   customer_id int references customer,
   product_id int references product
 );
