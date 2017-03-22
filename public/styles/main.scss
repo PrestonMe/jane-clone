@@ -533,135 +533,136 @@ b {
   }
   .logon {
     background: $background;
-    .login-pane {
-      background: #FFF;
-      width: 270px;
-      min-height: 429px;
-      padding: 30px 40px 40px 40px;
-      margin: 30px auto;
-      img {
-        display: block;
-        width: 180px;
-        margin: 20px auto 40px auto;
+  }
+}
+
+.login-pane {
+  background: #FFF;
+  width: 270px;
+  min-height: 429px;
+  padding: 30px 40px 40px 40px;
+  margin: 30px auto;
+  img {
+    display: block;
+    width: 180px;
+    margin: 20px auto 40px auto;
+  }
+  .fb-auth {
+    background: #4f6eae;
+    border-color: #47639c;
+    border-bottom: 3px solid #47639c;
+    border-radius: 3px;
+    color: #FFF;
+    width: 100%;
+    padding: 10px 20px 8px;
+    line-height: 25px;
+    text-align: center;
+    border-right: 0px;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .or {
+    margin: 20px 60px;
+    text-align: center;
+    font-style: italic;
+    font-weight: 600;
+  }
+  .or::after {
+    display: inline-block;
+    content: "";
+    border-top: 1px solid #d6d6d6;
+    width: 50px;
+    height: 3px;
+    transform: translateX(15px);
+  }
+  .or::before {
+    display: inline-block;
+    content: "";
+    border-top: 1px solid #d6d6d6;
+    width: 50px;
+    height: 3px;
+    transform: translateX(-15px);
+  }
+  .login-form {
+    .invalid-login {
+      border: 1px solid #ffced0;
+      color: #ff4e58;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .hide {
+      display: none;
+    }
+    .login {
+      input {
+        margin: 10px 0px;
       }
-      .fb-auth {
-        background: #4f6eae;
-        border-color: #47639c;
-        border-bottom: 3px solid #47639c;
-        border-radius: 3px;
-        color: #FFF;
-        width: 100%;
-        padding: 10px 20px 8px;
-        line-height: 25px;
-        text-align: center;
-        border-right: 0px;
+      .invalid {
+        border-color: red;
+      }
+      .error {
+        color: red;
+        font-size: 12px;
         font-weight: bold;
-        font-size: 15px;
+        text-align: left;
+        line-height: 20px;
       }
-      .or {
-        margin: 20px 60px;
-        text-align: center;
-        font-style: italic;
-        font-weight: 600;
+      .hide {
+        display: none;
       }
-      .or::after {
-        display: inline-block;
-        content: "";
-        border-top: 1px solid #d6d6d6;
-        width: 50px;
-        height: 3px;
-        transform: translateX(15px);
+    }
+    .sign-up {
+      input {
+        margin: 5px 0px;
       }
-      .or::before {
-        display: inline-block;
-        content: "";
-        border-top: 1px solid #d6d6d6;
-        width: 50px;
-        height: 3px;
-        transform: translateX(-15px);
+      .invalid {
+        border-color: red;
       }
-      .login-form {
-        .invalid-login {
-          border: 1px solid #ffced0;
-          color: #ff4e58;
-          border-radius: 5px;
-          padding: 20px;
-          text-align: left;
-          font-size: 14px;
-          line-height: 20px;
-        }
-        .hide {
-          display: none;
-        }
-        .login {
-          input {
-            margin: 10px 0px;
-          }
-          .invalid {
-            border-color: red;
-          }
-          .error {
-            color: red;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: left;
-            line-height: 20px;
-          }
-          .hide {
-            display: none;
-          }
-        }
-        .sign-up {
-          input {
-            margin: 5px 0px;
-          }
-          .invalid {
-            border-color: red;
-          }
-          .error {
-            color: red;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: left;
-            line-height: 20px;
-          }
-          .hide {
-            display: none;
-          }
-        }
-        .input-wrapper {
-          width: 270px;
-          input {
-            box-sizing: border-box;
-            width: 100%;
-            padding: 10px 16px;
-            border-radius: 3px;
-            border: 1px solid #d6d6d6;
-          }
-        }
-        p {
-          color: #7cd8cb;
-          text-align: center;
-          margin-bottom: 10px;
-        }
-        .btn {
-          background-color: #68D2C3;
-          border-bottom: 3px solid #58b9ab;
-          border-right: 0px;
-          border-left: 0px;
-          border-top: 0px;
-          padding: 10px 20px 8px;
-          width: 100%;
-          border-radius: 3px;
-          height: 45px;
-          margin-bottom: 10px;
-          color: #FFF;
-          font-weight: bold;
-        }
-        .btn-sign-up {
-          margin-top: 5px;
-        }
+      .error {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: left;
+        line-height: 20px;
       }
+      .hide {
+        display: none;
+      }
+    }
+    .input-wrapper {
+      width: 270px;
+      input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 3px;
+        border: 1px solid #d6d6d6;
+      }
+    }
+    p {
+      color: #7cd8cb;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn {
+      background-color: #68D2C3;
+      border-bottom: 3px solid #58b9ab;
+      border-right: 0px;
+      border-left: 0px;
+      border-top: 0px;
+      padding: 10px 20px 8px;
+      width: 100%;
+      border-radius: 3px;
+      height: 45px;
+      margin-bottom: 10px;
+      color: #FFF;
+      font-weight: bold;
+    }
+    .btn-sign-up {
+      margin-top: 5px;
     }
   }
 }
@@ -679,6 +680,35 @@ b {
       width: 100%;
       padding: 20px;
       margin-right: 20px;
+      .cart-login-signup {
+        display: flex;
+        div {
+          width: 100%;
+        }
+        .cart-reset {
+          padding: 0 20px 10px 10px;
+          margin: 0px;
+          min-height: 300px;
+          p {
+            margin: 30px 0;
+            color: #1a1819;
+            font-size: 17px;
+          }
+        }
+      }
+      .login-cart {
+        display: flex;
+        h1 {
+          font-size: 14px;
+          padding: 30px 0 30px;
+          width: 50%;
+          border-bottom: 1px solid #e5e5e5;
+        }
+        h1:nth-child(1){
+          padding-left: 10px;
+          margin-right: 10px;
+        }
+      }
       .complete-order {
         padding: 0 10px;
       }

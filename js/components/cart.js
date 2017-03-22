@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from './nav'
 import Footer from './footer'
+import CreateAccount from './createAccount'
 import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
@@ -106,7 +107,7 @@ class Cart extends React.Component {
                 </div>
               </div>
             </div>
-            {(this.state.cart.length > 1) ? 
+            {(this.state.cart.length > 1) ?
               <div className='note'>
                 <p>Note: Each deal is charged individually. Since you have multiple deals in your cart, you will see a transaction on your credit card for each deal.</p>
               </div>
@@ -114,34 +115,57 @@ class Cart extends React.Component {
               ''
             }
 
-
-            <div className='shipping-header'>
-              <h1>SHIPPING ADDRESS</h1>
-              <h1>PAYMENT METHOD</h1>
-            </div>
-
-            <div className='shipping-payment'>
-              <div className='new-address'>
-                <button className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
-              </div>
-              <div className='payment-method'>
-                <h1>SELECT A PAYMENT METHOD:</h1>
-                <div className='pay-btm'>
-                  <button>CARD</button>
-                  <img src='../../public/img/icons/paypal.png'/>
-                  <button>DWOLLA</button>
+            {this.props.loggedIn ?
+              <div>
+                <div className='shipping-header'>
+                  <h1>SHIPPING ADDRESS</h1>
+                  <h1>PAYMENT METHOD</h1>
                 </div>
+
+                <div className='shipping-payment'>
+                  <div className='new-address'>
+                    <button className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
+                  </div>
+                  <div className='payment-method'>
+                    <h1>SELECT A PAYMENT METHOD:</h1>
+                    <div className='pay-btm'>
+                      <button>CARD</button>
+                      <img src='../../public/img/icons/paypal.png'/>
+                      <button>DWOLLA</button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className='terms-of-use'>
+                  <h1>By completing your order, you agree to Jane.com's <span>Terms Of Use</span>.</h1>
+                </div>
+
+                <div className='complete-order'>
+                  <button className='btn-large-font btn-empty-cart max-width'>COMPLETE MY ORDER</button>
+                </div>
+            </div>
+            :
+            <div>
+              <div className='login-cart'>
+                <h1>SIGN UP & CHECKOUT</h1>
+                <h1>ALREADY A MEMBER?</h1>
+              </div>
+              <div className='cart-login-signup'>
+                    <div className='login-pane cart-reset'>
+                      <CreateAccount />
+                    </div>
+                  <div className='login'>
+                    <h1>Welcome back then! Click the Log In button below so we can help you get on your way.</h1>
+                    <button>LOG IN</button>
+                  </div>
               </div>
             </div>
+            }
 
-            <div className='terms-of-use'>
-              <h1>By completing your order, you agree to Jane.com's <span>Terms Of Use</span>.</h1>
-            </div>
+          </div>
 
-            <div className='complete-order'>
-              <button className='btn-large-font btn-empty-cart max-width'>COMPLETE MY ORDER</button>
-            </div>
-          </div> :
+          :
           <div>
             <p>You don't have anything in your cart yet
               Let's help you get this baby loaded!

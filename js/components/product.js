@@ -76,8 +76,8 @@ class Product extends React.Component {
                 <h1>{this.state.product[0].name}</h1>
                 <div className='price-favorites'>
                   <div className='product-sum-left'>
-                    <span className='sale-price'>{this.state.product[0].sale} </span>
-                    <span className='retail-price'>{this.state.product[0].price}</span>
+                    <span className='sale-price'>${this.state.product[0].sale} </span>
+                    <span className='retail-price'>${this.state.product[0].price}</span>
                   </div>
                   <div className='product-sum-right'>
                     <button className='like'>
