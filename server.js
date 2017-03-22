@@ -73,20 +73,16 @@ server.get('/login/:email/:password', function(req, res, next) {
               // inserts new items into users cart
               if(items.length !== 0) {
                 for(let i = 0; i < items.length; i++) {
-                  db.merge_carts(response[0].id, req.sessionID, items[i].product_id, function(err, complete) {
-                    console.log('merged')
-                  })
+                  db.merge_carts(response[0].id, req.sessionID, items[i].product_id, function(err, complete) {})
                 }
               }
               // removes duplicate items on guest cart now that we are logged in
-              db.cleanup_cart(req.sessionID, function(err, cleaned) {
-                console.log('duplicate session_cart rows deleted')
+              db.cleanup_cart(req.sessionID, function(err, cleaned) {})
+
+              db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+                response[0].total = rep[0].total
+                res.json(response)
               })
-            })
-            db.get_cart_total_items(['0', response[0].id], function(err, rep) {
-              response[0].total = rep[0].total
-              console.log('finished')
-              res.json(response)
             })
           } else {
             db.get_cart_total_items(['0', response[0].id], function(err, rep) {
@@ -95,7 +91,6 @@ server.get('/login/:email/:password', function(req, res, next) {
               } else {
                 response[0].total = rep[0].total
               }
-              console.log('finished')
               res.json(response)
             })
           }
@@ -108,20 +103,48 @@ server.post('/addToCart/:id/:qty/:custId', function(req, res, next) {
   if(req.params.custId === 'null') {
     req.params.custId = null
   }
+
   let params = [req.params.qty, req.sessionID, req.params.custId, req.params.id]
-  db.update_cart(params, function(err, response) {
-    if(!response || response.length === 0) {
+  let result;
+
+  if(!req.params.custId) {
+    db.update_guest_cart([params[0], params[1], params[3]], function(err, response) {
+      result = response
+      addToCart()
+    })
+  } else {
+    db.update_cart(params, function(err, response) {
+      result = response
+      addToCart()
+    })
+  }
+
+  function addToCart(){
+    if(!result || result.length === 0) {
       db.add_to_cart(params, function(err, response) {
-        db.get_cart_total_items([params[1], params[2]], function(err, rep) {
-          res.json(rep)
-        })
+        if(!params[2]) {
+          db.get_guest_cart_total(params[1], function(err, response) {
+            res.json(response)
+          })
+        } else {
+          db.get_cart_total_items([params[1], params[2]], function(err, response) {
+            res.json(response)
+          })
+        }
       })
     } else {
-      db.get_cart_total_items([params[1], params[2]], function(err, rep) {
-        res.json(rep)
-      })
+      if(!params[2]) {
+        db.get_guest_cart_total(params[1], function(err, response) {
+          res.json(response)
+        })
+      } else {
+        db.get_cart_total_items([params[1], params[2]], function(err, response) {
+          res.json(response)
+        })
+      }
     }
-  })
+  }
+
 })
 
 server.post('/signup', function(req, res, next) {
@@ -150,9 +173,6 @@ server.use((req, res) => {
   res.write(template({body: body}))
   res.end()
 })
-
-
-
 
 console.log('listening on ' + port)
 server.listen(port)
