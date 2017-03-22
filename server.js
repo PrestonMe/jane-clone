@@ -159,6 +159,17 @@ server.post('/signup', function(req, res, next) {
   })
 })
 
+server.get('/getCart/:userId', function(req, res, next) {
+  if(req.params.userId === 'getSession') {
+    db.get_guest_cart(req.sessionID, function(err, response) {
+      res.json(response)
+    })
+  } else {
+    db.get_customers_cart(req.params.userId, function(err, response) {
+      res.json(response)
+    })
+  }
+})
 
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()

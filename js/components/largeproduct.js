@@ -12,8 +12,8 @@ class LargeProduct extends React.Component {
         <div className='product-summary'>
           <div className='product-sum-left'>
             <Link to='/productpage'><div className='product-name'>{this.props.name}</div></Link>
-            <span className='sale-price'>{this.props.sale} </span>
-            <span className='retail-price'>{this.props.price}</span>
+            <span className='sale-price'>${this.props.sale} </span>
+            <span className='retail-price'>${this.props.price}</span>
           </div>
           <div className='product-sum-right'>
             <button className='like'>

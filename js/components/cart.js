@@ -1,16 +1,47 @@
 import React from 'react'
 import Nav from './nav'
 import Footer from './footer'
+import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 class Cart extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //
-  //
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+      cart: []
+    }
+
+  }
+
+  componentDidMount () {
+    if(this.props.userId) {
+      axios.get('/getCart/' + this.props.userId)
+      .then(res => {
+        const cart = res.data
+        this.setState({ cart })
+      })
+    } else {
+      axios.get('/getCart/' + 'getSession')
+      .then(res => {
+        const cart = res.data
+        this.setState({ cart })
+      })
+    }
+  }
+
   render () {
+    let total, tax;
+    console.log(25, this.state.cart)
+    if(this.state.cart) {
+      total = +this.state.cart.reduce((acc, val) => {
+        console.log(acc, +val.price)
+        return acc + (+val.sale * val.qty);
+      }, 0).toFixed(2)
+      tax = +(total * .08).toFixed(2)
+      console.log(typeof total, typeof tax, total + tax)
+    }
+
     return (
       <div>
         <Nav />
@@ -30,48 +61,59 @@ class Cart extends React.Component {
                 <h2>PRICE</h2>
               </div>
             </div>
-            <div className='cart-item'>
-              <div className='cart-item-top'>
-                <div className='cart-item-left'>
-                  <img src='../../public/img/accessories/thumbnails/adrflt1.jpg'/>
-                  <div>
-                    <p>$15.99 | Festival Sandals | 2 Styles</p>
-                    <p>Seller: Shoetopia.com</p>
+
+            {this.state.cart.map(item => {
+              return (
+                <div className='cart-item' key={item.product_id}>
+                  <div className='cart-item-top'>
+                    <div className='cart-item-left'>
+                      <img src={`../${item.thumb}`}/>
+                      <div>
+                        <p>${item.sale} {item.name}</p>
+                        <p>Seller: {item.seller}</p>
+                      </div>
+                    </div>
+                    <div className='cart-item-right'>
+                      <h2>{item.qty} | <span>Edit</span></h2>
+                      <h2>$5.99</h2>
+                      <h2>${item.sale}</h2>
+                    </div>
+                  </div>
+                  <div className='cart-item-bottom'>
+                    <div className='price-ship-details'>
+                      <h2>Estimate to ship by Tue, Mar 28.</h2>
+                      <h2>${(item.sale * item.qty + 5.99).toFixed(2)}</h2>
+                    </div>
+                    <p>Seller usually ships within 2 business days.</p>
                   </div>
                 </div>
-                <div className='cart-item-right'>
-                  <h2>1 | <span>Edit</span></h2>
-                  <h2>$5.99</h2>
-                  <h2>$15.99</h2>
-                </div>
-              </div>
-              <div className='cart-item-bottom'>
-                <div className='price-ship-details'>
-                  <h2>Estimate to ship by Tue, Mar 28.</h2>
-                  <h2>$21.98</h2>
-                </div>
-                <p>Seller usually ships within 2 business days.</p>
-              </div>
-            </div>
+              )
+            })}
+
             <div className='order-total'>
               <div className='order-right'>
                 <div>
                   <h1>TOTAL BEFORE TAX</h1>
-                  <h1>$31.96</h1>
+                  <h1>${total}</h1>
                 </div>
                 <div>
                   <h1>TAX</h1>
-                  <h1>$0.00</h1>
+                  <h1>${tax}</h1>
                 </div>
                 <div className='final-price'>
                   <h1>ORDER TOTAL:</h1>
-                  <h1>$31.96</h1>
+                  <h1>${total + tax}</h1>
                 </div>
               </div>
             </div>
-            <div className='note'>
-              <p>Note: Each deal is charged individually. If you have multiple deals in your cart, you will see a transaction on your credit card for each deal.</p>
-            </div>
+            {(this.state.cart.length > 1) ? 
+              <div className='note'>
+                <p>Note: Each deal is charged individually. Since you have multiple deals in your cart, you will see a transaction on your credit card for each deal.</p>
+              </div>
+              :
+              ''
+            }
+
 
             <div className='shipping-header'>
               <h1>SHIPPING ADDRESS</h1>
@@ -131,7 +173,8 @@ class Cart extends React.Component {
 const mapStateToProps = state => {
   return {
     cart: state.cartItems,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    userId: state.userId
   }
 }
 

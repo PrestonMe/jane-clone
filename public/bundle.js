@@ -13733,9 +13733,13 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_redux__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_redux__ = __webpack_require__(23);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13748,21 +13752,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var Cart = function (_React$Component) {
   _inherits(Cart, _React$Component);
 
-  function Cart() {
+  function Cart(props) {
     _classCallCheck(this, Cart);
 
-    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      cart: []
+    };
+
+    return _this;
   }
 
-  // constructor(props) {
-  //   super(props)
-  //
-  //
-  // }
+  Cart.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
+    if (this.props.userId) {
+      __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
+        var cart = res.data;
+        _this2.setState({ cart: cart });
+      });
+    } else {
+      __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
+        var cart = res.data;
+        _this2.setState({ cart: cart });
+      });
+    }
+  };
+
   Cart.prototype.render = function render() {
+    var total = void 0,
+        tax = void 0;
+    console.log(25, this.state.cart);
+    if (this.state.cart) {
+      total = +this.state.cart.reduce(function (acc, val) {
+        console.log(acc, +val.price);
+        return acc + +val.sale * val.qty;
+      }, 0).toFixed(2);
+      tax = +(total * .08).toFixed(2);
+      console.log(typeof total === 'undefined' ? 'undefined' : _typeof(total), typeof tax === 'undefined' ? 'undefined' : _typeof(tax), total + tax);
+    }
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -13816,80 +13850,89 @@ var Cart = function (_React$Component) {
                   )
                 )
               ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'cart-item' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              this.state.cart.map(function (item) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'div',
-                  { className: 'cart-item-top' },
+                  { className: 'cart-item', key: item.product_id },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'cart-item-left' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/accessories/thumbnails/adrflt1.jpg' }),
+                    { className: 'cart-item-top' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'div',
-                      null,
+                      { className: 'cart-item-left' },
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../' + item.thumb }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
+                        'div',
                         null,
-                        '$15.99 | Festival Sandals | 2 Styles'
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'p',
+                          null,
+                          '$',
+                          item.sale,
+                          ' ',
+                          item.name
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'p',
+                          null,
+                          'Seller: ',
+                          item.seller
+                        )
+                      )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'div',
+                      { className: 'cart-item-right' },
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h2',
+                        null,
+                        item.qty,
+                        ' | ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'span',
+                          null,
+                          'Edit'
+                        )
                       ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
+                        'h2',
                         null,
-                        'Seller: Shoetopia.com'
-                      )
-                    )
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'cart-item-right' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'h2',
-                      null,
-                      '1 | ',
+                        '$5.99'
+                      ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'span',
+                        'h2',
                         null,
-                        'Edit'
+                        '$',
+                        item.sale
                       )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'h2',
-                      null,
-                      '$5.99'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'h2',
-                      null,
-                      '$15.99'
-                    )
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'div',
-                  { className: 'cart-item-bottom' },
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'price-ship-details' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'h2',
-                      null,
-                      'Estimate to ship by Tue, Mar 28.'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'h2',
-                      null,
-                      '$21.98'
                     )
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'p',
-                    null,
-                    'Seller usually ships within 2 business days.'
+                    'div',
+                    { className: 'cart-item-bottom' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'div',
+                      { className: 'price-ship-details' },
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h2',
+                        null,
+                        'Estimate to ship by Tue, Mar 28.'
+                      ),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h2',
+                        null,
+                        '$',
+                        (item.sale * item.qty + 5.99).toFixed(2)
+                      )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      'Seller usually ships within 2 business days.'
+                    )
                   )
-                )
-              ),
+                );
+              }),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'order-total' },
@@ -13907,7 +13950,8 @@ var Cart = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'h1',
                       null,
-                      '$31.96'
+                      '$',
+                      total
                     )
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13921,7 +13965,8 @@ var Cart = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'h1',
                       null,
-                      '$0.00'
+                      '$',
+                      tax
                     )
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13935,20 +13980,21 @@ var Cart = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'h1',
                       null,
-                      '$31.96'
+                      '$',
+                      total + tax
                     )
                   )
                 )
               ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              this.state.cart.length > 1 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'note' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   'p',
                   null,
-                  'Note: Each deal is charged individually. If you have multiple deals in your cart, you will see a transaction on your credit card for each deal.'
+                  'Note: Each deal is charged individually. Since you have multiple deals in your cart, you will see a transaction on your credit card for each deal.'
                 )
-              ),
+              ) : '',
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'shipping-header' },
@@ -14039,7 +14085,7 @@ var Cart = function (_React$Component) {
                   'button',
                   { className: 'btn-empty-cart' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_3_react_router__["Link"],
+                    __WEBPACK_IMPORTED_MODULE_4_react_router__["Link"],
                     { to: '/' },
                     'SHOP TODAY\'S DEALS!'
                   )
@@ -14089,11 +14135,12 @@ var Cart = function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     cart: state.cartItems,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    userId: state.userId
   };
 };
 
-/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
 
 /***/ }),
 /* 142 */
@@ -14190,12 +14237,14 @@ var LargeProduct = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
             { className: 'sale-price' },
+            '$',
             this.props.sale,
             ' '
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
             { className: 'retail-price' },
+            '$',
             this.props.price
           )
         ),
@@ -15137,12 +15186,14 @@ var SmallProduct = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
             { className: 'sale-price' },
+            '$',
             this.props.sale,
             ' '
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'span',
             { className: 'retail-price' },
+            '$',
             this.props.price
           )
         ),
