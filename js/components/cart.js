@@ -27,6 +27,7 @@ class Cart extends React.Component {
   }
 
   componentDidMount () {
+    console.log('userid', this.props.userId)
     if(this.props.userId) {
       axios.get('/getCart/' + this.props.userId)
       .then(res => {

@@ -13787,6 +13787,7 @@ var Cart = function (_React$Component) {
   Cart.prototype.componentDidMount = function componentDidMount() {
     var _this2 = this;
 
+    console.log('userid', this.props.userId);
     if (this.props.userId) {
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
         var cart = res.data;

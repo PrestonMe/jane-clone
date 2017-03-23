@@ -70,19 +70,27 @@ server.get('/login/:email/:password', function(req, res, next) {
                   }
                 }
               }
+
+              function finish() {
+                // removes duplicate items on guest cart now that we are logged in
+                db.cleanup_cart(req.sessionID, function(err, cleaned) {
+                  db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+                    response[0].total = rep[0].total
+
+                    res.json(response)
+                  })
+                })
+              }
               // inserts new items into users cart
               if(items.length !== 0) {
                 for(let i = 0; i < items.length; i++) {
-                  db.merge_carts(response[0].id, req.sessionID, items[i].product_id, function(err, complete) {})
+                  db.merge_carts([response[0].id, req.sessionID, items[i].product_id], function(err, complete) {})
                 }
+                setTimeout(finish, 100)
+              } else {
+                finish()
               }
-              // removes duplicate items on guest cart now that we are logged in
-              db.cleanup_cart(req.sessionID, function(err, cleaned) {})
 
-              db.get_cart_total_items(['0', response[0].id], function(err, rep) {
-                response[0].total = rep[0].total
-                res.json(response)
-              })
             })
           } else {
             db.get_cart_total_items(['0', response[0].id], function(err, rep) {
