@@ -1,18 +1,29 @@
 import React from 'react'
 import Nav from './nav'
 import Footer from './footer'
+import SignIn from './signin'
 import CreateAccount from './createAccount'
 import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
+const { string } = React.PropTypes
+
 class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      cart: []
+      cart: [],
+      login: false
     }
+    this.login = this.login.bind(this)
+  }
 
+  login () {
+    if(!this.state.login) {
+      this.setState({login: true})
+    }
+    console.log(this.state.login)
   }
 
   componentDidMount () {
@@ -20,13 +31,13 @@ class Cart extends React.Component {
       axios.get('/getCart/' + this.props.userId)
       .then(res => {
         const cart = res.data
-        this.setState({ cart })
+        this.setState({ cart: cart })
       })
     } else {
       axios.get('/getCart/' + 'getSession')
       .then(res => {
         const cart = res.data
-        this.setState({ cart })
+        this.setState({ cart: cart })
       })
     }
   }
@@ -103,7 +114,7 @@ class Cart extends React.Component {
                 </div>
                 <div className='final-price'>
                   <h1>ORDER TOTAL:</h1>
-                  <h1>${total + tax}</h1>
+                  <h1>${(total + tax).toFixed(2)}</h1>
                 </div>
               </div>
             </div>
@@ -149,15 +160,27 @@ class Cart extends React.Component {
             <div>
               <div className='login-cart'>
                 <h1>SIGN UP & CHECKOUT</h1>
+                {this.state.login
+                ?
+                <h1>LOG IN</h1>
+                :
                 <h1>ALREADY A MEMBER?</h1>
+                }
               </div>
               <div className='cart-login-signup'>
-                    <div className='login-pane cart-reset'>
-                      <CreateAccount />
-                    </div>
-                  <div className='login'>
+                  <div className='login-pane cart-reset'>
+                    <CreateAccount />
+                  </div>
+                  <div className='login-pane cart-reset cart-reset-login'>
+                    {this.state.login
+                    ?
+                    ''
+                    :
                     <h1>Welcome back then! Click the Log In button below so we can help you get on your way.</h1>
-                    <button>LOG IN</button>
+                    }
+                    <div>
+                      <SignIn login={this.login} {...this.props.location}/>
+                    </div>
                   </div>
               </div>
             </div>
@@ -192,6 +215,10 @@ class Cart extends React.Component {
       </div>
     )
   }
+}
+
+Cart.propTypes = {
+  pathname: string
 }
 
 const mapStateToProps = state => {

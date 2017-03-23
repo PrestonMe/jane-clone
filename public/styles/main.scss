@@ -689,10 +689,40 @@ b {
           padding: 0 20px 10px 10px;
           margin: 0px;
           min-height: 300px;
+          width: 50%;
+          h1 {
+            padding: 0 0 20px 0;
+            line-height: 20px;
+            font-size: 15px;
+            color: #999;
+            border-bottom: 1px solid #dbd9d9;
+          }
           p {
-            margin: 30px 0;
-            color: #1a1819;
+            margin: 0;
+          }
+          p:nth-child(1) {
+            margin: 20px 60px;
+            text-align: center;
+            font-style: italic;
             font-size: 17px;
+            font-weight: 600;
+            color: #1a1819;
+          }
+        }
+        .cart-reset-login {
+          input:nth-child(1) {
+            margin: 0;
+          }
+          .line {
+            margin-top: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #dbd9d9;
+          }
+          h2 {
+            color: red;
+            padding: 0;
+            margin-bottom: 10px;
+            border: none;
           }
         }
       }

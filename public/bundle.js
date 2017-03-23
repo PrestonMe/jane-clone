@@ -13733,12 +13733,15 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createAccount__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_redux__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__signin__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createAccount__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_redux__ = __webpack_require__(19);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13755,6 +13758,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+var string = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.string;
+
 var Cart = function (_React$Component) {
   _inherits(Cart, _React$Component);
 
@@ -13764,22 +13770,30 @@ var Cart = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
     _this.state = {
-      cart: []
+      cart: [],
+      login: false
     };
-
+    _this.login = _this.login.bind(_this);
     return _this;
   }
+
+  Cart.prototype.login = function login() {
+    if (!this.state.login) {
+      this.setState({ login: true });
+    }
+    console.log(this.state.login);
+  };
 
   Cart.prototype.componentDidMount = function componentDidMount() {
     var _this2 = this;
 
     if (this.props.userId) {
-      __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
         var cart = res.data;
         _this2.setState({ cart: cart });
       });
     } else {
-      __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
         var cart = res.data;
         _this2.setState({ cart: cart });
       });
@@ -13983,7 +13997,7 @@ var Cart = function (_React$Component) {
                       'h1',
                       null,
                       '$',
-                      total + tax
+                      (total + tax).toFixed(2)
                     )
                   )
                 )
@@ -14086,7 +14100,11 @@ var Cart = function (_React$Component) {
                     null,
                     'SIGN UP & CHECKOUT'
                   ),
-                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  this.state.login ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    'LOG IN'
+                  ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'h1',
                     null,
                     'ALREADY A MEMBER?'
@@ -14098,20 +14116,20 @@ var Cart = function (_React$Component) {
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'login-pane cart-reset' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__createAccount__["a" /* default */], null)
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__createAccount__["a" /* default */], null)
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'login' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    { className: 'login-pane cart-reset cart-reset-login' },
+                    this.state.login ? '' : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'h1',
                       null,
                       'Welcome back then! Click the Log In button below so we can help you get on your way.'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                      'button',
+                      'div',
                       null,
-                      'LOG IN'
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__signin__["a" /* default */], _extends({ login: this.login }, this.props.location))
                     )
                   )
                 )
@@ -14131,7 +14149,7 @@ var Cart = function (_React$Component) {
                   'button',
                   { className: 'btn-empty-cart' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_5_react_router__["Link"],
+                    __WEBPACK_IMPORTED_MODULE_6_react_router__["Link"],
                     { to: '/' },
                     'SHOP TODAY\'S DEALS!'
                   )
@@ -14178,6 +14196,10 @@ var Cart = function (_React$Component) {
   return Cart;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
+Cart.propTypes = {
+  pathname: string
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return {
     cart: state.cartItems,
@@ -14186,7 +14208,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
 
 /***/ }),
 /* 142 */
@@ -14330,8 +14352,9 @@ var LargeProduct = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__footer__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signin__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__nav__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__footer__ = __webpack_require__(26);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -14346,88 +14369,90 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var object = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.object;
 
 var MyAccount = function (_React$Component) {
   _inherits(MyAccount, _React$Component);
 
-  function MyAccount(props) {
+  function MyAccount() {
     _classCallCheck(this, MyAccount);
 
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-
-    _this.state = {
-      email: '',
-      password: '',
-      validator: {
-        email: null,
-        login: null
-      }
-    };
-
-    _this.setValue = _this.setValue.bind(_this);
-    _this.submit = _this.submit.bind(_this);
-    _this.handleFieldChange = _this.handleFieldChange.bind(_this);
-    _this.isInvalid = _this.isInvalid.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
   }
 
-  MyAccount.prototype.setValue = function setValue(event) {
-    var obj = {};
-    obj[event.target.name] = event.target.value;
-    this.setState(obj);
-  };
-
-  MyAccount.prototype.submit = function submit(e) {
-    var _this2 = this;
-
-    e.preventDefault();
-    var obj = this.state;
-    if (obj.validator.email && obj.password) {
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
-        console.log(res);
-        var user = res.data[0];
-        console.log(user);
-        if (user.fullname) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
-          _this2.context.router.transitionTo('/');
-        } else {
-          obj.validator.login = true;
-          _this2.setState(obj);
-        }
-      });
-    }
-  };
-
-  MyAccount.prototype.handleFieldChange = function handleFieldChange(e) {
-    var obj = this.state;
-
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(e.target.value)) {
-      if (this.state.validator.email !== false) {
-        obj.validator.email = false;
-        console.log('getting set');
-        this.setState(obj);
-      }
-    } else {
-      if (this.state.validator.email !== true) {
-        obj.validator.email = true;
-        this.setState(obj);
-      }
-    }
-  };
-
-  MyAccount.prototype.isInvalid = function isInvalid(value) {
-    return value === false ? 'invalid' : '';
-  };
+  // constructor (props) {
+  //   super(props)
+  //   this.state = {
+  //       email: '',
+  //       password: '',
+  //       validator: {
+  //         email: null,
+  //         login: null
+  //       }
+  //   }
+  //
+  //   this.setValue = this.setValue.bind(this)
+  //   this.submit = this.submit.bind(this)
+  //   this.handleFieldChange = this.handleFieldChange.bind(this)
+  //   this.isInvalid = this.isInvalid.bind(this)
+  // }
+  //
+  // setValue (event) {
+  //   let obj = {}
+  //   obj[event.target.name] = event.target.value
+  //   this.setState(obj)
+  // }
+  //
+  // submit (e) {
+  //   e.preventDefault()
+  //   let obj = this.state;
+  //   if(obj.validator.email && obj.password) {
+  //     axios.get('/login/' + this.state.email + '/' + this.state.password
+  //     ).then(res => {
+  //       console.log(res)
+  //       let user = res.data[0]
+  //       console.log(user)
+  //       if(user.fullname) {
+  //         this.props.dispatch(login(true, user.fullname, user.id, user.total))
+  //         this.context.router.transitionTo('/')
+  //       } else {
+  //         obj.validator.login = true
+  //         this.setState(obj);
+  //       }
+  //     })
+  //   }
+  // }
+  //
+  // handleFieldChange (e) {
+  //   let obj = this.state
+  //
+  //   // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+  //   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   if(!re.test(e.target.value)) {
+  //     if(this.state.validator.email !== false) {
+  //       obj.validator.email = false
+  //       console.log('getting set')
+  //       this.setState(obj)
+  //     }
+  //   } else {
+  //     if(this.state.validator.email !== true) {
+  //       obj.validator.email = true
+  //       this.setState(obj)
+  //     }
+  //   }
+  // }
+  //
+  // isInvalid (value) {
+  //   return value === false ? 'invalid' : '';
+  // }
 
   MyAccount.prototype.render = function render() {
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'base' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'logon' },
@@ -14435,85 +14460,10 @@ var MyAccount = function (_React$Component) {
           'div',
           { className: 'login-pane' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/jane-logo_360.png' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'fb-wrapper' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'button',
-              { className: 'fb-auth' },
-              'LOG IN WITH FACEBOOK'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'div',
-              null,
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'p',
-                { className: 'or' },
-                'or'
-              )
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'form',
-              { className: 'login-form', onSubmit: this.submit },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'p',
-                {
-                  className: this.state.validator.login ? 'invalid-login' : 'hide'
-                },
-                'Invalid email address or password. Please try again.'
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'input-wrapper login' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                  className: this.isInvalid(this.state.validator.email),
-                  onBlur: this.handleFieldChange,
-                  name: 'email',
-                  onChange: this.setValue,
-                  value: this.state.email,
-                  placeholder: 'Email Address' }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'p',
-                  {
-                    className: this.state.validator.email === false ? 'error' : 'hide'
-                  },
-                  'Please enter a valid email address.'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                  type: 'password',
-                  name: 'password',
-                  onChange: this.setValue,
-                  value: this.state.password,
-                  placeholder: 'Password' })
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { className: 'btn' },
-                'LOG IN'
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'p',
-                null,
-                'Forgot your password?'
-              ),
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_2_react_router__["Link"],
-                { to: '/signup' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                  'p',
-                  null,
-                  'New? Sign up.'
-                )
-              )
-            )
-          )
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__signin__["a" /* default */], this.props.location)
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__footer__["a" /* default */], null)
     );
   };
 
@@ -31890,6 +31840,298 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(CreateAccount);
+
+/***/ }),
+/* 301 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(36);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var object = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.object;
+
+var SignIn = function (_React$Component) {
+  _inherits(SignIn, _React$Component);
+
+  function SignIn(props) {
+    _classCallCheck(this, SignIn);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      email: '',
+      password: '',
+      validator: {
+        email: null,
+        login: null
+      },
+      cartLogin: false
+    };
+
+    _this.login = _this.login.bind(_this);
+    _this.setValue = _this.setValue.bind(_this);
+    _this.submit = _this.submit.bind(_this);
+    _this.handleFieldChange = _this.handleFieldChange.bind(_this);
+    _this.isInvalid = _this.isInvalid.bind(_this);
+    return _this;
+  }
+
+  SignIn.prototype.login = function login() {
+    this.props.login();
+    if (!this.state.cartLogin) {
+      this.setState({ cartLogin: true });
+    }
+  };
+
+  SignIn.prototype.setValue = function setValue(event) {
+    var obj = {};
+    obj[event.target.name] = event.target.value;
+    this.setState(obj);
+  };
+
+  SignIn.prototype.submit = function submit(e) {
+    var _this2 = this;
+
+    e.preventDefault();
+    var obj = this.state;
+    if (obj.validator.email && obj.password) {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login/' + this.state.email + '/' + this.state.password).then(function (res) {
+        console.log(res);
+        var user = res.data[0];
+        console.log(user);
+        if (user.fullname) {
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
+          _this2.context.router.transitionTo('/');
+        } else {
+          obj.validator.login = true;
+          _this2.setState(obj);
+        }
+      });
+    }
+  };
+
+  SignIn.prototype.handleFieldChange = function handleFieldChange(e) {
+    var obj = this.state;
+
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(e.target.value)) {
+      if (this.state.validator.email !== false) {
+        obj.validator.email = false;
+        console.log('getting set');
+        this.setState(obj);
+      }
+    } else {
+      if (this.state.validator.email !== true) {
+        obj.validator.email = true;
+        this.setState(obj);
+      }
+    }
+  };
+
+  SignIn.prototype.isInvalid = function isInvalid(value) {
+    return value === false ? 'invalid' : '';
+  };
+
+  SignIn.prototype.render = function render() {
+    console.log(this.props);
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      this.props.pathname === '/logon' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'fb-wrapper' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            { className: 'fb-auth' },
+            'LOG IN WITH FACEBOOK'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { className: 'or' },
+              'or'
+            )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'form',
+            { className: 'login-form', onSubmit: this.submit },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              {
+                className: this.state.validator.login ? 'invalid-login' : 'hide'
+              },
+              'Invalid email address or password. Please try again.'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              { className: 'input-wrapper login' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                className: this.isInvalid(this.state.validator.email),
+                onBlur: this.handleFieldChange,
+                name: 'email',
+                onChange: this.setValue,
+                value: this.state.email,
+                placeholder: 'Email Address' }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                {
+                  className: this.state.validator.email === false ? 'error' : 'hide'
+                },
+                'Please enter a valid email address.'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                type: 'password',
+                name: 'password',
+                onChange: this.setValue,
+                value: this.state.password,
+                placeholder: 'Password' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'button',
+              { className: 'btn' },
+              'LOG IN'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              null,
+              'Forgot your password?'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_2_react_router__["Link"],
+              { to: '/signup' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'New? Sign up.'
+              )
+            )
+          )
+        )
+      ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'form',
+            { className: 'login-form', onSubmit: this.submit },
+            !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'h2',
+                {
+                  className: this.state.validator.login ? 'invalid-login' : 'hide'
+                },
+                'Invalid email address or password. Please try again.'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'input-wrapper login' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  className: this.isInvalid(this.state.validator.email),
+                  onBlur: this.handleFieldChange,
+                  name: 'email',
+                  onChange: this.setValue,
+                  value: this.state.email,
+                  placeholder: 'Email Address' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'p',
+                  {
+                    className: this.state.validator.email === false ? 'error' : 'hide'
+                  },
+                  'Please enter a valid email address.'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                  type: 'password',
+                  name: 'password',
+                  onChange: this.setValue,
+                  value: this.state.password,
+                  placeholder: 'Password' })
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'line' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'button',
+              { className: 'btn', onClick: this.login },
+              'LOG IN'
+            ),
+            !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              null,
+              'Forgot your password?'
+            )
+          )
+        ),
+        !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'fb-wrapper' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { className: 'or' },
+              'or'
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            { className: 'fb-auth' },
+            'LOG IN WITH FACEBOOK'
+          )
+        )
+      )
+    );
+  };
+
+  return SignIn;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+SignIn.contextTypes = {
+  router: object
+};
+
+SignIn.propTypes = {
+  location: object
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(SignIn);
 
 /***/ })
 /******/ ]);
