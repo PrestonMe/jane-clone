@@ -31697,9 +31697,10 @@ var CreateAccount = function (_React$Component) {
           password: this.state.password
         }
       }).then(function (res) {
+        console.log('response', res);
         var user = res.data[0];
         if (user.email) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id));
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, +user.total));
           _this2.context.router.transitionTo('/');
         } else {
           obj.validator.login = true;

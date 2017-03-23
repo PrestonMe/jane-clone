@@ -39,6 +39,56 @@ server.use(session({
   saveUninitialized: true
 }))
 
+function login (req, res, response) {
+  //checks to see if there are items in cart before user logs in
+  db.items_on_session_cart(req.sessionID, function(err, items) {
+      if(items.length) {
+        //remove items on session cart already in user cart
+        db.items_on_user_cart(response[0].id, function(err, userItems) {
+          for(let i = 0; i < items.length; i++) {
+            for(let j = 0; j < userItems.length; j++) {
+              if(items[i].product_id === userItems[j].product_id) {
+                items.splice(i, 1);
+                i--;
+                break;
+              }
+            }
+          }
+
+          function finish() {
+            // removes duplicate items on guest cart now that we are logged in
+            db.cleanup_cart(req.sessionID, function(err, cleaned) {
+              db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+                response[0].total = rep[0].total
+
+                res.json(response)
+              })
+            })
+          }
+          // inserts new items into users cart
+          if(items.length !== 0) {
+            for(let i = 0; i < items.length; i++) {
+              db.merge_carts([response[0].id, req.sessionID, items[i].product_id], function(err, complete) {})
+            }
+            setTimeout(finish, 100)
+          } else {
+            finish()
+          }
+
+        })
+      } else {
+        db.get_cart_total_items(['0', response[0].id], function(err, rep) {
+          if(!rep[0].total) {
+            response[0].total = null
+          } else {
+            response[0].total = rep[0].total
+          }
+          res.json(response)
+        })
+      }
+  })
+}
+
 server.get('/products', function(req, res, next) {
   db.get_products(req.query.path, function(err, products) {
     res.json(products);
@@ -56,53 +106,20 @@ server.get('/login/:email/:password', function(req, res, next) {
     if(response.length === 0) {
       res.json('Login Failed')
     } else {
-      //checks to see if there are items in cart before user logs in
-      db.items_on_session_cart(req.sessionID, function(err, items) {
-          if(items.length) {
-            //remove items on session cart already in user cart
-            db.items_on_user_cart(response[0].id, function(err, userItems) {
-              for(let i = 0; i < items.length; i++) {
-                for(let j = 0; j < userItems.length; j++) {
-                  if(items[i].product_id === userItems[j].product_id) {
-                    items.splice(i, 1);
-                    i--;
-                    break;
-                  }
-                }
-              }
+      login(req, res, response)
+    }
+  })
+})
 
-              function finish() {
-                // removes duplicate items on guest cart now that we are logged in
-                db.cleanup_cart(req.sessionID, function(err, cleaned) {
-                  db.get_cart_total_items(['0', response[0].id], function(err, rep) {
-                    response[0].total = rep[0].total
 
-                    res.json(response)
-                  })
-                })
-              }
-              // inserts new items into users cart
-              if(items.length !== 0) {
-                for(let i = 0; i < items.length; i++) {
-                  db.merge_carts([response[0].id, req.sessionID, items[i].product_id], function(err, complete) {})
-                }
-                setTimeout(finish, 100)
-              } else {
-                finish()
-              }
-
-            })
-          } else {
-            db.get_cart_total_items(['0', response[0].id], function(err, rep) {
-              if(!rep[0].total) {
-                response[0].total = null
-              } else {
-                response[0].total = rep[0].total
-              }
-              res.json(response)
-            })
-          }
+server.post('/signup', function(req, res, next) {
+  db.find_account(req.body.data.email, function(err, response) {
+    if(response.length === 0) {
+      db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
+        login(req, res, response)
       })
+    } else {
+      res.json('Account Already Exists!')
     }
   })
 })
@@ -153,18 +170,6 @@ server.post('/addToCart/:id/:qty/:custId', function(req, res, next) {
     }
   }
 
-})
-
-server.post('/signup', function(req, res, next) {
-  db.find_account(req.body.data.email, function(err, response) {
-    if(response.length === 0) {
-      db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
-        res.json(response)
-      })
-    } else {
-      res.json('Account Already Exists!')
-    }
-  })
 })
 
 server.get('/getCart/:userId', function(req, res, next) {

@@ -114,9 +114,10 @@ class CreateAccount extends React.Component {
              }
            }
          ).then(res => {
+           console.log('response', res)
            let user = res.data[0]
            if(user.email) {
-                this.props.dispatch(login(true, user.fullname, user.id))
+                this.props.dispatch(login(true, user.fullname, user.id, +user.total))
                 this.context.router.transitionTo('/')
              } else {
                obj.validator.login = true
