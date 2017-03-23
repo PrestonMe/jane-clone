@@ -33,7 +33,6 @@ class Product extends React.Component {
       this.state.qty + '/' +
       user
     ).then(res => {
-      console.log(res)
         this.props.dispatch(updateQty(res.data[0].total))
       })
   }

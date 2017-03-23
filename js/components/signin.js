@@ -45,9 +45,7 @@ class SignIn extends React.Component {
     if(obj.validator.email && obj.password) {
       axios.get('/login/' + this.state.email + '/' + this.state.password
       ).then(res => {
-        console.log(res)
         let user = res.data[0]
-        console.log(user)
         if(user.fullname) {
           this.props.dispatch(login(true, user.fullname, user.id, user.total))
           this.context.router.transitionTo('/')
@@ -67,7 +65,6 @@ class SignIn extends React.Component {
     if(!re.test(e.target.value)) {
       if(this.state.validator.email !== false) {
         obj.validator.email = false
-        console.log('getting set')
         this.setState(obj)
       }
     } else {
@@ -82,7 +79,7 @@ class SignIn extends React.Component {
     return value === false ? 'invalid' : '';
   }
   render () {
-    console.log(this.props)
+
     return (
       <div>
         {this.props.pathname === '/logon' ?

@@ -17,17 +17,32 @@ class Cart extends React.Component {
       login: false
     }
     this.login = this.login.bind(this)
+    this.convertMoney = this.convertMoney.bind(this)
+    this.editQty = this.editQty.bind(this)
+  }
+
+  editQty () {
+    
+  }
+
+  convertMoney(value) {
+      value += ""
+      value = value.split('.')
+      if(value[1] && value[1].length === 1) {
+        value[1] += '0'
+      } else if (!value[1]){
+        value[1] = '00'
+      }
+      return value.join('.')
   }
 
   login () {
     if(!this.state.login) {
       this.setState({login: true})
     }
-    console.log(this.state.login)
   }
 
   componentDidMount () {
-    console.log('userid', this.props.userId)
     if(this.props.userId) {
       axios.get('/getCart/' + this.props.userId)
       .then(res => {
@@ -45,14 +60,12 @@ class Cart extends React.Component {
 
   render () {
     let total, tax;
-    console.log(25, this.state.cart)
+
     if(this.state.cart) {
       total = +this.state.cart.reduce((acc, val) => {
-        console.log(acc, +val.price)
         return acc + (+val.sale * val.qty);
       }, 0).toFixed(2)
       tax = +(total * .08).toFixed(2)
-      console.log(typeof total, typeof tax, total + tax)
     }
 
     return (
@@ -95,7 +108,7 @@ class Cart extends React.Component {
                   <div className='cart-item-bottom'>
                     <div className='price-ship-details'>
                       <h2>Estimate to ship by Tue, Mar 28.</h2>
-                      <h2>${(item.sale * item.qty + 5.99).toFixed(2)}</h2>
+                      <h2>${this.convertMoney((item.sale * item.qty + 5.99).toFixed(2))}</h2>
                     </div>
                     <p>Seller usually ships within 2 business days.</p>
                   </div>
@@ -107,15 +120,15 @@ class Cart extends React.Component {
               <div className='order-right'>
                 <div>
                   <h1>TOTAL BEFORE TAX</h1>
-                  <h1>${total}</h1>
+                  <h1>${this.convertMoney(total)}</h1>
                 </div>
                 <div>
                   <h1>TAX</h1>
-                  <h1>${tax}</h1>
+                  <h1>${this.convertMoney(tax)}</h1>
                 </div>
                 <div className='final-price'>
                   <h1>ORDER TOTAL:</h1>
-                  <h1>${(total + tax).toFixed(2)}</h1>
+                  <h1>${this.convertMoney((total + tax).toFixed(2))}</h1>
                 </div>
               </div>
             </div>
