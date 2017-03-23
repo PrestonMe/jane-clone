@@ -124,6 +124,22 @@ server.post('/signup', function(req, res, next) {
   })
 })
 
+server.put('/updateCartItem/:id/:qty/:custId', function(req, res, next) {
+if(req.params.custId === 'null') {
+    db.edit_guest_cart([+req.params.qty, req.sessionID, +req.params.id], function(err, response) {
+      db.get_guest_cart_total(req.sessionID, function(err, response) {
+        res.json(response)
+      })
+    })
+  } else {
+    db.edit_cart([+req.params.qty, req.params.custId, +req.params.id], function(err, response) {
+      db.get_cart_total_items([req.sessionID, req.params.custId], function(err, response) {
+        res.json(response)
+      })
+    })
+  }
+})
+
 server.post('/addToCart/:id/:qty/:custId', function(req, res, next) {
   if(req.params.custId === 'null') {
     req.params.custId = null

@@ -3,6 +3,7 @@ import Nav from './nav'
 import Footer from './footer'
 import SignIn from './signin'
 import CreateAccount from './createAccount'
+import { updateQty } from '../actions/actionCreators'
 import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
@@ -21,8 +22,30 @@ class Cart extends React.Component {
     this.editQty = this.editQty.bind(this)
   }
 
-  editQty () {
-    
+  editQty (e) {
+    e.preventDefault()
+    console.log(+e.target.value, e.target.value)
+    if(!isNaN(e.target.value) && +e.target.value < 10){
+      let cart = this.state.cart, id = +e.target.id
+      for(let i = 0; i < this.state.cart.length; i++) {
+        if(this.state.cart[i].product_id === id) {
+          cart[i].qty = +e.target.value
+          break;
+        }
+      }
+      if(e.target.value === '' || e.target.value === '00') {
+        this.setState({cart: cart})
+      } else {
+        axios.put('/updateCartItem/' + id + '/'+ +e.target.value + '/' + this.props.userId)
+        .then(res => {
+          console.log('update response', res)
+          this.props.dispatch(updateQty(+res.data[0].total))
+          // const cart = res.data
+          // this.setState({ cart: cart })
+          this.setState({cart: cart})
+        })
+      }
+    }
   }
 
   convertMoney(value) {
@@ -60,10 +83,9 @@ class Cart extends React.Component {
 
   render () {
     let total, tax;
-
     if(this.state.cart) {
       total = +this.state.cart.reduce((acc, val) => {
-        return acc + (+val.sale * val.qty);
+        return acc + (val.sale * val.qty) + (val.shipping * val.qty)
       }, 0).toFixed(2)
       tax = +(total * .08).toFixed(2)
     }
@@ -101,14 +123,23 @@ class Cart extends React.Component {
                     </div>
                     <div className='cart-item-right'>
                       <h2>{item.qty} | <span>Edit</span></h2>
-                      <h2>$5.99</h2>
+                      <h2>${item.shipping}</h2>
                       <h2>${item.sale}</h2>
                     </div>
+                  </div>
+                  <div className='clearfix'>
+                    <div className='edit-qty'>
+                      <input
+                        id={item.product_id}
+                        value={item.qty}
+                        onChange={this.editQty}/>
+                        <img src='../../public/img/icons/cancel.svg'/>
+                      </div>
                   </div>
                   <div className='cart-item-bottom'>
                     <div className='price-ship-details'>
                       <h2>Estimate to ship by Tue, Mar 28.</h2>
-                      <h2>${this.convertMoney((item.sale * item.qty + 5.99).toFixed(2))}</h2>
+                      <h2>${this.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))}</h2>
                     </div>
                     <p>Seller usually ships within 2 business days.</p>
                   </div>

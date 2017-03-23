@@ -676,6 +676,38 @@ b {
         padding-bottom: 20px;
         border-bottom: 2px solid #EEE;
         margin-bottom: 20px; }
+        .checkout .cart-wrapper .cart .cart-item .edit-qty {
+          position: relative;
+          width: calc(100% / 2.6);
+          float: right;
+          padding: 10px 0px; }
+          .checkout .cart-wrapper .cart .cart-item .edit-qty input {
+            padding: 5px 15px;
+            width: 10px;
+            background-color: #FCFCFC;
+            border: solid 1px #e5e5e5;
+            color: #7A7979;
+            font-size: 14px; }
+          .checkout .cart-wrapper .cart .cart-item .edit-qty img {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            height: 12px;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer; }
+        .checkout .cart-wrapper .cart .cart-item .clearfix {
+          display: block;
+          border-bottom: 1px dashed #EEE; }
+        .checkout .cart-wrapper .cart .cart-item .clearfix:after {
+          content: ".";
+          display: block;
+          clear: both;
+          visibility: hidden;
+          line-height: 0;
+          height: 0; }
         .checkout .cart-wrapper .cart .cart-item .cart-item-top {
           padding-bottom: 15px;
           display: flex;
@@ -711,7 +743,8 @@ b {
               color: #68D2C3;
               cursor: pointer; }
         .checkout .cart-wrapper .cart .cart-item .cart-item-bottom {
-          padding: 25px 10px 15px; }
+          padding: 25px 10px 15px;
+          clear: both; }
           .checkout .cart-wrapper .cart .cart-item .cart-item-bottom .price-ship-details {
             display: flex;
             justify-content: space-between;

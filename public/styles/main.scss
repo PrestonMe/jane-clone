@@ -861,6 +861,43 @@ b {
         padding-bottom: 20px;
         border-bottom: 2px solid #EEE;
         margin-bottom: 20px;
+        .edit-qty {
+          position: relative;
+          width: calc(100% / 2.6);
+          float: right;
+          padding: 10px 0px;
+          input {
+            padding: 5px 15px;
+            width: 10px;
+            background-color: #FCFCFC;
+            border: solid 1px #e5e5e5;
+            color: #7A7979;
+            font-size: 14px;
+          }
+          img {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            height: 12px;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+          }
+        }
+        .clearfix {
+          display: block;
+          border-bottom: 1px dashed #EEE;
+        }
+        .clearfix:after {
+           content: ".";
+           display: block;
+           clear: both;
+           visibility: hidden;
+           line-height: 0;
+           height: 0;
+        }
         .cart-item-top {
           padding-bottom: 15px;
           display: flex;
@@ -906,6 +943,7 @@ b {
         }
         .cart-item-bottom {
           padding: 25px 10px 15px;
+          clear: both;
           .price-ship-details {
             display: flex;
             justify-content: space-between;

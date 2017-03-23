@@ -8960,7 +8960,6 @@ var CreateAccount = function (_React$Component) {
           password: this.state.password
         }
       }).then(function (res) {
-        console.log('response', res);
         var user = res.data[0];
         if (user.email) {
           _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, +user.total));
@@ -14313,11 +14312,12 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__signin__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createAccount__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_redux__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_actionCreators__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_router__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_redux__ = __webpack_require__(16);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14325,6 +14325,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -14355,7 +14356,33 @@ var Cart = function (_React$Component) {
     return _this;
   }
 
-  Cart.prototype.editQty = function editQty() {};
+  Cart.prototype.editQty = function editQty(e) {
+    var _this2 = this;
+
+    e.preventDefault();
+    console.log(+e.target.value, e.target.value);
+    if (!isNaN(e.target.value) && +e.target.value < 10) {
+      var cart = this.state.cart,
+          id = +e.target.id;
+      for (var i = 0; i < this.state.cart.length; i++) {
+        if (this.state.cart[i].product_id === id) {
+          cart[i].qty = +e.target.value;
+          break;
+        }
+      }
+      if (e.target.value === '' || e.target.value === '00') {
+        this.setState({ cart: cart });
+      } else {
+        __WEBPACK_IMPORTED_MODULE_6_axios___default.a.put('/updateCartItem/' + id + '/' + +e.target.value + '/' + this.props.userId).then(function (res) {
+          console.log('update response', res);
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__actions_actionCreators__["a" /* updateQty */])(+res.data[0].total));
+          // const cart = res.data
+          // this.setState({ cart: cart })
+          _this2.setState({ cart: cart });
+        });
+      }
+    }
+  };
 
   Cart.prototype.convertMoney = function convertMoney(value) {
     value += "";
@@ -14375,30 +14402,29 @@ var Cart = function (_React$Component) {
   };
 
   Cart.prototype.componentDidMount = function componentDidMount() {
-    var _this2 = this;
+    var _this3 = this;
 
     if (this.props.userId) {
-      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
+      __WEBPACK_IMPORTED_MODULE_6_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
         var cart = res.data;
-        _this2.setState({ cart: cart });
+        _this3.setState({ cart: cart });
       });
     } else {
-      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
+      __WEBPACK_IMPORTED_MODULE_6_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
         var cart = res.data;
-        _this2.setState({ cart: cart });
+        _this3.setState({ cart: cart });
       });
     }
   };
 
   Cart.prototype.render = function render() {
-    var _this3 = this;
+    var _this4 = this;
 
     var total = void 0,
         tax = void 0;
-
     if (this.state.cart) {
       total = +this.state.cart.reduce(function (acc, val) {
-        return acc + +val.sale * val.qty;
+        return acc + val.sale * val.qty + val.shipping * val.qty;
       }, 0).toFixed(2);
       tax = +(total * .08).toFixed(2);
     }
@@ -14503,7 +14529,8 @@ var Cart = function (_React$Component) {
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h2',
                         null,
-                        '$5.99'
+                        '$',
+                        item.shipping
                       ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h2',
@@ -14511,6 +14538,19 @@ var Cart = function (_React$Component) {
                         '$',
                         item.sale
                       )
+                    )
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'clearfix' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'div',
+                      { className: 'edit-qty' },
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        id: item.product_id,
+                        value: item.qty,
+                        onChange: _this4.editQty }),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/icons/cancel.svg' })
                     )
                   ),
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14528,7 +14568,7 @@ var Cart = function (_React$Component) {
                         'h2',
                         null,
                         '$',
-                        _this3.convertMoney((item.sale * item.qty + 5.99).toFixed(2))
+                        _this4.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))
                       )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14739,7 +14779,7 @@ var Cart = function (_React$Component) {
                   'button',
                   { className: 'btn-empty-cart' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_6_react_router__["Link"],
+                    __WEBPACK_IMPORTED_MODULE_7_react_router__["Link"],
                     { to: '/' },
                     'SHOP TODAY\'S DEALS!'
                   )
@@ -14798,7 +14838,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8_react_redux__["b" /* connect */])(mapStateToProps)(Cart);
 
 /***/ }),
 /* 144 */
