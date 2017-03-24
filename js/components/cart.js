@@ -20,11 +20,12 @@ class Cart extends React.Component {
     this.login = this.login.bind(this)
     this.convertMoney = this.convertMoney.bind(this)
     this.editQty = this.editQty.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this)
+    this.removeFromCart = this.removeFromCart.bind(this)
   }
 
   editQty (e) {
     e.preventDefault()
-    console.log(+e.target.value, e.target.value)
     if(!isNaN(e.target.value) && +e.target.value < 10){
       let cart = this.state.cart, id = +e.target.id
       for(let i = 0; i < this.state.cart.length; i++) {
@@ -38,10 +39,7 @@ class Cart extends React.Component {
       } else {
         axios.put('/updateCartItem/' + id + '/'+ +e.target.value + '/' + this.props.userId)
         .then(res => {
-          console.log('update response', res)
           this.props.dispatch(updateQty(+res.data[0].total))
-          // const cart = res.data
-          // this.setState({ cart: cart })
           this.setState({cart: cart})
         })
       }
@@ -69,19 +67,53 @@ class Cart extends React.Component {
     if(this.props.userId) {
       axios.get('/getCart/' + this.props.userId)
       .then(res => {
-        const cart = res.data
+        let cart = res.data
+        for(let i = 0; i < cart.length; i++) {
+          cart[i].edit = false;
+        }
         this.setState({ cart: cart })
       })
     } else {
       axios.get('/getCart/' + 'getSession')
       .then(res => {
-        const cart = res.data
+        let cart = res.data
+        for(let i = 0; i < cart.length; i++) {
+          cart[i].edit = false;
+        }
         this.setState({ cart: cart })
       })
     }
   }
 
+  toggleEdit (e, f) {
+    e = !e
+    let obj = this.state.cart
+    for(let i = 0; i < this.state.cart.length; i++) {
+        if(this.state.cart[i].product_id === f) {
+          obj[i].edit = e
+          this.setState({cart: obj});
+          break;
+        }
+    }
+  }
+
+  removeFromCart (id, userId) {
+    axios.delete('/deleteItem/' + id + '/' + userId)
+    .then(res => {
+      console.log('res', res)
+      let obj = this.state.cart
+      this.props.dispatch(updateQty(+res.data[0].total))
+      for(let i = 0; i < this.state.cart.length; i++) {
+        if(this.state.cart[i].id === id) {
+          obj.splice(i, 1);
+          this.setState({cart: obj})
+        }
+      }
+    })
+  }
+
   render () {
+    console.log(this.state.cart)
     let total, tax;
     if(this.state.cart) {
       total = +this.state.cart.reduce((acc, val) => {
@@ -122,18 +154,22 @@ class Cart extends React.Component {
                       </div>
                     </div>
                     <div className='cart-item-right'>
-                      <h2>{item.qty} | <span>Edit</span></h2>
+                      <h2>{item.qty} |
+                        <span onClick={() => this.toggleEdit(item.edit, item.product_id)}>
+                          {!item.edit ? ' Edit' : ' Close'}
+                        </span>
+                      </h2>
                       <h2>${item.shipping}</h2>
                       <h2>${item.sale}</h2>
                     </div>
                   </div>
-                  <div className='clearfix'>
+                  <div className={!item.edit ? 'hide' : 'clearfix'}>
                     <div className='edit-qty'>
                       <input
                         id={item.product_id}
                         value={item.qty}
                         onChange={this.editQty}/>
-                        <img src='../../public/img/icons/cancel.svg'/>
+                        <img onClick={() => this.removeFromCart(item.id, item.customer_id)} src='../../public/img/icons/cancel.svg'/>
                       </div>
                   </div>
                   <div className='cart-item-bottom'>

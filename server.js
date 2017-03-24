@@ -200,6 +200,20 @@ server.get('/getCart/:userId', function(req, res, next) {
   }
 })
 
+server.delete('/deleteItem/:id/:userId', function(req, res, next) {
+  db.delete_cart_item(req.params.id, function(err, response) {
+    if(req.params.userId !== 'null') {
+      db.get_cart_total_items([req.sessionID, req.params.userId], function(err, response) {
+        res.json(response)
+      })
+    } else {
+      db.get_guest_cart_total(req.sessionID, function(err, response) {
+        res.json(response)
+      })
+    }
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can
