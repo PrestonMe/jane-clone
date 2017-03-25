@@ -3,6 +3,7 @@ import Nav from './nav'
 import Footer from './footer'
 import SignIn from './signin'
 import CreateAccount from './createAccount'
+import NewAddress from './new_address'
 import { updateQty } from '../actions/actionCreators'
 import axios from 'axios'
 import { Link } from 'react-router'
@@ -15,13 +16,22 @@ class Cart extends React.Component {
     super(props)
     this.state = {
       cart: [],
-      login: false
+      login: false,
+      addressMenu: false
     }
     this.login = this.login.bind(this)
     this.convertMoney = this.convertMoney.bind(this)
     this.editQty = this.editQty.bind(this)
     this.toggleEdit = this.toggleEdit.bind(this)
     this.removeFromCart = this.removeFromCart.bind(this)
+    this.toggleAddress = this.toggleAddress.bind(this)
+  }
+
+  toggleAddress () {
+    console.log(this.state.addressMenu)
+    let obj = this.state
+    obj.addressMenu = !this.state.addressMenu
+    this.setState(obj)
   }
 
   editQty (e) {
@@ -100,7 +110,6 @@ class Cart extends React.Component {
   removeFromCart (id, userId) {
     axios.delete('/deleteItem/' + id + '/' + userId)
     .then(res => {
-      console.log('res', res)
       let obj = this.state.cart
       this.props.dispatch(updateQty(+res.data[0].total))
       for(let i = 0; i < this.state.cart.length; i++) {
@@ -113,7 +122,6 @@ class Cart extends React.Component {
   }
 
   render () {
-    console.log(this.state.cart)
     let total, tax;
     if(this.state.cart) {
       total = +this.state.cart.reduce((acc, val) => {
@@ -121,6 +129,8 @@ class Cart extends React.Component {
       }, 0).toFixed(2)
       tax = +(total * .08).toFixed(2)
     }
+
+    let setAddress = !this.state.addressMenu ? 'hide' : ''
 
     return (
       <div>
@@ -216,8 +226,9 @@ class Cart extends React.Component {
 
                 <div className='shipping-payment'>
                   <div className='new-address'>
-                    <button className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
+                    <button onClick={this.toggleAddress} className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
                   </div>
+                  <NewAddress class={setAddress} exitMenu={this.toggleAddress}/>
                   <div className='payment-method'>
                     <h1>SELECT A PAYMENT METHOD:</h1>
                     <div className='pay-btm'>

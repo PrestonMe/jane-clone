@@ -40,6 +40,7 @@ class Nav extends React.Component {
   render () {
     let classAdd = this.state.isHide ? 'slide-in' : 'slide-out'
     let account_menu = !this.state.accountMenu ? 'hide' : ''
+    
     return (
       <div>
         <div className='nav'>

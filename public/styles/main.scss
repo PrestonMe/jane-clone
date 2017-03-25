@@ -759,6 +759,53 @@ b {
         padding: 10px 0px 30px;
         border-bottom: 1px solid #e5e5e5;
         display: flex;
+        .hide {
+          display: none;
+        }
+        .address-form {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 5;
+          .menu-background {
+            position: fixed;
+            background: #b4adad;
+            opacity: .8;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 10;
+          }
+          .address-details {
+            padding: 30px;
+            background-color: #FFF;
+            width: 240px;
+            position: fixed;
+            left: 50%;
+            z-index: 11;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            .address-header {
+              display: flex;
+              justify-content: space-between;
+              border-bottom: 1px solid #e5e5e5;
+              padding: 0 0 20px 0;
+            }
+            .address-input {
+              input {
+                width: 100%;
+                padding: 5px;
+                margin: 10px 0;
+                background-color: #FCFCFC;
+              }
+              h1 {
+                border: none;
+                padding: 0;
+              }
+            }
+          }
+        }
         .new-address {
           width: calc(100% / 2);
           button {
@@ -1055,6 +1102,7 @@ b {
     margin-right: 2px;
   }
 }
+
 
 .account-menu {
   position: absolute;
