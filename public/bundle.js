@@ -15103,12 +15103,15 @@ var mapStateToProps = function mapStateToProps(state) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(14);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -15121,12 +15124,75 @@ var NewAddress = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
+    _this.state = {
+      first: '',
+      last: '',
+      addressOne: '',
+      addressTwo: '',
+      city: '',
+      state: '',
+      zip: '',
+      validator: {
+        state: false,
+        zip: false
+      }
+    };
     _this.exitMenu = _this.exitMenu.bind(_this);
+    _this.updateAddress = _this.updateAddress.bind(_this);
+    _this.setValue = _this.setValue.bind(_this);
     return _this;
   }
 
   NewAddress.prototype.exitMenu = function exitMenu() {
     this.props.exitMenu();
+  };
+
+  NewAddress.prototype.updateAddress = function updateAddress(e) {
+    var _this2 = this;
+
+    e.preventDefault();
+    var obj = this.state;
+
+    if (obj.first && obj.last && obj.addressOne && obj.city && obj.state && obj.zip) {
+      if (obj.state.length < 2) {
+        obj.validator.state = true;
+        obj.validator.zip = false;
+        this.setState(obj);
+      } else if (obj.zip.length < 5 || isNaN(obj.zip * 1)) {
+        obj.validator.zip = true;
+        obj.validator.state = false;
+        this.setState(obj);
+      } else {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/setShipAddress', {
+          data: {
+            first: obj.first,
+            last: obj.last,
+            address: obj.addressOne + ' ' + obj.addressTwo,
+            state: obj.state,
+            city: obj.city,
+            zip: obj.zip,
+            id: this.props.userId
+          }
+        }).then(function (res) {
+          console.log(res);
+          _this2.exitMenu();
+        });
+      }
+      // axios.get('/getCart/' + 'getSession')
+      // .then(res => {
+      //   let cart = res.data
+      //   for(let i = 0; i < cart.length; i++) {
+      //     cart[i].edit = false;
+      //   }
+      //   this.setState({ cart: cart })
+      // })
+    }
+  };
+
+  NewAddress.prototype.setValue = function setValue(event) {
+    var obj = {};
+    obj[event.target.name] = event.target.value;
+    this.setState(obj);
   };
 
   NewAddress.prototype.componentWillMount = function componentWillMount() {
@@ -15163,26 +15229,72 @@ var NewAddress = function (_React$Component) {
           'div',
           { className: 'address-input' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'h1',
-            null,
-            'Recipient'
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'First Name' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Last Name' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'h1',
-            null,
-            'Address'
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Address 1' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Address 2' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'City' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'State' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'ZIP' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            null,
-            'SAVE'
+            'form',
+            { onSubmit: this.updateAddress },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h1',
+              null,
+              'Recipient'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'first',
+              onChange: this.setValue,
+              value: this.state.first,
+              placeholder: 'First Name' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'last',
+              onChange: this.setValue,
+              value: this.state.last,
+              placeholder: 'Last Name' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h1',
+              null,
+              'Address'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'addressOne',
+              onChange: this.setValue,
+              value: this.state.addressOne,
+              placeholder: 'Address 1' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'addressTwo',
+              onChange: this.setValue,
+              value: this.state.addressTwo,
+              placeholder: 'Address 2' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'city',
+              onChange: this.setValue,
+              value: this.state.city,
+              placeholder: 'City' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'state',
+              onChange: this.setValue,
+              value: this.state.state,
+              placeholder: 'State' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+              name: 'zip',
+              onChange: this.setValue,
+              value: this.state.zip,
+              placeholder: 'ZIP' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              {
+                className: this.state.validator.state ? 'error' : 'hide'
+              },
+              'Please enter a valid state name.'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              {
+                className: this.state.validator.zip ? 'error' : 'hide'
+              },
+              'Please enter a 5 digit zip code.'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'button',
+              null,
+              'SAVE'
+            )
           )
         )
       )
@@ -15195,10 +15307,11 @@ var NewAddress = function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     loggedIn: state.loggedIn,
-    userName: state.userName
+    userName: state.userName,
+    userId: state.userId
   };
 };
-/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps)(NewAddress);
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(NewAddress);
 
 /***/ }),
 /* 148 */
@@ -15221,16 +15334,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-// import Scroll from 'react-scroll'
-
-// import { Link } from 'react-router'
 
 
 
 
 
 
-// const scroll = Scroll.animateScroll;
 
 var Product = function (_React$Component) {
   _inherits(Product, _React$Component);
@@ -15537,20 +15646,15 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__footer__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__createAccount__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__nav__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__footer__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__createAccount__ = __webpack_require__(78);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
 
 
 
@@ -15569,140 +15673,11 @@ var SignUp = function (_React$Component) {
     return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
   }
 
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {
-  //     name: '',
-  //     email: '',
-  //     password: '',
-  //     verifyPassword: '',
-  //     validator: {
-  //       name: null,
-  //       email: null,
-  //       password: null,
-  //       verifyPassword: null,
-  //       login: null
-  //     }
-  //   }
-  //   this.setValue = this.setValue.bind(this)
-  //   this.submit = this.submit.bind(this)
-  //   this.handleFieldChange = this.handleFieldChange.bind(this)
-  //   this.isInvalid = this.isInvalid.bind(this)
-  // }
-  //
-  // handleFieldChange (e) {
-  //   let obj = this.state
-  //
-  //   if(e.target.name === 'name'){
-  //     if(!e.target.value && this.state.validator.name) {
-  //       obj.validator.name = false
-  //       this.setState(obj)
-  //     } else if (e.target.value && !this.state.validator.name) {
-  //       obj.validator.name = true
-  //       this.setState(obj)
-  //     }
-  //     //throw error if no name is entered (addclass to input box and display error message p tag)
-  //   } else if (e.target.name === 'email') {
-  //     // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-  //       const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  //       if(!re.test(e.target.value) && e.target.value) {
-  //         if(this.state.validator.email || this.state.validator.email === null) {
-  //           obj.validator.email = false;
-  //           this.setState(obj)
-  //         }
-  //       } else if (!this.state.validator.email && e.target.value) {
-  //         obj.validator.email = true;
-  //         this.setState(obj)
-  //       }
-  //   } else if (e.target.name === 'password') {
-  //     // sets verifypassword to false if password field is changed
-  //     if(e.target.value !== this.state.verifyPassword && this.state.validator.verifyPassword && this.state.validator.verifyPassword !== null) {
-  //       obj.validator.verifyPassword = false
-  //     }
-  //
-  //     if(e.target.value && e.target.value.length < 8) {
-  //       if(this.state.validator.password || this.state.validator.password === null) {
-  //         obj.validator.password = false;
-  //         this.setState(obj)
-  //       }
-  //     } else if (e.target.value.length > 7 && !this.state.validator.password) {
-  //       // automatically sets verify password to true if both fields match
-  //       if(this.state.verifyPassword === e.target.value && !this.state.validator.verifyPassword) {
-  //           obj.validator.verifyPassword = true
-  //       }
-  //       obj.validator.password = true
-  //       this.setState(obj)
-  //     } else {
-  //       this.setState(obj)
-  //     }
-  //   } else if (e.target.name === 'verifyPassword') {
-  //     if(e.target.value !== this.state.password) {
-  //       if(this.state.validator.verifyPassword) {
-  //         obj.validator.verifyPassword = false
-  //         this.setState(obj)
-  //       } else if (e.target.value && this.state.validator.verifyPassword === null) {
-  //         obj.validator.verifyPassword = false
-  //         this.setState(obj)
-  //       }
-  //     } else if (this.state.verifyPassword === this.state.password) {
-  //       if(!this.state.validator.verifyPassword && this.state.validator.password) {
-  //         obj.validator.verifyPassword = true
-  //         this.setState(obj)
-  //       } else if (e.target.value && this.state.validator.verifyPassword === null){
-  //         obj.validator.verifyPassword = false
-  //         this.setState(obj)
-  //       }
-  //     }
-  //   }
-  // }
-  //
-  // setValue (event) {
-  //   let obj = {}
-  //   obj[event.target.name] = event.target.value
-  //   this.setState(obj)
-  // }
-  //
-  // submit (e) {
-  //   e.preventDefault()
-  //   let obj = this.state;
-  //   if(obj.validator.name && obj.validator.email
-  //      && obj.validator.password && obj.validator.verifyPassword) {
-  //        axios.post('/signup', {
-  //            data: {
-  //              name: this.state.name,
-  //              email: this.state.email,
-  //              password: this.state.password
-  //            }
-  //          }
-  //        ).then(res => {
-  //          let user = res.data[0]
-  //          if(user.email) {
-  //               this.props.dispatch(login(true, user.fullname, user.id))
-  //               this.context.router.transitionTo('/')
-  //            } else {
-  //              obj.validator.login = true
-  //              this.setState(obj)
-  //            }
-  //          })
-  //   } else {
-  //     for(let key in obj.validator) {
-  //       if(!obj.validator[key]) {
-  //         obj.validator[key] = false
-  //       }
-  //     }
-  //     this.setState(obj)
-  //   }
-  // }
-  //
-  // isInvalid (value) {
-  //   return value === false ? 'invalid' : '';
-  // }
-
   SignUp.prototype.render = function render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'base' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__nav__["a" /* default */], this.props.location),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'logon' },
@@ -15710,7 +15685,7 @@ var SignUp = function (_React$Component) {
           'div',
           { className: 'login-pane' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/jane-logo_360.png' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__createAccount__["a" /* default */], null)
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__createAccount__["a" /* default */], null)
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -15726,7 +15701,7 @@ var SignUp = function (_React$Component) {
           )
         )
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__footer__["a" /* default */], null)
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__footer__["a" /* default */], null)
     );
   };
 
@@ -15743,7 +15718,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(SignUp);
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(SignUp);
 
 /***/ }),
 /* 150 */

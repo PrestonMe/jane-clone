@@ -22,11 +22,17 @@ CREATE TABLE customer (
   fullname varchar(40),
   password varchar(30),
   email varchar(50),
-  street varchar(30),
-  city varchar(20),
-  state varchar(2),
-  apt varchar(10),
-  zipcode varchar(10),
+  ship_first_name varchar(20),
+  ship_last_name varchar(20),
+  ship_address varchar(30),
+  ship_city varchar(20),
+  ship_state varchar(2),
+  ship_zipcode varchar(10),
+  bill_address_one varchar(30),
+  bill_address_two varchar(30),
+  bill_city varchar(20),
+  bill_state varchar(2),
+  bill_zipcode varchar(10),
   phonenumber varchar(15)
 );
 

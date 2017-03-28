@@ -1,14 +1,78 @@
 import React from 'react'
+import axios from 'axios'
 import { connect } from 'react-redux'
 
 class NewAddress extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      first: '',
+      last: '',
+      addressOne: '',
+      addressTwo: '',
+      city: '',
+      state: '',
+      zip: '',
+      validator: {
+        state: false,
+        zip: false
+      }
+    }
     this.exitMenu = this.exitMenu.bind(this)
+    this.updateAddress = this.updateAddress.bind(this)
+    this.setValue = this.setValue.bind(this)
   }
 
   exitMenu () {
     this.props.exitMenu()
+  }
+
+  updateAddress (e) {
+    e.preventDefault()
+    let obj = this.state
+
+    if(obj.first && obj.last && obj.addressOne
+      && obj.city && obj.state && obj.zip) {
+        if(obj.state.length < 2) {
+          obj.validator.state = true
+          obj.validator.zip = false;
+          this.setState(obj)
+        } else if (obj.zip.length < 5 || isNaN(obj.zip * 1)) {
+          obj.validator.zip = true
+          obj.validator.state = false;
+          this.setState(obj)
+        } else {
+          axios.post('/setShipAddress', {
+            data: {
+              first: obj.first,
+              last: obj.last,
+              address: obj.addressOne + ' ' + obj.addressTwo,
+              state: obj.state,
+              city: obj.city,
+              zip: obj.zip,
+              id: this.props.userId
+            }
+          }).then(res => {
+            console.log(res)
+            this.exitMenu()
+          })
+        }
+        // axios.get('/getCart/' + 'getSession')
+        // .then(res => {
+        //   let cart = res.data
+        //   for(let i = 0; i < cart.length; i++) {
+        //     cart[i].edit = false;
+        //   }
+        //   this.setState({ cart: cart })
+        // })
+
+      }
+  }
+
+  setValue (event) {
+    let obj = {}
+    obj[event.target.name] = event.target.value
+    this.setState(obj)
   }
 
   componentWillMount (){
@@ -33,18 +97,53 @@ class NewAddress extends React.Component {
               src='../public/img/icons/close.svg'/>
           </div>
           <div className='address-input'>
-            <h1>Recipient</h1>
-            <input placeholder='First Name'/>
-            <input placeholder='Last Name'/>
-            <h1>Address</h1>
-            <input placeholder='Address 1'/>
-            <input placeholder='Address 2'/>
-            <input placeholder='City'/>
-            <input placeholder='State'/>
-            <input placeholder='ZIP'/>
-            <button>SAVE</button>
+            <form onSubmit={this.updateAddress}>
+              <h1>Recipient</h1>
+              <input
+                name='first'
+                onChange={this.setValue}
+                value={this.state.first}
+                placeholder='First Name'/>
+              <input
+                name='last'
+                onChange={this.setValue}
+                value={this.state.last}
+                placeholder='Last Name'/>
+              <h1>Address</h1>
+              <input
+                name='addressOne'
+                onChange={this.setValue}
+                value={this.state.addressOne}
+                placeholder='Address 1'/>
+              <input
+                name='addressTwo'
+                onChange={this.setValue}
+                value={this.state.addressTwo}
+                placeholder='Address 2'/>
+              <input
+                name='city'
+                onChange={this.setValue}
+                value={this.state.city}
+                placeholder='City'/>
+              <input
+                name='state'
+                onChange={this.setValue}
+                value={this.state.state}
+                placeholder='State'/>
+              <input
+                name='zip'
+                onChange={this.setValue}
+                value={this.state.zip}
+                placeholder='ZIP'/>
+                <div
+                  className={this.state.validator.state ? 'error' : 'hide'}
+                  >Please enter a valid state name.</div>
+                <div
+                  className={this.state.validator.zip ? 'error' : 'hide'}
+                  >Please enter a 5 digit zip code.</div>
+              <button>SAVE</button>
+            </form>
           </div>
-
         </div>
       </div>
     )
@@ -54,7 +153,8 @@ class NewAddress extends React.Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.loggedIn,
-    userName: state.userName
+    userName: state.userName,
+    userId: state.userId
   }
 }
 export default connect(mapStateToProps)(NewAddress)

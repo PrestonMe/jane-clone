@@ -1,14 +1,12 @@
 import React from 'react'
-// import Scroll from 'react-scroll'
 import axios from 'axios'
-// import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { updateQty } from '../actions/actionCreators'
 import Nav from './nav'
 import Footer from './footer'
 import Details from './details'
 
-// const scroll = Scroll.animateScroll;
+
 
 class Product extends React.Component {
   constructor (props) {

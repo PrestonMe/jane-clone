@@ -631,6 +631,12 @@ b {
                 margin-top: 0; }
               .checkout .cart-wrapper .cart .shipping-payment .address-form .address-details .address-header img {
                 cursor: pointer; }
+            .checkout .cart-wrapper .cart .shipping-payment .address-form .address-details .address-input .error {
+              padding: 10px 0px 0px 10px;
+              font-size: 15px;
+              color: #ffc261; }
+            .checkout .cart-wrapper .cart .shipping-payment .address-form .address-details .address-input .hide {
+              display: none; }
             .checkout .cart-wrapper .cart .shipping-payment .address-form .address-details .address-input input {
               width: 100%;
               padding: 10px 10px;

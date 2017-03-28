@@ -214,6 +214,13 @@ server.delete('/deleteItem/:id/:userId', function(req, res, next) {
   })
 })
 
+server.post('/setShipAddress', function(req, res, next) {
+  let data = req.body.data
+  db.set_ship_address([data.first, data.last, data.address, data.city, data.state, data.zip, data.id], function(err, response) {
+    res.json(response)
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

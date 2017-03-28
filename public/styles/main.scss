@@ -802,6 +802,14 @@ b {
               }
             }
             .address-input {
+              .error {
+                padding: 10px 0px 0px 10px;
+                font-size: 15px;
+                color: #ffc261;
+              }
+              .hide {
+                display: none;
+              }
               input {
                 width: 100%;
                 padding: 10px 10px;
