@@ -763,13 +763,12 @@ b {
           display: none;
         }
         .address-form {
-          position: absolute;
+          position: fixed;
           top: 0;
           left: 0;
-          z-index: 5;
+          z-index: 10;
           .menu-background {
-            position: fixed;
-            background: #b4adad;
+            background: #F5F5F5;
             opacity: .8;
             top: 0;
             left: 0;
@@ -778,30 +777,64 @@ b {
             z-index: 10;
           }
           .address-details {
-            padding: 30px;
+            padding: 20px;
             background-color: #FFF;
-            width: 240px;
-            position: fixed;
+            width: 280px;
+            position: absolute;
             left: 50%;
-            z-index: 11;
             top: 50%;
             transform: translate(-50%, -50%);
+            z-index: 11;
             .address-header {
               display: flex;
               justify-content: space-between;
+              align-items: baseline;
               border-bottom: 1px solid #e5e5e5;
               padding: 0 0 20px 0;
+              margin-bottom: 20px;
+              p {
+                color: #000;
+                font-size: 15px;
+                margin-top: 0;
+              }
+              img {
+                cursor: pointer;
+              }
             }
             .address-input {
               input {
                 width: 100%;
-                padding: 5px;
+                padding: 10px 10px;
                 margin: 10px 0;
                 background-color: #FCFCFC;
+                box-sizing: border-box;
+                border: 1px solid #E9E9E9;
+                font-size: 14px;
+              }
+              input:nth-child(2),
+              input:nth-child(5) {
+                margin-top: 0;
               }
               h1 {
                 border: none;
                 padding: 0;
+                margin: 15px 0 8px 0;
+                font-weight: bold;
+                font-size: 13px
+              }
+              button {
+                background-color: #68D2C3;
+                border-bottom: 3px solid #58b9ab;
+                border-right: 0px;
+                border-left: 0px;
+                border-top: 0px;
+                padding: 10px 20px 8px;
+                border-radius: 3px;
+                height: 45px;
+                color: #FFF;
+                font-weight: bold;
+                margin: 10px auto 0px;
+                float: right;
               }
             }
           }

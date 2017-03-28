@@ -40,7 +40,7 @@ class Nav extends React.Component {
   render () {
     let classAdd = this.state.isHide ? 'slide-in' : 'slide-out'
     let account_menu = !this.state.accountMenu ? 'hide' : ''
-    
+
     return (
       <div>
         <div className='nav'>
@@ -63,8 +63,12 @@ class Nav extends React.Component {
                  <p
                    className='user'
                    onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
-
+                 {account_menu !== 'hide'
+                 ?
                  <AccountMenu class={account_menu} exitMenu={this.toggleAccountMenu} />
+                 :
+                 ''
+                 }
                </span>
                 :
               <p className={(this.props.pathname === '/logon' || this.props.pathname === '/signup') ? 'login' : ''}><Link to='/logon' >LOG IN</Link></p>

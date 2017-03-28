@@ -228,7 +228,12 @@ class Cart extends React.Component {
                   <div className='new-address'>
                     <button onClick={this.toggleAddress} className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
                   </div>
+                  {setAddress !== 'hide'
+                  ?
                   <NewAddress class={setAddress} exitMenu={this.toggleAddress}/>
+                  :
+                  ''
+                  }    
                   <div className='payment-method'>
                     <h1>SELECT A PAYMENT METHOD:</h1>
                     <div className='pay-btm'>

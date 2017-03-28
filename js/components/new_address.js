@@ -4,9 +4,6 @@ import { connect } from 'react-redux'
 class NewAddress extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isHide: false
-    }
     this.exitMenu = this.exitMenu.bind(this)
   }
 
@@ -14,16 +11,26 @@ class NewAddress extends React.Component {
     this.props.exitMenu()
   }
 
+  componentWillMount (){
+    document.body.style.overflow = "hidden"
+  }
+
+  componentWillUnmount(){
+    document.body.style.overflow = "scroll"
+  }
+
   render () {
     return (
-      <div className='address-form'>
+      <div className={'address-form ' + this.props.class}>
         <div
           onClick={this.exitMenu}
-          className={'menu-background ' + this.props.class} />
+          className={'menu-background'} />
         <div className='address-details'>
           <div className='address-header'>
             <p>ADDRESS</p>
-            <img src='../public/img/icons/close.svg'/>
+            <img
+              onClick={this.exitMenu}
+              src='../public/img/icons/close.svg'/>
           </div>
           <div className='address-input'>
             <h1>Recipient</h1>

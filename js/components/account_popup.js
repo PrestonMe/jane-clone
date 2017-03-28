@@ -7,9 +7,6 @@ import { logout } from '../actions/actionCreators'
 class AccountMenu extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isHide: false
-    }
     this.logout = this.logout.bind(this)
     this.exitMenu = this.exitMenu.bind(this)
   }
@@ -20,6 +17,14 @@ class AccountMenu extends React.Component {
 
   logout () {
     this.props.dispatch(logout())
+  }
+
+  componentWillMount (){
+    document.body.style.overflow = "hidden"
+  }
+
+  componentWillUnmount(){
+    document.body.style.overflow = "scroll"
   }
 
   render () {
@@ -39,7 +44,7 @@ class AccountMenu extends React.Component {
             <img src='../public/img/icons/account.png'/>
           </div>
           <div>
-          <Link to='/logon'><p className='logout' onClick={this.logout}>Log Out</p></Link>
+            <Link to='/logon'><p className='logout' onClick={this.logout}>Log Out</p></Link>
           </div>
         </div>
       </div>
