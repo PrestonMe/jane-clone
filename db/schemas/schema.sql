@@ -26,12 +26,14 @@ CREATE TABLE customer (
   ship_last_name varchar(20),
   ship_address varchar(30),
   ship_city varchar(20),
-  ship_state varchar(2),
+  ship_state varchar(20),
   ship_zipcode varchar(10),
+  bill_first_name varchar(20),
+  bill_last_name varchar(20),
   bill_address_one varchar(30),
   bill_address_two varchar(30),
   bill_city varchar(20),
-  bill_state varchar(2),
+  bill_state varchar(20),
   bill_zipcode varchar(10),
   phonenumber varchar(15)
 );

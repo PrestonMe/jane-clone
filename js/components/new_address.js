@@ -23,8 +23,8 @@ class NewAddress extends React.Component {
     this.setValue = this.setValue.bind(this)
   }
 
-  exitMenu () {
-    this.props.exitMenu()
+  exitMenu (val) {
+    this.props.exitMenu(val)
   }
 
   updateAddress (e) {
@@ -53,19 +53,14 @@ class NewAddress extends React.Component {
               id: this.props.userId
             }
           }).then(res => {
-            console.log(res)
-            this.exitMenu()
+            if(res.data[0].ship_address){
+              this.exitMenu(res.data[0])
+            } else {
+              this.exitMenu()
+            }
+
           })
         }
-        // axios.get('/getCart/' + 'getSession')
-        // .then(res => {
-        //   let cart = res.data
-        //   for(let i = 0; i < cart.length; i++) {
-        //     cart[i].edit = false;
-        //   }
-        //   this.setState({ cart: cart })
-        // })
-
       }
   }
 

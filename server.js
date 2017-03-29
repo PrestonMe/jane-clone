@@ -195,7 +195,12 @@ server.get('/getCart/:userId', function(req, res, next) {
     })
   } else {
     db.get_customers_cart(req.params.userId, function(err, response) {
-      res.json(response)
+      db.get_customers_shipping_address(req.params.userId, function(err, address) {
+        if(address[0].ship_address){
+          response.push(address[0])
+        }
+        res.json(response)
+      })
     })
   }
 })

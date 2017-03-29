@@ -849,6 +849,25 @@ b {
         }
         .new-address {
           width: calc(100% / 2);
+          .shipping_address {
+            padding: 10px 10px 0 0;
+            display: flex;
+            align-items: baseline;
+            input {
+              margin-right: 20px;
+            }
+            p {
+              margin: 0 0 5px 0;
+              font-weight: bold;
+              text-align: left;
+              color: #000;
+            }
+            h3 {
+              font-weight: normal;
+              line-height: 20px;
+              font-size: 13px;
+            }
+          }
           button {
             width: 90%;
             cursor: pointer;

@@ -669,6 +669,21 @@ b {
               float: right; }
         .checkout .cart-wrapper .cart .shipping-payment .new-address {
           width: calc(100% / 2); }
+          .checkout .cart-wrapper .cart .shipping-payment .new-address .shipping_address {
+            padding: 10px 10px 0 0;
+            display: flex;
+            align-items: baseline; }
+            .checkout .cart-wrapper .cart .shipping-payment .new-address .shipping_address input {
+              margin-right: 20px; }
+            .checkout .cart-wrapper .cart .shipping-payment .new-address .shipping_address p {
+              margin: 0 0 5px 0;
+              font-weight: bold;
+              text-align: left;
+              color: #000; }
+            .checkout .cart-wrapper .cart .shipping-payment .new-address .shipping_address h3 {
+              font-weight: normal;
+              line-height: 20px;
+              font-size: 13px; }
           .checkout .cart-wrapper .cart .shipping-payment .new-address button {
             width: 90%;
             cursor: pointer;

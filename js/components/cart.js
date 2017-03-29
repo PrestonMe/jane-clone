@@ -17,7 +17,9 @@ class Cart extends React.Component {
     this.state = {
       cart: [],
       login: false,
-      addressMenu: false
+      addressMenu: false,
+      billingMenu: false,
+      shippingAddress: {}
     }
     this.login = this.login.bind(this)
     this.convertMoney = this.convertMoney.bind(this)
@@ -25,11 +27,14 @@ class Cart extends React.Component {
     this.toggleEdit = this.toggleEdit.bind(this)
     this.removeFromCart = this.removeFromCart.bind(this)
     this.toggleAddress = this.toggleAddress.bind(this)
+    this.toggleBilling = this.toggleBilling.bind(this)
   }
 
-  toggleAddress () {
-    console.log(this.state.addressMenu)
+  toggleAddress (e) {
     let obj = this.state
+    if(e.ship_address){
+      obj.shippingAddress = e;
+    }
     obj.addressMenu = !this.state.addressMenu
     this.setState(obj)
   }
@@ -73,15 +78,28 @@ class Cart extends React.Component {
     }
   }
 
+  toggleBilling () {
+    let obj = this.state
+    obj.billingMenu = !this.state.billingMenu
+    this.setState(obj)
+  }
+
   componentDidMount () {
+    let obj = this.state
     if(this.props.userId) {
       axios.get('/getCart/' + this.props.userId)
       .then(res => {
         let cart = res.data
-        for(let i = 0; i < cart.length; i++) {
-          cart[i].edit = false;
+        console.log(res)
+        if(cart[cart.length - 1].ship_address) {
+          obj.shippingAddress = cart.pop()
         }
-        this.setState({ cart: cart })
+
+        for(let i = 0; i < cart.length; i++) {
+          cart[i].edit = false
+        }
+        obj.cart = cart
+        this.setState(obj)
       })
     } else {
       axios.get('/getCart/' + 'getSession')
@@ -226,6 +244,23 @@ class Cart extends React.Component {
 
                 <div className='shipping-payment'>
                   <div className='new-address'>
+                    {this.state.shippingAddress.ship_address
+                    ?
+                    <div className='shipping_address'>
+                      <div>
+                        <input type='radio'
+                               checked='checked'
+                               disabled='true'/>
+                      </div>
+                      <div>
+                        <p>{this.state.shippingAddress.ship_first_name} {this.state.shippingAddress.ship_last_name}</p>
+                        <h3>{this.state.shippingAddress.ship_address}</h3>
+                        <h3>{this.state.shippingAddress.ship_city}, {this.state.shippingAddress.ship_state} {this.state.shippingAddress.ship_zipcode}</h3>
+                      </div>
+                    </div>
+                    :
+                    ''
+                    }
                     <button onClick={this.toggleAddress} className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
                   </div>
                   {setAddress !== 'hide'
@@ -233,15 +268,45 @@ class Cart extends React.Component {
                   <NewAddress class={setAddress} exitMenu={this.toggleAddress}/>
                   :
                   ''
-                  }    
+                  }
+                  {!this.state.billingMenu
+                  ?
                   <div className='payment-method'>
                     <h1>SELECT A PAYMENT METHOD:</h1>
                     <div className='pay-btm'>
-                      <button>CARD</button>
+                      <button onClick={this.toggleBilling}>CARD</button>
                       <img src='../../public/img/icons/paypal.png'/>
                       <button>DWOLLA</button>
                     </div>
                   </div>
+                  :
+                  <div>
+                    Hello
+                    <span onClick={this.toggleBilling}>
+                      <img src='../../public/img/icons/billingClose.svg' />
+                       Select a different payment method</span>
+                    <h1>ADD A NEW CREDIT CARD</h1>
+                    <form>
+                      <input name='card-name'
+                             placeholder='Cardholder Name'/>
+                      <input name='card-number'
+                             placeholder='Card Number'/>
+                      <input name='month'/>
+                      <input name='year'/>
+                      <input name='cvv'
+                             placeholder='cvv'/>
+                      <h1>BILLING ADDRESS</h1>
+                      <input /> <span>Same as my Shipping Address</span>
+                      <input name='bill-address'
+                             placeholder='Billing Address'/>
+                      <input name='bill-city'
+                             placeholder='City'/>
+                      <input name='bill-state'/>
+                      <input name='bill-zip'
+                             placeholder='Zip'/>
+                    </form>
+                  </div>
+                  }
 
                 </div>
 
