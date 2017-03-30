@@ -753,6 +753,9 @@ b {
             border-radius: 3px;
             border: 1px solid #ccc;
             background-color: #FFF; }
+            .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .drop-down-box .invalid {
+              border-color: red;
+              color: red; }
             .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .drop-down-box option {
               font-weight: bold; }
           .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .billing-address {
@@ -765,8 +768,9 @@ b {
           .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .same-text {
             font-weight: bold;
             font-size: 13px;
-            padding: 15px 0;
-            margin-bottom: 10px; }
+            margin-bottom: 7px;
+            margin-top: 5px;
+            float: left; }
           .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .same-address {
             margin: 0px 8px 0px 10px;
             vertical-align: text-top; }
@@ -780,6 +784,9 @@ b {
             padding: 10px 16px;
             border-radius: 3px;
             border: 1px solid #ccc; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .invalid {
+            border-color: red;
+            color: red; }
       .checkout .cart-wrapper .cart .shipping-header {
         font-size: 14px;
         padding: 30px 10px 10px;

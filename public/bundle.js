@@ -14344,7 +14344,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var string = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.string;
+var _React$PropTypes = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes,
+    string = _React$PropTypes.string,
+    object = _React$PropTypes.object;
 
 var Cart = function (_React$Component) {
   _inherits(Cart, _React$Component);
@@ -14359,7 +14361,30 @@ var Cart = function (_React$Component) {
       login: false,
       addressMenu: false,
       billingMenu: false,
-      shippingAddress: {}
+      shippingAddress: {},
+      checked: false,
+      validator: {
+        name: true,
+        cardNumber: true,
+        exp_month: true,
+        exp_year: true,
+        cvv: true,
+        address: true,
+        city: true,
+        state: true,
+        zip: true
+      },
+      payInfo: {
+        name: '',
+        cardNumber: '',
+        exp_month: '',
+        exp_year: '',
+        cvv: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: ''
+      }
     };
     _this.login = _this.login.bind(_this);
     _this.convertMoney = _this.convertMoney.bind(_this);
@@ -14368,6 +14393,9 @@ var Cart = function (_React$Component) {
     _this.removeFromCart = _this.removeFromCart.bind(_this);
     _this.toggleAddress = _this.toggleAddress.bind(_this);
     _this.toggleBilling = _this.toggleBilling.bind(_this);
+    _this.updateBillAddress = _this.updateBillAddress.bind(_this);
+    _this.updateInput = _this.updateInput.bind(_this);
+    _this.submitOrder = _this.submitOrder.bind(_this);
     return _this;
   }
 
@@ -14427,33 +14455,22 @@ var Cart = function (_React$Component) {
     this.setState(obj);
   };
 
-  Cart.prototype.componentDidMount = function componentDidMount() {
-    var _this3 = this;
-
+  Cart.prototype.updateBillAddress = function updateBillAddress(e) {
     var obj = this.state;
-    if (this.props.userId) {
-      __WEBPACK_IMPORTED_MODULE_7_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
-        var cart = res.data;
-        console.log(res);
-        if (cart[cart.length - 1].ship_address) {
-          obj.shippingAddress = cart.pop();
-        }
-
-        for (var i = 0; i < cart.length; i++) {
-          cart[i].edit = false;
-        }
-        obj.cart = cart;
-        _this3.setState(obj);
-      });
-    } else {
-      __WEBPACK_IMPORTED_MODULE_7_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
-        var cart = res.data;
-        for (var i = 0; i < cart.length; i++) {
-          cart[i].edit = false;
-        }
-        _this3.setState({ cart: cart });
-      });
+    obj.checked = !obj.checked;
+    if (obj.checked && obj.shippingAddress.ship_address) {
+      obj.payInfo.address = obj.shippingAddress.ship_address;
+      obj.payInfo.city = obj.shippingAddress.ship_city;
+      obj.payInfo.state = obj.shippingAddress.ship_state;
+      obj.payInfo.zip = obj.shippingAddress.ship_zipcode;
     }
+    this.setState(obj);
+  };
+
+  Cart.prototype.updateInput = function updateInput(e) {
+    var obj = this.state;
+    obj.payInfo[e.target.name] = e.target.value;
+    this.setState(obj);
   };
 
   Cart.prototype.toggleEdit = function toggleEdit(e, f) {
@@ -14469,22 +14486,110 @@ var Cart = function (_React$Component) {
   };
 
   Cart.prototype.removeFromCart = function removeFromCart(id, userId) {
-    var _this4 = this;
+    var _this3 = this;
 
     __WEBPACK_IMPORTED_MODULE_7_axios___default.a.delete('/deleteItem/' + id + '/' + userId).then(function (res) {
-      var obj = _this4.state.cart;
-      _this4.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__actions_actionCreators__["a" /* updateQty */])(+res.data[0].total));
-      for (var i = 0; i < _this4.state.cart.length; i++) {
-        if (_this4.state.cart[i].id === id) {
+      var obj = _this3.state.cart;
+      _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__actions_actionCreators__["a" /* updateQty */])(+res.data[0].total));
+      for (var i = 0; i < _this3.state.cart.length; i++) {
+        if (_this3.state.cart[i].id === id) {
           obj.splice(i, 1);
-          _this4.setState({ cart: obj });
+          _this3.setState({ cart: obj });
         }
       }
     });
   };
 
-  Cart.prototype.render = function render() {
+  Cart.prototype.submitOrder = function submitOrder(e) {
+    var _this4 = this;
+
+    e.preventDefault();
+    var obj = this.state;
+    var validator = this.state.validator;
+    var validInput = true;
+    for (var key in validator) {
+      validator[key] = true;
+    }
+    if (!obj.payInfo.name) validator.name = false;
+    if (!obj.payInfo.cardNumber || obj.payInfo.cardNumber.length !== 16 || isNaN(obj.payInfo.cardNumber * 1)) validator.cardNumber = false;
+    if (!obj.payInfo.exp_month) validator.exp_month = false;
+    if (!obj.payInfo.exp_year) validator.exp_year = false;
+    if (!obj.payInfo.cvv || obj.payInfo.cvv.length !== 3 || isNaN(obj.payInfo.cvv * 1)) validator.cvv = false;
+    if (!obj.payInfo.address) validator.address = false;
+    if (!obj.payInfo.city) validator.city = false;
+    if (!obj.payInfo.state) validator.state = false;
+    if (!obj.payInfo.zip || obj.payInfo.zip.length < 4 || obj.payInfo.zip.length > 10 || isNaN(obj.payInfo.zip * 1)) validator.zip = false;
+    obj.validator = validator;
+
+    for (var _key in validator) {
+      if (!validator[_key]) {
+        validInput = false;
+      }
+    }
+
+    if (validInput) {
+      var cartItems = [];
+      for (var i = 0; i < obj.cart.length; i++) {
+        cartItems.push({
+          product_id: obj.cart[i].product_id,
+          qty: obj.cart[i].qty,
+          price: obj.cart[i].sale,
+          shipping: obj.cart[i].shipping
+        });
+      }
+      __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post('/createOrder', {
+        data: {
+          id: this.props.userId,
+          name: obj.payInfo.name,
+          address: obj.payInfo.address,
+          city: obj.payInfo.city,
+          state: obj.payInfo.state,
+          zip: obj.payInfo.zip,
+          cart: cartItems
+        }
+      }).then(function (res) {
+        if (res.data === "Order Complete") {
+          _this4.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__actions_actionCreators__["a" /* updateQty */])(0));
+          _this4.context.router.transitionTo('/');
+        } else {
+          console.log('something went wrong', res);
+        }
+      });
+    } else {
+      this.setState(obj);
+    }
+  };
+
+  Cart.prototype.componentDidMount = function componentDidMount() {
     var _this5 = this;
+
+    var obj = this.state;
+    if (this.props.userId) {
+      __WEBPACK_IMPORTED_MODULE_7_axios___default.a.get('/getCart/' + this.props.userId).then(function (res) {
+        var cart = res.data;
+        if (cart[cart.length - 1].ship_address) {
+          obj.shippingAddress = cart.pop();
+        }
+
+        for (var i = 0; i < cart.length; i++) {
+          cart[i].edit = false;
+        }
+        obj.cart = cart;
+        _this5.setState(obj);
+      });
+    } else {
+      __WEBPACK_IMPORTED_MODULE_7_axios___default.a.get('/getCart/' + 'getSession').then(function (res) {
+        var cart = res.data;
+        for (var i = 0; i < cart.length; i++) {
+          cart[i].edit = false;
+        }
+        _this5.setState({ cart: cart });
+      });
+    }
+  };
+
+  Cart.prototype.render = function render() {
+    var _this6 = this;
 
     var total = void 0,
         tax = void 0;
@@ -14591,7 +14696,7 @@ var Cart = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'span',
                           { onClick: function onClick() {
-                              return _this5.toggleEdit(item.edit, item.product_id);
+                              return _this6.toggleEdit(item.edit, item.product_id);
                             } },
                           !item.edit ? ' Edit' : ' Close'
                         )
@@ -14619,9 +14724,9 @@ var Cart = function (_React$Component) {
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                         id: item.product_id,
                         value: item.qty,
-                        onChange: _this5.editQty }),
+                        onChange: _this6.editQty }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { onClick: function onClick() {
-                          return _this5.removeFromCart(item.id, item.customer_id);
+                          return _this6.removeFromCart(item.id, item.customer_id);
                         }, src: '../../public/img/icons/cancel.svg' })
                     )
                   ),
@@ -14640,7 +14745,7 @@ var Cart = function (_React$Component) {
                         'h2',
                         null,
                         '$',
-                        _this5.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))
+                        _this6.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))
                       )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14819,20 +14924,25 @@ var Cart = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'form',
                       null,
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'card-name',
-                        className: 'input-text',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        name: 'name',
+                        value: this.state.payInfo.name,
+                        className: this.state.validator.name ? 'input-text' : 'input-text invalid',
                         placeholder: 'Cardholder Name' }),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'card-number',
-                        className: 'input-text',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        name: 'cardNumber',
+                        value: this.state.payInfo.cardNumber,
+                        className: this.state.validator.cardNumber ? 'input-text' : 'input-text invalid',
                         placeholder: 'Card Number' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'select',
-                        {
-                          className: 'drop-down-box',
-                          name: 'month' },
+                        { onChange: this.updateInput,
+                          value: this.state.payInfo.exp_month,
+                          className: this.state.validator.exp_month ? 'drop-down-box' : 'drop-down-box invalid',
+                          name: 'exp_month' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
-                          { selected: true, value: null },
+                          { defaultValue: true, value: '' },
                           '[Expiration Month]'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14899,11 +15009,13 @@ var Cart = function (_React$Component) {
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'select',
                         {
-                          className: 'drop-down-box',
-                          name: 'year' },
+                          onChange: this.updateInput,
+                          className: this.state.validator.exp_year ? 'drop-down-box' : 'drop-down-box invalid',
+                          value: this.state.payInfo.exp_year,
+                          name: 'exp_year' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
-                          { selected: true, value: null },
+                          { defaultValue: true, value: '' },
                           '[Expiration Year]'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -14957,8 +15069,10 @@ var Cart = function (_React$Component) {
                           '2026'
                         )
                       ),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'cvv',
-                        className: 'cvv',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        value: this.state.payInfo.cvv,
+                        name: 'cvv',
+                        className: this.state.validator.cvv ? 'cvv' : 'cvv invalid',
                         placeholder: 'cvv' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h1',
@@ -14968,22 +15082,31 @@ var Cart = function (_React$Component) {
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'label',
                         { className: 'same-text' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateBillAddress,
+                          type: 'checkbox',
+                          checked: this.state.checked,
                           className: 'same-address' }),
                         'Same as my Shipping Address'
                       ),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-address',
-                        className: 'input-text',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        name: 'address',
+                        value: this.state.payInfo.address,
+                        className: this.state.validator.address ? 'input-text' : 'input-text invalid',
                         placeholder: 'Billing Address' }),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-city',
-                        className: 'input-text',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        name: 'city',
+                        value: this.state.payInfo.city,
+                        className: this.state.validator.city ? 'input-text' : 'input-text invalid',
                         placeholder: 'City' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'select',
-                        { className: 'drop-down-box' },
+                        { onChange: this.updateInput,
+                          name: 'state',
+                          className: this.state.validator.state ? 'drop-down-box' : 'drop-down-box invalid',
+                          value: this.state.payInfo.state },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
-                          { selected: true, value: null },
+                          { defaultValue: true, value: '' },
                           '[Select a State]'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -15257,8 +15380,10 @@ var Cart = function (_React$Component) {
                           'Armed Forces Others'
                         )
                       ),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-zip',
-                        className: 'input-text',
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.updateInput,
+                        name: 'zip',
+                        value: this.state.payInfo.zip,
+                        className: this.state.validator.zip ? 'input-text' : 'input-text invalid',
                         placeholder: 'Zip' })
                     )
                   )
@@ -15283,7 +15408,8 @@ var Cart = function (_React$Component) {
                   { className: 'complete-order' },
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'button',
-                    { className: 'btn-large-font btn-empty-cart max-width' },
+                    { onClick: this.submitOrder,
+                      className: 'btn-large-font btn-empty-cart max-width' },
                     'COMPLETE MY ORDER'
                   )
                 )
@@ -15398,6 +15524,9 @@ Cart.propTypes = {
   pathname: string
 };
 
+Cart.contextTypes = {
+  router: object
+};
 var mapStateToProps = function mapStateToProps(state) {
   return {
     cart: state.cartItems,

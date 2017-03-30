@@ -9,7 +9,7 @@ import axios from 'axios'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
-const { string } = React.PropTypes
+const { string, object } = React.PropTypes
 
 class Cart extends React.Component {
   constructor(props) {
@@ -19,7 +19,30 @@ class Cart extends React.Component {
       login: false,
       addressMenu: false,
       billingMenu: false,
-      shippingAddress: {}
+      shippingAddress: {},
+      checked: false,
+      validator: {
+        name: true,
+        cardNumber: true,
+        exp_month: true,
+        exp_year: true,
+        cvv: true,
+        address: true,
+        city: true,
+        state: true,
+        zip: true
+      },
+      payInfo: {
+        name: '',
+        cardNumber: '',
+        exp_month: '',
+        exp_year: '',
+        cvv: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: ''
+      }
     }
     this.login = this.login.bind(this)
     this.convertMoney = this.convertMoney.bind(this)
@@ -28,6 +51,9 @@ class Cart extends React.Component {
     this.removeFromCart = this.removeFromCart.bind(this)
     this.toggleAddress = this.toggleAddress.bind(this)
     this.toggleBilling = this.toggleBilling.bind(this)
+    this.updateBillAddress = this.updateBillAddress.bind(this)
+    this.updateInput = this.updateInput.bind(this)
+    this.submitOrder = this.submitOrder.bind(this)
   }
 
   toggleAddress (e) {
@@ -84,34 +110,24 @@ class Cart extends React.Component {
     this.setState(obj)
   }
 
-  componentDidMount () {
+  updateBillAddress (e) {
     let obj = this.state
-    if(this.props.userId) {
-      axios.get('/getCart/' + this.props.userId)
-      .then(res => {
-        let cart = res.data
-        console.log(res)
-        if(cart[cart.length - 1].ship_address) {
-          obj.shippingAddress = cart.pop()
-        }
-
-        for(let i = 0; i < cart.length; i++) {
-          cart[i].edit = false
-        }
-        obj.cart = cart
-        this.setState(obj)
-      })
-    } else {
-      axios.get('/getCart/' + 'getSession')
-      .then(res => {
-        let cart = res.data
-        for(let i = 0; i < cart.length; i++) {
-          cart[i].edit = false;
-        }
-        this.setState({ cart: cart })
-      })
+    obj.checked = !obj.checked;
+    if(obj.checked && obj.shippingAddress.ship_address) {
+      obj.payInfo.address = obj.shippingAddress.ship_address
+      obj.payInfo.city = obj.shippingAddress.ship_city
+      obj.payInfo.state = obj.shippingAddress.ship_state
+      obj.payInfo.zip = obj.shippingAddress.ship_zipcode
     }
+    this.setState(obj)
   }
+
+  updateInput (e) {
+    let obj = this.state
+    obj.payInfo[e.target.name] = e.target.value
+    this.setState(obj)
+  }
+
 
   toggleEdit (e, f) {
     e = !e
@@ -137,6 +153,93 @@ class Cart extends React.Component {
         }
       }
     })
+  }
+
+  submitOrder (e) {
+    e.preventDefault()
+    let obj = this.state
+    let validator = this.state.validator
+    let validInput = true;
+    for(let key in validator) {
+      validator[key] = true
+    }
+    if(!obj.payInfo.name) validator.name = false
+    if(!obj.payInfo.cardNumber || obj.payInfo.cardNumber.length !== 16 || isNaN(obj.payInfo.cardNumber * 1)) validator.cardNumber = false
+    if(!obj.payInfo.exp_month) validator.exp_month = false
+    if(!obj.payInfo.exp_year) validator.exp_year = false
+    if(!obj.payInfo.cvv || obj.payInfo.cvv.length !== 3 || isNaN(obj.payInfo.cvv * 1)) validator.cvv = false
+    if(!obj.payInfo.address) validator.address = false
+    if(!obj.payInfo.city) validator.city = false
+    if(!obj.payInfo.state) validator.state = false
+    if(!obj.payInfo.zip || obj.payInfo.zip.length < 4 || obj.payInfo.zip.length > 10 || isNaN(obj.payInfo.zip * 1)) validator.zip = false
+    obj.validator = validator
+
+
+    for(let key in validator) {
+      if(!validator[key]){
+        validInput = false
+      }
+    }
+
+    if(validInput) {
+        let cartItems = []
+        for(let i = 0; i < obj.cart.length; i++) {
+          cartItems.push({
+            product_id: obj.cart[i].product_id,
+            qty: obj.cart[i].qty,
+            price: obj.cart[i].sale,
+            shipping: obj.cart[i].shipping
+          })
+        }
+        axios.post('/createOrder', {
+          data: {
+            id: this.props.userId,
+            name: obj.payInfo.name,
+            address: obj.payInfo.address,
+            city: obj.payInfo.city,
+            state: obj.payInfo.state,
+            zip: obj.payInfo.zip,
+            cart: cartItems
+          }
+        }).then(res => {
+          if(res.data === "Order Complete") {
+            this.props.dispatch(updateQty(0))
+            this.context.router.transitionTo('/')
+          } else {
+            console.log('something went wrong', res)
+          }
+        })
+      } else {
+        this.setState(obj)
+      }
+  }
+
+  componentDidMount () {
+    let obj = this.state
+    if(this.props.userId) {
+      axios.get('/getCart/' + this.props.userId)
+      .then(res => {
+        let cart = res.data
+        if(cart[cart.length - 1].ship_address) {
+          obj.shippingAddress = cart.pop()
+        }
+
+        for(let i = 0; i < cart.length; i++) {
+          cart[i].edit = false
+        }
+        obj.cart = cart
+        this.setState(obj)
+      })
+    } else {
+      axios.get('/getCart/' + 'getSession')
+      .then(res => {
+        let cart = res.data
+        for(let i = 0; i < cart.length; i++) {
+          cart[i].edit = false;
+        }
+        this.setState({ cart: cart })
+      })
+    }
   }
 
   render () {
@@ -284,16 +387,21 @@ class Cart extends React.Component {
                     <span onClick={this.toggleBilling}><img src='../../public/img/icons/billingClose.svg' /> Select a different payment method</span>
                     <h1>ADD A NEW CREDIT CARD</h1>
                     <form>
-                      <input name='card-name'
-                             className='input-text'
+                      <input onChange={this.updateInput}
+                             name='name'
+                             value={this.state.payInfo.name}
+                             className={this.state.validator.name ? 'input-text' : 'input-text invalid'}
                              placeholder='Cardholder Name'/>
-                      <input name='card-number'
-                             className='input-text'
+                      <input onChange={this.updateInput}
+                             name='cardNumber'
+                             value={this.state.payInfo.cardNumber}
+                             className={this.state.validator.cardNumber ? 'input-text' : 'input-text invalid'}
                              placeholder='Card Number'/>
-                      <select
-                        className='drop-down-box'
-                        name='month'>
-                        <option selected value={null}>[Expiration Month]</option>
+                      <select onChange={this.updateInput}
+                        value={this.state.payInfo.exp_month}
+                        className={this.state.validator.exp_month ? 'drop-down-box' : 'drop-down-box invalid'}
+                        name='exp_month'>
+                        <option defaultValue value=''>[Expiration Month]</option>
                         <option value='January'>01-January</option>
                         <option value='February'>02-February</option>
                         <option value='March'>March</option>
@@ -308,9 +416,11 @@ class Cart extends React.Component {
                         <option value='December'>December</option>
                       </select>
                       <select
-                        className='drop-down-box'
-                        name='year'>
-                        <option selected value={null}>[Expiration Year]</option>
+                        onChange={this.updateInput}
+                        className={this.state.validator.exp_year ? 'drop-down-box' : 'drop-down-box invalid'}
+                        value={this.state.payInfo.exp_year}
+                        name='exp_year'>
+                        <option defaultValue value=''>[Expiration Year]</option>
                         <option value='2017'>2017</option>
                         <option value='2018'>2018</option>
                         <option value='2019'>2019</option>
@@ -322,22 +432,33 @@ class Cart extends React.Component {
                         <option value='2025'>2025</option>
                         <option value='2026'>2026</option>
                       </select>
-                      <input name='cvv'
-                             className='cvv'
+                      <input onChange={this.updateInput}
+                             value={this.state.payInfo.cvv}
+                             name='cvv'
+                             className={this.state.validator.cvv ? 'cvv' : 'cvv invalid'}
                              placeholder='cvv'/>
                       <h1 className='billing-address'>BILLING ADDRESS</h1>
                         <label className='same-text'>
-                          <input type='checkbox'
+                          <input onChange={this.updateBillAddress}
+                            type='checkbox'
+                            checked={this.state.checked}
                             className='same-address'/>Same as my Shipping Address
                         </label>
-                      <input name='bill-address'
-                             className='input-text'
+                      <input onChange={this.updateInput}
+                             name='address'
+                             value={this.state.payInfo.address}
+                             className={this.state.validator.address ? 'input-text' : 'input-text invalid'}
                              placeholder='Billing Address'/>
-                      <input name='bill-city'
-                             className='input-text'
+                      <input onChange={this.updateInput}
+                             name='city'
+                             value={this.state.payInfo.city}
+                             className={this.state.validator.city ? 'input-text' : 'input-text invalid'}
                              placeholder='City'/>
-                      <select className='drop-down-box'>
-                          <option selected value={null}>[Select a State]</option>
+                      <select onChange={this.updateInput}
+                              name='state'
+                              className={this.state.validator.state ? 'drop-down-box' : 'drop-down-box invalid'}
+                              value={this.state.payInfo.state}>
+                          <option defaultValue value=''>[Select a State]</option>
                          	<option value="AL">Alabama</option>
                          	<option value="AK">Alaska</option>
                          	<option value="AZ">Arizona</option>
@@ -393,8 +514,10 @@ class Cart extends React.Component {
                           <option value="AP">Armed Forces Pacific</option>
                           <option value="AE">Armed Forces Others</option>
                       </select>
-                      <input name='bill-zip'
-                             className='input-text'
+                      <input onChange={this.updateInput}
+                             name='zip'
+                             value={this.state.payInfo.zip}
+                             className={this.state.validator.zip ? 'input-text' : 'input-text invalid'}
                              placeholder='Zip'/>
                     </form>
                   </div>
@@ -407,7 +530,8 @@ class Cart extends React.Component {
                 </div>
 
                 <div className='complete-order'>
-                  <button className='btn-large-font btn-empty-cart max-width'>COMPLETE MY ORDER</button>
+                  <button onClick={this.submitOrder}
+                          className='btn-large-font btn-empty-cart max-width'>COMPLETE MY ORDER</button>
                 </div>
             </div>
             :
@@ -475,6 +599,9 @@ Cart.propTypes = {
   pathname: string
 }
 
+Cart.contextTypes = {
+  router: object
+}
 const mapStateToProps = state => {
   return {
     cart: state.cartItems,

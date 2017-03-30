@@ -28,13 +28,6 @@ CREATE TABLE customer (
   ship_city varchar(20),
   ship_state varchar(20),
   ship_zipcode varchar(10),
-  bill_first_name varchar(20),
-  bill_last_name varchar(20),
-  bill_address_one varchar(30),
-  bill_address_two varchar(30),
-  bill_city varchar(20),
-  bill_state varchar(20),
-  bill_zipcode varchar(10),
   phonenumber varchar(15)
 );
 
@@ -44,4 +37,24 @@ CREATE TABLE cart (
   session_id varchar(40),
   customer_id int references customer,
   product_id int references product
+);
+
+CREATE TABLE orders (
+  id serial primary key,
+  ship_name varchar(20),
+  ship_address varchar(30),
+  ship_city varchar(20),
+  ship_state varchar(20),
+  ship_zipcode varchar(10),
+  purchase_time TIMESTAMP WITH TIME ZONE,
+  customer_id int references customer
+);
+
+CREATE TABLE orderDetails (
+  id serial primary key,
+  product_id int references product,
+  qty int,
+  sold_price numeric(6, 2),
+  shipping_price numeric(4, 2),
+  order_id int references orders
 );

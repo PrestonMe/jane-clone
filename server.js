@@ -226,6 +226,24 @@ server.post('/setShipAddress', function(req, res, next) {
   })
 })
 
+server.post('/createOrder', function(req, res, next) {
+  let data = req.body.data
+  db.create_order([data.id, data.name, data.address, data.city, data.state, data.zip], function(err, orderId) {
+    let iterator = 0
+    for(let i = 0; i < data.cart.length; i++){
+      let cartDetails = [data.cart[i].product_id, data.cart[i].qty, data.cart[i].price, data.cart[i].shipping, orderId[0].id]
+      db.create_order_details(cartDetails, function(err, response) {
+        iterator++
+        if(iterator === data.cart.length){
+          db.empty_cart(data.id, function(err, finished) {
+            res.json('Order Complete')
+          })
+        }
+      })
+    }
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can
