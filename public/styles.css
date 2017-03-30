@@ -714,6 +714,72 @@ b {
               width: 105px;
               padding: 0px 12px;
               cursor: pointer; }
+        .checkout .cart-wrapper .cart .shipping-payment .pay-by-card {
+          width: calc(100% / 2);
+          padding-top: 10px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card span {
+            padding-left: 10px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card span:nth-child(1) {
+            color: #44C7B5;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer; }
+            .checkout .cart-wrapper .cart .shipping-payment .pay-by-card span:nth-child(1) img {
+              margin-right: 8px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card h1 {
+            border: none;
+            padding: 0;
+            margin: 15px 0; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card form {
+            padding-right: 20px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .input-text {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 10px 0px;
+            background-color: #FFF;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+            border-radius: 3px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .drop-down-box {
+            color: #555555;
+            font-weight: bold;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 10px 0px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            box-sizing: border-box;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            background-color: #FFF; }
+            .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .drop-down-box option {
+              font-weight: bold; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .billing-address {
+            padding: 15px 10px 20px 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #EEEEEE;
+            width: 100%;
+            font-size: 15px;
+            color: #555555; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .same-text {
+            font-weight: bold;
+            font-size: 13px;
+            padding: 15px 0;
+            margin-bottom: 10px; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .same-address {
+            margin: 0px 8px 0px 10px;
+            vertical-align: text-top; }
+          .checkout .cart-wrapper .cart .shipping-payment .pay-by-card .cvv {
+            padding: 10px;
+            margin: 8px 10px 0px;
+            font-size: 14px;
+            box-sizing: content-box;
+            width: 55px;
+            height: 17px;
+            padding: 10px 16px;
+            border-radius: 3px;
+            border: 1px solid #ccc; }
       .checkout .cart-wrapper .cart .shipping-header {
         font-size: 14px;
         padding: 30px 10px 10px;

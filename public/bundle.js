@@ -14804,13 +14804,12 @@ var Cart = function (_React$Component) {
                     )
                   ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    null,
-                    'Hello',
+                    { className: 'pay-by-card' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'span',
                       { onClick: this.toggleBilling },
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../../public/img/icons/billingClose.svg' }),
-                      'Select a different payment method'
+                      ' Select a different payment method'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                       'h1',
@@ -14821,31 +14820,445 @@ var Cart = function (_React$Component) {
                       'form',
                       null,
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'card-name',
+                        className: 'input-text',
                         placeholder: 'Cardholder Name' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'card-number',
+                        className: 'input-text',
                         placeholder: 'Card Number' }),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'month' }),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'year' }),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        {
+                          className: 'drop-down-box',
+                          name: 'month' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { selected: true, value: null },
+                          '[Expiration Month]'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'January' },
+                          '01-January'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'February' },
+                          '02-February'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'March' },
+                          'March'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'April' },
+                          'April'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'May' },
+                          'May'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'June' },
+                          'June'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'July' },
+                          'July'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'August' },
+                          'August'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'September' },
+                          'September'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'October' },
+                          'October'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'November' },
+                          'November'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'December' },
+                          'December'
+                        )
+                      ),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        {
+                          className: 'drop-down-box',
+                          name: 'year' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { selected: true, value: null },
+                          '[Expiration Year]'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2017' },
+                          '2017'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2018' },
+                          '2018'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2019' },
+                          '2019'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2020' },
+                          '2020'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2021' },
+                          '2021'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2022' },
+                          '2022'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2023' },
+                          '2023'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2024' },
+                          '2024'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2025' },
+                          '2025'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: '2026' },
+                          '2026'
+                        )
+                      ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'cvv',
+                        className: 'cvv',
                         placeholder: 'cvv' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h1',
-                        null,
+                        { className: 'billing-address' },
                         'BILLING ADDRESS'
                       ),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', null),
-                      ' ',
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'span',
-                        null,
+                        'label',
+                        { className: 'same-text' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox',
+                          className: 'same-address' }),
                         'Same as my Shipping Address'
                       ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-address',
+                        className: 'input-text',
                         placeholder: 'Billing Address' }),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-city',
+                        className: 'input-text',
                         placeholder: 'City' }),
-                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-state' }),
+                      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        { className: 'drop-down-box' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { selected: true, value: null },
+                          '[Select a State]'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AL' },
+                          'Alabama'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AK' },
+                          'Alaska'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AZ' },
+                          'Arizona'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AR' },
+                          'Arkansas'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'CA' },
+                          'California'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'CO' },
+                          'Colorado'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'CT' },
+                          'Connecticut'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'DE' },
+                          'Delaware'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'DC' },
+                          'District Of Columbia'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'FL' },
+                          'Florida'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'GA' },
+                          'Georgia'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'HI' },
+                          'Hawaii'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'ID' },
+                          'Idaho'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'IL' },
+                          'Illinois'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'IN' },
+                          'Indiana'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'IA' },
+                          'Iowa'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'KS' },
+                          'Kansas'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'KY' },
+                          'Kentucky'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'LA' },
+                          'Louisiana'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'ME' },
+                          'Maine'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MD' },
+                          'Maryland'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MA' },
+                          'Massachusetts'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MI' },
+                          'Michigan'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MN' },
+                          'Minnesota'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MS' },
+                          'Mississippi'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MO' },
+                          'Missouri'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'MT' },
+                          'Montana'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NE' },
+                          'Nebraska'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NV' },
+                          'Nevada'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NH' },
+                          'New Hampshire'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NJ' },
+                          'New Jersey'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NM' },
+                          'New Mexico'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NY' },
+                          'New York'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'NC' },
+                          'North Carolina'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'ND' },
+                          'North Dakota'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'OH' },
+                          'Ohio'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'OK' },
+                          'Oklahoma'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'OR' },
+                          'Oregon'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'PA' },
+                          'Pennsylvania'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'RI' },
+                          'Rhode Island'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'SC' },
+                          'South Carolina'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'SD' },
+                          'South Dakota'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'TN' },
+                          'Tennessee'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'TX' },
+                          'Texas'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'UT' },
+                          'Utah'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'VT' },
+                          'Vermont'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'VA' },
+                          'Virginia'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'WA' },
+                          'Washington'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'WV' },
+                          'West Virginia'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'WI' },
+                          'Wisconsin'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'WY' },
+                          'Wyoming'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AA' },
+                          'Armed Forces Americas'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AP' },
+                          'Armed Forces Pacific'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                          'option',
+                          { value: 'AE' },
+                          'Armed Forces Others'
+                        )
+                      ),
                       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'bill-zip',
+                        className: 'input-text',
                         placeholder: 'Zip' })
                     )
                   )

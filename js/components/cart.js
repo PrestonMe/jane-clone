@@ -280,29 +280,121 @@ class Cart extends React.Component {
                     </div>
                   </div>
                   :
-                  <div>
-                    Hello
-                    <span onClick={this.toggleBilling}>
-                      <img src='../../public/img/icons/billingClose.svg' />
-                       Select a different payment method</span>
+                  <div className='pay-by-card'>
+                    <span onClick={this.toggleBilling}><img src='../../public/img/icons/billingClose.svg' /> Select a different payment method</span>
                     <h1>ADD A NEW CREDIT CARD</h1>
                     <form>
                       <input name='card-name'
+                             className='input-text'
                              placeholder='Cardholder Name'/>
                       <input name='card-number'
+                             className='input-text'
                              placeholder='Card Number'/>
-                      <input name='month'/>
-                      <input name='year'/>
+                      <select
+                        className='drop-down-box'
+                        name='month'>
+                        <option selected value={null}>[Expiration Month]</option>
+                        <option value='January'>01-January</option>
+                        <option value='February'>02-February</option>
+                        <option value='March'>March</option>
+                        <option value='April'>April</option>
+                        <option value='May'>May</option>
+                        <option value='June'>June</option>
+                        <option value='July'>July</option>
+                        <option value='August'>August</option>
+                        <option value='September'>September</option>
+                        <option value='October'>October</option>
+                        <option value='November'>November</option>
+                        <option value='December'>December</option>
+                      </select>
+                      <select
+                        className='drop-down-box'
+                        name='year'>
+                        <option selected value={null}>[Expiration Year]</option>
+                        <option value='2017'>2017</option>
+                        <option value='2018'>2018</option>
+                        <option value='2019'>2019</option>
+                        <option value='2020'>2020</option>
+                        <option value='2021'>2021</option>
+                        <option value='2022'>2022</option>
+                        <option value='2023'>2023</option>
+                        <option value='2024'>2024</option>
+                        <option value='2025'>2025</option>
+                        <option value='2026'>2026</option>
+                      </select>
                       <input name='cvv'
+                             className='cvv'
                              placeholder='cvv'/>
-                      <h1>BILLING ADDRESS</h1>
-                      <input /> <span>Same as my Shipping Address</span>
+                      <h1 className='billing-address'>BILLING ADDRESS</h1>
+                        <label className='same-text'>
+                          <input type='checkbox'
+                            className='same-address'/>Same as my Shipping Address
+                        </label>
                       <input name='bill-address'
+                             className='input-text'
                              placeholder='Billing Address'/>
                       <input name='bill-city'
+                             className='input-text'
                              placeholder='City'/>
-                      <input name='bill-state'/>
+                      <select className='drop-down-box'>
+                          <option selected value={null}>[Select a State]</option>
+                         	<option value="AL">Alabama</option>
+                         	<option value="AK">Alaska</option>
+                         	<option value="AZ">Arizona</option>
+                         	<option value="AR">Arkansas</option>
+                         	<option value="CA">California</option>
+                         	<option value="CO">Colorado</option>
+                         	<option value="CT">Connecticut</option>
+                         	<option value="DE">Delaware</option>
+                         	<option value="DC">District Of Columbia</option>
+                         	<option value="FL">Florida</option>
+                         	<option value="GA">Georgia</option>
+                         	<option value="HI">Hawaii</option>
+                         	<option value="ID">Idaho</option>
+                         	<option value="IL">Illinois</option>
+                         	<option value="IN">Indiana</option>
+                         	<option value="IA">Iowa</option>
+                         	<option value="KS">Kansas</option>
+                         	<option value="KY">Kentucky</option>
+                         	<option value="LA">Louisiana</option>
+                         	<option value="ME">Maine</option>
+                         	<option value="MD">Maryland</option>
+                         	<option value="MA">Massachusetts</option>
+                         	<option value="MI">Michigan</option>
+                         	<option value="MN">Minnesota</option>
+                         	<option value="MS">Mississippi</option>
+                         	<option value="MO">Missouri</option>
+                         	<option value="MT">Montana</option>
+                         	<option value="NE">Nebraska</option>
+                         	<option value="NV">Nevada</option>
+                         	<option value="NH">New Hampshire</option>
+                         	<option value="NJ">New Jersey</option>
+                         	<option value="NM">New Mexico</option>
+                         	<option value="NY">New York</option>
+                         	<option value="NC">North Carolina</option>
+                         	<option value="ND">North Dakota</option>
+                         	<option value="OH">Ohio</option>
+                         	<option value="OK">Oklahoma</option>
+                         	<option value="OR">Oregon</option>
+                         	<option value="PA">Pennsylvania</option>
+                         	<option value="RI">Rhode Island</option>
+                         	<option value="SC">South Carolina</option>
+                         	<option value="SD">South Dakota</option>
+                         	<option value="TN">Tennessee</option>
+                         	<option value="TX">Texas</option>
+                         	<option value="UT">Utah</option>
+                         	<option value="VT">Vermont</option>
+                         	<option value="VA">Virginia</option>
+                         	<option value="WA">Washington</option>
+                         	<option value="WV">West Virginia</option>
+                         	<option value="WI">Wisconsin</option>
+                         	<option value="WY">Wyoming</option>
+                          <option value="AA">Armed Forces Americas</option>
+                          <option value="AP">Armed Forces Pacific</option>
+                          <option value="AE">Armed Forces Others</option>
+                      </select>
                       <input name='bill-zip'
+                             className='input-text'
                              placeholder='Zip'/>
                     </form>
                   </div>
