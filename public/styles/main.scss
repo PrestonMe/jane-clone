@@ -1285,14 +1285,17 @@ b {
     right: 20px;
     top: 60px;
     z-index: 11;
-    div:nth-child(-n+2) {
+    a {
       display: flex;
       justify-content: space-between;
       padding-bottom: 20px;
     }
+    .no-pad {
+      padding: 0;
+    }
       p {
-        font-size: 18px;
-        color: #585454;
+        font-size: 17px;
+        color: #333;
       }
       img {
         width: 18px;
@@ -1305,10 +1308,28 @@ b {
   }
 }
 
+
 .max-width {
   width: 100%;
 }
 
 .btn-large-font {
   font-size: 16px;
+}
+
+.history {
+  .no-history {
+    height: 22px;
+    width: 100%;
+    padding: 20px;
+    margin: 95px 0;
+    box-sizing: border-box;
+    display: inline-table;
+    background-color: #FFF;
+    text-align: center;
+    line-height: 22px;
+    a {
+      color: #7cd8cb;
+    }
+  }
 }

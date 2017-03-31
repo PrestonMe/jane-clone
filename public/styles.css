@@ -1025,13 +1025,15 @@ b {
     right: 20px;
     top: 60px;
     z-index: 11; }
-    .account-menu .menu-details div:nth-child(-n+2) {
+    .account-menu .menu-details a {
       display: flex;
       justify-content: space-between;
       padding-bottom: 20px; }
+    .account-menu .menu-details .no-pad {
+      padding: 0; }
     .account-menu .menu-details p {
-      font-size: 18px;
-      color: #585454; }
+      font-size: 17px;
+      color: #333; }
     .account-menu .menu-details img {
       width: 18px;
       height: 18px; }
@@ -1044,5 +1046,18 @@ b {
 
 .btn-large-font {
   font-size: 16px; }
+
+.history .no-history {
+  height: 22px;
+  width: 100%;
+  padding: 20px;
+  margin: 95px 0;
+  box-sizing: border-box;
+  display: inline-table;
+  background-color: #FFF;
+  text-align: center;
+  line-height: 22px; }
+  .history .no-history a {
+    color: #7cd8cb; }
 
 /*# sourceMappingURL=styles.css.map*/

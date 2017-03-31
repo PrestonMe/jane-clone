@@ -244,6 +244,61 @@ server.post('/createOrder', function(req, res, next) {
   })
 })
 
+server.get('/getHistory/:userId', function(req, res, next) {
+
+  db.get_order_history(req.params.userId, function(err, response) {
+    let arr = []
+    let counter = 0
+    let microCount = 0
+    // Possibly avoid this smelly solution with bluebird promisification?
+    for(let i = 0; i < response.length; i++) {
+      db.get_order_details(response[i].id, function(err, details){
+        counter++
+        arr.push(details)
+        microCount += details.length
+        if(counter === response.length) {
+
+          let counter2 = 0, arr2 = []
+
+          for(let j = 0; j < arr.length; j++) {
+            for(let k = 0; k < arr[j].length; k++){
+              db.get_order_product_details(arr[j][k].product_id, function(err, product) {
+                counter2++
+                arr2.push(product[0])
+                if(counter2 === microCount) {
+
+                  //appending product details to order items
+                  for(let h = 0; h < arr2.length; h++) {
+                    for(let g = 0; g < arr.length; g++) {
+                      for(let f = 0; f < arr[g].length; f++) {
+                        if(arr[g][f].product_id === arr2[h].id){
+                          arr[g][f].name = arr2[h].name
+                          arr[g][f].seller = arr2[h].seller
+                          arr[g][f].thumb = arr2[h].thumb
+                        }
+                      }
+                    }
+                  }
+                  // appending array of order items to order object
+                  for(let h = 0; h < response.length; h++) {
+                    for(let g = 0; g < arr.length; g++){
+                      if(arr[g][0].order_id === response[h].id) {
+                        response[h].order_items = arr[g]
+                        break;
+                      }
+                    }
+                  }
+                  res.json(response)
+                }
+              })
+            }
+          }
+        }
+      })
+    }
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

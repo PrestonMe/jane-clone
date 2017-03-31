@@ -8,6 +8,7 @@ import MyAccount from '../components/login'
 import Cart from '../components/cart'
 import Product from '../components/product'
 import SignUp from '../components/signup'
+import History from '../components/order_history'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Match exactly pattern='/popular' component={AllDeals} />
         <Match exactly pattern='/sneak-peaks' component={AllDeals} />
         <Match exactly pattern='/home-decor' component={AllDeals} />
+        <Match exactly pattern='/history' component={History} />
         <Match pattern='/productpage/:id' component={Product} />
 
       </div>

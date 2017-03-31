@@ -36,15 +36,23 @@ class AccountMenu extends React.Component {
           className={'menu-background ' + this.props.class} />
         <div className='menu-details'>
           <div>
-            <p>Order History</p>
-            <img src='../public/img/icons/clock.png'/>
+            <Link to='/history'>
+              <p>Order History</p>
+              <img src='../public/img/icons/clock.png'/>
+            </Link>
           </div>
           <div>
-            <p>View Account</p>
-            <img src='../public/img/icons/account.png'/>
+            <Link to='/my-account'>
+              <p>View Account</p>
+              <img src='../public/img/icons/account.png'/>
+            </Link>
           </div>
           <div>
-            <Link to='/logon'><p className='logout' onClick={this.logout}>Log Out</p></Link>
+            <Link className='no-pad' to='/logon'>
+              <p className='logout' onClick={this.logout}>
+                Log Out
+              </p>
+            </Link>
           </div>
         </div>
       </div>
