@@ -1047,6 +1047,14 @@ b {
 .btn-large-font {
   font-size: 16px; }
 
+.history .history-wrapper {
+  margin: 20px auto 40px;
+  max-width: 1300px;
+  background-color: #FFF; }
+  .history .history-wrapper .history-orders {
+    width: 100%;
+    padding: 20px; }
+
 .history .no-history {
   height: 22px;
   width: 100%;

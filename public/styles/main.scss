@@ -1318,6 +1318,15 @@ b {
 }
 
 .history {
+  .history-wrapper {
+    margin: 20px auto 40px;
+    max-width: 1300px;
+    background-color: #FFF;
+    .history-orders {
+      width: 100%;
+      padding: 20px;
+    }
+  }
   .no-history {
     height: 22px;
     width: 100%;
