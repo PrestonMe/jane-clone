@@ -205,6 +205,9 @@ b {
       width: 415px;
       display: flex;
       justify-content: space-between;
+      li:hover {
+        color: #FF8188;
+      }
     }
     .right {
       width: 150px;
@@ -1290,6 +1293,11 @@ b {
       justify-content: space-between;
       padding-bottom: 20px;
     }
+    a:hover {
+      p {
+        color: #FF8188;
+      }
+    }
     .no-pad {
       padding: 0;
     }
@@ -1325,6 +1333,87 @@ b {
     .history-orders {
       width: 100%;
       padding: 20px;
+      box-sizing: border-box;
+      h1{
+        padding-bottom: 20px;
+        border-bottom: 1px solid #1c1c1c;
+      }
+      .order {
+        overflow: hidden;
+        .order-pricing {
+          padding: 30px 10px 0 20px;
+          .left {
+            float: left;
+            padding: 0;
+            text-align: end;
+            margin-right: 20px;
+          }
+          h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+          }
+          h4 {
+            padding-top: 20px;
+            font-size: 15px;
+            font-weight: bold;
+          }
+        }
+        .line-item {
+          display: flex;
+          padding: 20px 0 20px 10px;
+          border-bottom: 1px dashed #868181;
+          p {
+            color: #7a7979;
+            font-size: 14px;
+            margin-bottom: 5px;
+          }
+          .seller-price {
+            p:nth-child(1) {
+              color: #6b6a6a;
+            }
+          }
+          div:nth-child(2) {
+            width: calc(100% / 3);
+          }
+          div {
+            margin-left: 20px;
+          }
+          img {
+            height: 51px;
+            width: 100px;
+            padding-left: 10px;
+          }
+        }
+        padding: 30px 0px;
+        border-bottom: 1px solid #1c1c1c;
+        .order-sum {
+          display: flex;
+          div {
+            width: calc(100% / 5);
+          }
+          div:nth-child(1) {
+            padding-left: 2px;
+          }
+        }
+        .shipping-details {
+          padding: 30px 0 30px 10px;
+          border-bottom: 1px dashed #868181;
+          p {
+            margin-bottom: 5px;
+          }
+          h2 {
+            margin-bottom: 5px;
+            font-weight: bold
+          }
+        }
+        div:nth-child(1) {
+          padding-left: 20px;
+        }
+        .show-order-items {
+          color: #7cd8cb;
+          cursor: pointer;
+        }
+      }
     }
   }
   .no-history {

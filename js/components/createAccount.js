@@ -27,6 +27,7 @@ class CreateAccount extends React.Component {
     this.submit = this.submit.bind(this)
     this.handleFieldChange = this.handleFieldChange.bind(this)
     this.isInvalid = this.isInvalid.bind(this)
+    this.buttonSubmitOnly = this.buttonSubmitOnly.bind(this)
   }
 
   handleFieldChange (e) {
@@ -101,8 +102,15 @@ class CreateAccount extends React.Component {
     this.setState(obj)
   }
 
+  buttonSubmitOnly (e) {
+    if(e.charCode === 13) {
+      e.preventDefault()
+    }
+  }
+
   submit (e) {
     e.preventDefault()
+
     let obj = this.state;
     if(obj.validator.name && obj.validator.email
        && obj.validator.password && obj.validator.verifyPassword) {
@@ -160,50 +168,53 @@ class CreateAccount extends React.Component {
                   name='name'
                   onChange={this.setValue}
                   value={this.state.name}
+                  onKeyPress={this.buttonSubmitOnly}
                   placeholder='Full Name' />
-                  <p
-                    className={this.state.validator.name === false ? 'error' : 'hide'}
-                    >Don't forget to enter your name.</p>
-                    <input
-                      className={this.isInvalid(this.state.validator.email)}
-                      onBlur={this.handleFieldChange}
-                      name='email'
-                      onChange={this.setValue}
-                      value={this.state.email}
-                      placeholder='Email Address' />
-                      <p
-                        className={this.state.validator.email === false ? 'error' : 'hide'}
-                        >Don't forget to enter your email.</p>
-                        <input
-                          type='password'
-                          className={this.isInvalid(this.state.validator.password)}
-                          onBlur={this.handleFieldChange}
-                          name='password'
-                          onChange={this.setValue}
-                          value={this.state.password}
-                          placeholder='Password' />
-                          <p
-                            className={this.state.validator.password === false ? 'error' : 'hide'}
-                            >Don't forget to come up with a great new password just for Jane! Make sure it's at least 8 characters.</p>
-                            <input
-                              type='password'
-                              className={this.isInvalid(this.state.validator.verifyPassword)}
-                              onBlur={this.handleFieldChange}
-                              name='verifyPassword'
-                              onChange={this.setValue}
-                              value={this.state.verifyPassword}
-                              placeholder='Confirm Password' />
-                              <p
-                                className={this.state.validator.verifyPassword === false ? 'error' : 'hide'}
-                                >Enter your password one more time to make sure we got it right.</p>
-                              </div>
-                              <button className='btn btn-sign-up'>SIGN ME UP!</button>
-                            </form>
-                          </div>
-                        </div>
-                      )
-                    }
-
+                <p
+                  className={this.state.validator.name === false ? 'error' : 'hide'}
+                  >Don't forget to enter your name.</p>
+                <input
+                  className={this.isInvalid(this.state.validator.email)}
+                  onBlur={this.handleFieldChange}
+                  name='email'
+                  onChange={this.setValue}
+                  value={this.state.email}
+                  onKeyPress={this.buttonSubmitOnly}
+                  placeholder='Email Address' />
+                <p
+                  className={this.state.validator.email === false ? 'error' : 'hide'}
+                  >Don't forget to enter your email.</p>
+                <input
+                  type='password'
+                  className={this.isInvalid(this.state.validator.password)}
+                  onBlur={this.handleFieldChange}
+                  name='password'
+                  onChange={this.setValue}
+                  value={this.state.password}
+                  onKeyPress={this.buttonSubmitOnly}
+                  placeholder='Password' />
+                <p
+                  className={this.state.validator.password === false ? 'error' : 'hide'}
+                  >Don't forget to come up with a great new password just for Jane! Make sure it's at least 8 characters.</p>
+                <input
+                  type='password'
+                  className={this.isInvalid(this.state.validator.verifyPassword)}
+                  onBlur={this.handleFieldChange}
+                  name='verifyPassword'
+                  onChange={this.setValue}
+                  value={this.state.verifyPassword}
+                  onKeyPress={this.buttonSubmitOnly}
+                  placeholder='Confirm Password' />
+                <p
+                  className={this.state.validator.verifyPassword === false ? 'error' : 'hide'}
+                  >Enter your password one more time to make sure we got it right.</p>
+              </div>
+              <button className='btn btn-sign-up'>SIGN ME UP!</button>
+            </form>
+          </div>
+        </div>
+        )
+      }
 }
 
 

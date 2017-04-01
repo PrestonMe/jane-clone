@@ -8873,6 +8873,7 @@ var CreateAccount = function (_React$Component) {
     _this.submit = _this.submit.bind(_this);
     _this.handleFieldChange = _this.handleFieldChange.bind(_this);
     _this.isInvalid = _this.isInvalid.bind(_this);
+    _this.buttonSubmitOnly = _this.buttonSubmitOnly.bind(_this);
     return _this;
   }
 
@@ -8948,10 +8949,17 @@ var CreateAccount = function (_React$Component) {
     this.setState(obj);
   };
 
+  CreateAccount.prototype.buttonSubmitOnly = function buttonSubmitOnly(e) {
+    if (e.charCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   CreateAccount.prototype.submit = function submit(e) {
     var _this2 = this;
 
     e.preventDefault();
+
     var obj = this.state;
     if (obj.validator.name && obj.validator.email && obj.validator.password && obj.validator.verifyPassword) {
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/signup', {
@@ -9028,6 +9036,7 @@ var CreateAccount = function (_React$Component) {
               name: 'name',
               onChange: this.setValue,
               value: this.state.name,
+              onKeyPress: this.buttonSubmitOnly,
               placeholder: 'Full Name' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
@@ -9042,6 +9051,7 @@ var CreateAccount = function (_React$Component) {
               name: 'email',
               onChange: this.setValue,
               value: this.state.email,
+              onKeyPress: this.buttonSubmitOnly,
               placeholder: 'Email Address' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
@@ -9057,6 +9067,7 @@ var CreateAccount = function (_React$Component) {
               name: 'password',
               onChange: this.setValue,
               value: this.state.password,
+              onKeyPress: this.buttonSubmitOnly,
               placeholder: 'Password' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
@@ -9072,6 +9083,7 @@ var CreateAccount = function (_React$Component) {
               name: 'verifyPassword',
               onChange: this.setValue,
               value: this.state.verifyPassword,
+              onKeyPress: this.buttonSubmitOnly,
               placeholder: 'Confirm Password' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
@@ -33019,18 +33031,209 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Order = function (_React$Component) {
   _inherits(Order, _React$Component);
 
-  function Order() {
+  function Order(props) {
     _classCallCheck(this, Order);
 
-    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      isHide: false,
+      orderDetails: false
+    };
+    _this.toggleOrderDetails = _this.toggleOrderDetails.bind(_this);
+    _this.convertMoney = _this.convertMoney.bind(_this);
+    return _this;
   }
 
+  Order.prototype.convertMoney = function convertMoney(value) {
+    value += "";
+    value = value.split('.');
+    if (value[1] && value[1].length === 1) {
+      value[1] += '0';
+    } else if (!value[1]) {
+      value[1] = '00';
+    }
+    return value.join('.');
+  };
+
+  Order.prototype.toggleOrderDetails = function toggleOrderDetails() {
+    this.setState({ orderDetails: !this.state.orderDetails });
+  };
+
   Order.prototype.render = function render() {
-    console.log(this.props);
+    var total = void 0,
+        tax = void 0;
+
+    total = +this.props.order_items.reduce(function (acc, val) {
+      return acc + val.sold_price * val.qty + val.shipping_price * val.qty;
+    }, 0).toFixed(2);
+
+    tax = +(total * .08).toFixed(2);
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      null,
-      'Yo'
+      { className: 'order' },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'order-sum' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          'Order #',
+          this.props.id
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          'Items In Order ',
+          this.props.order_items.reduce(function (acc, val) {
+            return acc + val.qty;
+          }, 0)
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          'Order Total: $',
+          this.convertMoney((total + tax).toFixed(2))
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'show-order-items', onClick: this.toggleOrderDetails },
+          this.state.orderDetails ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Hide Details'
+          ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Show Details'
+          )
+        )
+      ),
+      this.state.orderDetails ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'shipping-details' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            'SHIPPING ADDRESS'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            this.props.ship_name
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            this.props.ship_address
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            this.props.ship_city,
+            ', ',
+            this.props.ship_state,
+            ' ',
+            this.props.ship_zipcode
+          )
+        ),
+        this.props.order_items.map(function (item) {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'line-item', key: item.product_id },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../' + item.thumb }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              { className: 'seller-price' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                '$',
+                item.sold_price,
+                ' ',
+                item.name
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'Seller: ',
+                item.seller
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'Quantity: ',
+                item.qty
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'Price: $',
+                item.sold_price * item.qty
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                null,
+                'Shipping: $',
+                item.shipping_price * item.qty
+              )
+            )
+          );
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'order-pricing' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'left' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h3',
+              null,
+              'TOTAL BEFORE TAX:'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h3',
+              null,
+              'TAX:'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h4',
+              null,
+              'ORDER TOTAL:'
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'left' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h3',
+              null,
+              ' $',
+              this.convertMoney(total)
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h3',
+              null,
+              ' $',
+              this.convertMoney(tax)
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h4',
+              null,
+              ' $',
+              this.convertMoney((total + tax).toFixed(2))
+            )
+          )
+        )
+      ) : ''
     );
   };
 
