@@ -299,6 +299,13 @@ server.get('/getHistory/:userId', function(req, res, next) {
   })
 })
 
+server.get('/getAccount/:id', function(req, res, next) {
+  console.log(req.params)
+  db.get_account_info(req.params.id , function(err, response) {
+    res.json(response)
+  })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

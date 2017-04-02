@@ -13205,8 +13205,9 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_product__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_signup__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_order_history__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_account_info__ = __webpack_require__(305);
 
-// import { render } from 'react-dom'
+
 
 
 
@@ -13239,6 +13240,7 @@ var App = function App() {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/sneak-peaks', component: __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__["a" /* default */] }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/home-decor', component: __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__["a" /* default */] }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/history', component: __WEBPACK_IMPORTED_MODULE_9__components_order_history__["a" /* default */] }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/account', component: __WEBPACK_IMPORTED_MODULE_10__components_account_info__["a" /* default */] }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/productpage/:id', component: __WEBPACK_IMPORTED_MODULE_7__components_product__["a" /* default */] })
     )
   );
@@ -14293,7 +14295,7 @@ var AccountMenu = function (_React$Component) {
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-            { to: '/my-account' },
+            { to: '/account' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
               null,
@@ -33241,6 +33243,182 @@ var Order = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = Order;
+
+/***/ }),
+/* 305 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_redux__ = __webpack_require__(14);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var Account = function (_React$Component) {
+  _inherits(Account, _React$Component);
+
+  function Account(props) {
+    _classCallCheck(this, Account);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      changePassword: false,
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    };
+    _this.togglePassword = _this.togglePassword.bind(_this);
+    _this.updateProfile = _this.updateProfile.bind(_this);
+    _this.setValue = _this.setValue.bind(_this);
+    return _this;
+  }
+
+  Account.prototype.togglePassword = function togglePassword() {
+    this.setState({ changePassword: !this.state.changePassword });
+  };
+
+  Account.prototype.updateProfile = function updateProfile(e) {
+    e.preventDefault();
+    console.log('updating profile');
+  };
+
+  Account.prototype.setValue = function setValue(e) {
+    var obj = {};
+    obj[e.target.name] = e.target.value;
+    this.setState(obj);
+  };
+
+  Account.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
+    __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/getAccount/' + this.props.userId).then(function (res) {
+      var userData = res.data[0];
+      var obj = _this2.state;
+      obj.name = userData.fullname;
+      obj.email = userData.email;
+      _this2.setState(obj);
+    });
+  };
+
+  Account.prototype.render = function render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__nav__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'account' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'update_profile' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h1',
+            null,
+            'YOUR INFORMATION'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'form',
+            { onSubmit: this.updateProfile },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Full name',
+              onChange: this.setValue,
+              name: 'name',
+              value: this.state.name
+            }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Email Address',
+              onChange: this.setValue,
+              name: 'email',
+              value: this.state.email
+            }),
+            this.state.changePassword ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'clearfix' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'span',
+                  { onClick: this.togglePassword },
+                  'Nevermind, don\'t change it.'
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Password',
+                onChange: this.setValue,
+                name: 'password',
+                value: this.state.password }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Confirm Password',
+                onChange: this.setValue,
+                name: 'confirmPassword',
+                value: this.state.confirmPassword
+              }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'line clearfix' })
+            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              { className: 'clearfix' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'span',
+                { onClick: this.togglePassword },
+                'Change your Password'
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'button',
+              { className: 'btn' },
+              'UPDATE ACCOUNT'
+            )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'support' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h1',
+            null,
+            'SUPPORT'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            'Should you have any questions, feel free to email us at ',
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'span',
+              null,
+              'support@jane.com'
+            ),
+            '.'
+          )
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__footer__["a" /* default */], null)
+    );
+  };
+
+  return Account;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn,
+    userId: state.userId
+  };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_react_redux__["b" /* connect */])(mapStateToProps)(Account);
 
 /***/ })
 /******/ ]);

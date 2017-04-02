@@ -42,7 +42,7 @@ class AccountMenu extends React.Component {
             </Link>
           </div>
           <div>
-            <Link to='/my-account'>
+            <Link to='/account'>
               <p>View Account</p>
               <img src='../public/img/icons/account.png'/>
             </Link>

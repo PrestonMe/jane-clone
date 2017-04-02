@@ -1,5 +1,4 @@
 import React from 'react'
-// import { render } from 'react-dom'
 import { Match } from 'react-router'
 import { Provider } from 'react-redux'
 import store from '../store'
@@ -9,6 +8,7 @@ import Cart from '../components/cart'
 import Product from '../components/product'
 import SignUp from '../components/signup'
 import History from '../components/order_history'
+import Account from '../components/account_info'
 
 const App = () => {
   return (
@@ -29,6 +29,7 @@ const App = () => {
         <Match exactly pattern='/sneak-peaks' component={AllDeals} />
         <Match exactly pattern='/home-decor' component={AllDeals} />
         <Match exactly pattern='/history' component={History} />
+        <Match exactly pattern='/account' component={Account} />
         <Match pattern='/productpage/:id' component={Product} />
 
       </div>
