@@ -1167,6 +1167,27 @@ b {
     margin-right: 10px;
     padding: 20px;
     background-color: #FFF; }
+    .account .update_profile .success {
+      background-color: #DFF0D8;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: #EEE; }
+      .account .update_profile .success p {
+        margin: 0;
+        color: #29612A;
+        text-align: center; }
+    .account .update_profile .error {
+      border-color: red;
+      color: red; }
+    .account .update_profile .invalid {
+      color: red;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: left;
+      line-height: 20px;
+      margin: 0; }
+    .account .update_profile .mar-bot {
+      margin-bottom: 10px; }
     .account .update_profile .line {
       border-bottom: 1px solid #EEE;
       width: 100%;

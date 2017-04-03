@@ -1473,6 +1473,32 @@ b {
     margin-right: 10px;
     padding: 20px;
     background-color: #FFF;
+    .success {
+      background-color: #DFF0D8;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: #EEE;
+      p {
+        margin: 0;
+        color: #29612A;
+        text-align: center;
+      }
+    }
+    .error {
+      border-color: red;
+      color: red;
+    }
+    .invalid {
+      color: red;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: left;
+      line-height: 20px;
+      margin: 0;
+    }
+    .mar-bot {
+      margin-bottom: 10px;
+    }
     .line {
       border-bottom: 1px solid #EEE;
       width: 100%;

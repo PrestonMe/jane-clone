@@ -12,7 +12,14 @@ class Account extends React.Component {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      validator: {
+        name: true,
+        email: true,
+        pass: true,
+        valPass: true
+      },
+      updateSuccess: false
     }
     this.togglePassword = this.togglePassword.bind(this)
     this.updateProfile = this.updateProfile.bind(this)
@@ -25,7 +32,83 @@ class Account extends React.Component {
 
   updateProfile (e) {
     e.preventDefault()
-    console.log('updating profile')
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let obj = this.state
+
+    if(re.test(obj.email)) {
+      obj.validator.email = true
+    } else {
+      obj.validator.email = false
+    }
+
+    if(obj.name) {
+      obj.validator.name = true
+    } else {
+      obj.validator.name = false
+    }
+
+    if(obj.changePassword) {
+      if(obj.password.length >= 8) {
+        obj.validator.pass = true
+      } else {
+        obj.validator.pass = false
+      }
+
+      if(obj.confirmPassword === obj.password) {
+        obj.validator.valPass = true
+      } else {
+        obj.validator.valPass = false
+      }
+
+      if(obj.validator.pass && obj.validator.valPass
+      && obj.validator.name && obj.validator.email) {
+        this.setState({validator: obj.validator})
+        console.log('updating validator')
+        axios.put('/updateAll', {
+          data: {
+            name: obj.name,
+            email: obj.email,
+            password: obj.password,
+            id: this.props.userId
+          }
+        }).then(res => {
+          if(res.data === 'Account Updated') {
+            this.setState({updateSuccess: true})
+            let that = this
+            setTimeout(function(){
+              that.setState({updateSuccess: false})
+            }, 4000)
+          }
+        })
+      } else {
+        this.setState({validator: obj.validator})
+      }
+
+    } else {
+      if(obj.validator.name && obj.validator.email) {
+        this.setState({validator: obj.validator})
+        axios.put('/updateAccount', {
+          data: {
+            name: obj.name,
+            email: obj.email,
+            id: this.props.userId
+          }
+        }).then(res => {
+          console.log(res.data)
+          if(res.data === 'Account Updated') {
+            console.log('running')
+            this.setState({updateSuccess: true})
+            let that = this
+            setTimeout(function(){
+              that.setState({updateSuccess: false})
+            }, 4000)
+          }
+        })
+      } else {
+        this.setState({validator: obj.validator})
+      }
+    }
+
   }
 
   setValue (e) {
@@ -46,6 +129,7 @@ class Account extends React.Component {
   }
 
   render () {
+    console.log(this.state.updateSuccess)
     return (
       <div>
         <Nav />
@@ -54,17 +138,33 @@ class Account extends React.Component {
               <h1>
                 YOUR INFORMATION
               </h1>
+              {this.state.updateSuccess
+              ?
+                <div className='success'>
+                  <p>Your Account has been updated!</p>
+                </div>
+              :
+              ''
+              }
               <form onSubmit={this.updateProfile}>
                 <input placeholder='Full name'
                        onChange={this.setValue}
                        name='name'
                        value={this.state.name}
+                       className={!this.state.validator.name ? 'error mar-bot' : ''}
                 />
+                {!this.state.validator.name
+                ? <p className='invalid'>Enter your name.</p>
+                : ''}
                 <input placeholder='Email Address'
                        onChange={this.setValue}
                        name='email'
                        value={this.state.email}
+                       className={!this.state.validator.email ? 'error' : ''}
                 />
+                {!this.state.validator.email
+                ? <p className='invalid'>Invalid Email.</p>
+                : ''}
                 {this.state.changePassword
                 ?
                 <div>
@@ -76,12 +176,21 @@ class Account extends React.Component {
                   <input placeholder='Password'
                          onChange={this.setValue}
                          name='password'
-                         value={this.state.password}/>
+                         value={this.state.password}
+                         className={!this.state.validator.pass ? 'error mar-bot' : ''}
+                       />
+                 {!this.state.validator.pass
+                 ? <p className='invalid'>Password must be at least 8 characters in length.</p>
+                 : ''}
                   <input placeholder='Confirm Password'
                          onChange={this.setValue}
                          name='confirmPassword'
                          value={this.state.confirmPassword}
+                         className={!this.state.validator.valPass ? 'error' : ''}
                        />
+                 {!this.state.validator.valPass
+                 ? <p className='invalid'>Passwords must match!</p>
+                 : ''}
                        <div className='line clearfix'/>
                 </div>
                 :

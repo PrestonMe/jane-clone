@@ -306,6 +306,18 @@ server.get('/getAccount/:id', function(req, res, next) {
   })
 })
 
+server.put('/updateAll', function(req, res, next) {
+  db.update_all([req.body.data.name, req.body.data.email, req.body.data.password, req.body.data.id], function(err, response) {
+    res.json('Account Updated')
+  })
+})
+
+server.put('/updateAccount', function(req, res, next) {
+    db.update_account([req.body.data.name, req.body.data.email, req.body.data.id], function(err, response) {
+      res.json('Account Updated')
+    })
+})
+
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
   // used for react router v4 server side rendering, you can

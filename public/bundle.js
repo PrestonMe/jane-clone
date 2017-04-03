@@ -33281,7 +33281,14 @@ var Account = function (_React$Component) {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      validator: {
+        name: true,
+        email: true,
+        pass: true,
+        valPass: true
+      },
+      updateSuccess: false
     };
     _this.togglePassword = _this.togglePassword.bind(_this);
     _this.updateProfile = _this.updateProfile.bind(_this);
@@ -33294,8 +33301,83 @@ var Account = function (_React$Component) {
   };
 
   Account.prototype.updateProfile = function updateProfile(e) {
+    var _this2 = this;
+
     e.preventDefault();
-    console.log('updating profile');
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var obj = this.state;
+
+    if (re.test(obj.email)) {
+      obj.validator.email = true;
+    } else {
+      obj.validator.email = false;
+    }
+
+    if (obj.name) {
+      obj.validator.name = true;
+    } else {
+      obj.validator.name = false;
+    }
+
+    if (obj.changePassword) {
+      if (obj.password.length >= 8) {
+        obj.validator.pass = true;
+      } else {
+        obj.validator.pass = false;
+      }
+
+      if (obj.confirmPassword === obj.password) {
+        obj.validator.valPass = true;
+      } else {
+        obj.validator.valPass = false;
+      }
+
+      if (obj.validator.pass && obj.validator.valPass && obj.validator.name && obj.validator.email) {
+        this.setState({ validator: obj.validator });
+        console.log('updating validator');
+        __WEBPACK_IMPORTED_MODULE_3_axios___default.a.put('/updateAll', {
+          data: {
+            name: obj.name,
+            email: obj.email,
+            password: obj.password,
+            id: this.props.userId
+          }
+        }).then(function (res) {
+          if (res.data === 'Account Updated') {
+            _this2.setState({ updateSuccess: true });
+            var that = _this2;
+            setTimeout(function () {
+              that.setState({ updateSuccess: false });
+            }, 4000);
+          }
+        });
+      } else {
+        this.setState({ validator: obj.validator });
+      }
+    } else {
+      if (obj.validator.name && obj.validator.email) {
+        this.setState({ validator: obj.validator });
+        __WEBPACK_IMPORTED_MODULE_3_axios___default.a.put('/updateAccount', {
+          data: {
+            name: obj.name,
+            email: obj.email,
+            id: this.props.userId
+          }
+        }).then(function (res) {
+          console.log(res.data);
+          if (res.data === 'Account Updated') {
+            console.log('running');
+            _this2.setState({ updateSuccess: true });
+            var that = _this2;
+            setTimeout(function () {
+              that.setState({ updateSuccess: false });
+            }, 4000);
+          }
+        });
+      } else {
+        this.setState({ validator: obj.validator });
+      }
+    }
   };
 
   Account.prototype.setValue = function setValue(e) {
@@ -33305,18 +33387,19 @@ var Account = function (_React$Component) {
   };
 
   Account.prototype.componentDidMount = function componentDidMount() {
-    var _this2 = this;
+    var _this3 = this;
 
     __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/getAccount/' + this.props.userId).then(function (res) {
       var userData = res.data[0];
-      var obj = _this2.state;
+      var obj = _this3.state;
       obj.name = userData.fullname;
       obj.email = userData.email;
-      _this2.setState(obj);
+      _this3.setState(obj);
     });
   };
 
   Account.prototype.render = function render() {
+    console.log(this.state.updateSuccess);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -33332,19 +33415,40 @@ var Account = function (_React$Component) {
             null,
             'YOUR INFORMATION'
           ),
+          this.state.updateSuccess ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'success' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              null,
+              'Your Account has been updated!'
+            )
+          ) : '',
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'form',
             { onSubmit: this.updateProfile },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Full name',
               onChange: this.setValue,
               name: 'name',
-              value: this.state.name
+              value: this.state.name,
+              className: !this.state.validator.name ? 'error mar-bot' : ''
             }),
+            !this.state.validator.name ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { className: 'invalid' },
+              'Enter your name.'
+            ) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Email Address',
               onChange: this.setValue,
               name: 'email',
-              value: this.state.email
+              value: this.state.email,
+              className: !this.state.validator.email ? 'error' : ''
             }),
+            !this.state.validator.email ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'p',
+              { className: 'invalid' },
+              'Invalid Email.'
+            ) : '',
             this.state.changePassword ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'div',
               null,
@@ -33360,12 +33464,25 @@ var Account = function (_React$Component) {
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Password',
                 onChange: this.setValue,
                 name: 'password',
-                value: this.state.password }),
+                value: this.state.password,
+                className: !this.state.validator.pass ? 'error mar-bot' : ''
+              }),
+              !this.state.validator.pass ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'invalid' },
+                'Password must be at least 8 characters in length.'
+              ) : '',
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Confirm Password',
                 onChange: this.setValue,
                 name: 'confirmPassword',
-                value: this.state.confirmPassword
+                value: this.state.confirmPassword,
+                className: !this.state.validator.valPass ? 'error' : ''
               }),
+              !this.state.validator.valPass ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'p',
+                { className: 'invalid' },
+                'Passwords must match!'
+              ) : '',
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'line clearfix' })
             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'div',
