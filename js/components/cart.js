@@ -30,7 +30,8 @@ class Cart extends React.Component {
         address: true,
         city: true,
         state: true,
-        zip: true
+        zip: true,
+        shipping: true
       },
       payInfo: {
         name: '',
@@ -163,6 +164,7 @@ class Cart extends React.Component {
     for(let key in validator) {
       validator[key] = true
     }
+    if(!obj.shippingAddress.ship_first_name) validator.shipping = false
     if(!obj.payInfo.name) validator.name = false
     if(!obj.payInfo.cardNumber || obj.payInfo.cardNumber.length !== 16 || isNaN(obj.payInfo.cardNumber * 1)) validator.cardNumber = false
     if(!obj.payInfo.exp_month) validator.exp_month = false
@@ -194,7 +196,7 @@ class Cart extends React.Component {
         axios.post('/createOrder', {
           data: {
             id: this.props.userId,
-            name: obj.payInfo.name,
+            name: obj.shippingAddress.ship_first_name + ' ' + obj.shippingAddress.ship_last_name,
             address: obj.payInfo.address,
             city: obj.payInfo.city,
             state: obj.payInfo.state,
@@ -202,9 +204,9 @@ class Cart extends React.Component {
             cart: cartItems
           }
         }).then(res => {
-          if(res.data === "Order Complete") {
+          if(res.data[0]) {
             this.props.dispatch(updateQty(0))
-            this.context.router.transitionTo('/')
+            this.context.router.transitionTo('/confirmation/' + res.data[0].id)
           } else {
             console.log('something went wrong', res)
           }
@@ -365,6 +367,7 @@ class Cart extends React.Component {
                     ''
                     }
                     <button onClick={this.toggleAddress} className='btn-large-font btn-empty-cart'>USE A NEW ADDRESS</button>
+                    <p className={this.state.validator.shipping ? 'hide' : 'error'}>Please enter a shipping address.</p>
                   </div>
                   {setAddress !== 'hide'
                   ?
@@ -402,8 +405,8 @@ class Cart extends React.Component {
                         className={this.state.validator.exp_month ? 'drop-down-box' : 'drop-down-box invalid'}
                         name='exp_month'>
                         <option defaultValue value=''>[Expiration Month]</option>
-                        <option value='January'>01-January</option>
-                        <option value='February'>02-February</option>
+                        <option value='January'>January</option>
+                        <option value='February'>February</option>
                         <option value='March'>March</option>
                         <option value='April'>April</option>
                         <option value='May'>May</option>

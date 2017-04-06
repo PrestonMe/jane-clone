@@ -3830,8 +3830,8 @@ module.exports = React;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(77);
 /* harmony export (immutable) */ __webpack_exports__["c"] = login;
-/* harmony export (immutable) */ __webpack_exports__["b"] = logout;
-/* harmony export (immutable) */ __webpack_exports__["a"] = updateQty;
+/* harmony export (immutable) */ __webpack_exports__["a"] = logout;
+/* harmony export (immutable) */ __webpack_exports__["b"] = updateQty;
 
 
 function login(loggedIn, fullName, userId, cartItems) {
@@ -13206,6 +13206,8 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_signup__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_order_history__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_account_info__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_order_complete__ = __webpack_require__(306);
+
 
 
 
@@ -13241,7 +13243,8 @@ var App = function App() {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/home-decor', component: __WEBPACK_IMPORTED_MODULE_4__components_AllDeals__["a" /* default */] }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/history', component: __WEBPACK_IMPORTED_MODULE_9__components_order_history__["a" /* default */] }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/account', component: __WEBPACK_IMPORTED_MODULE_10__components_account_info__["a" /* default */] }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/productpage/:id', component: __WEBPACK_IMPORTED_MODULE_7__components_product__["a" /* default */] })
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/productpage/:id', component: __WEBPACK_IMPORTED_MODULE_7__components_product__["a" /* default */] }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/confirmation/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_order_complete__["a" /* default */] })
     )
   );
 };
@@ -14254,7 +14257,7 @@ var AccountMenu = function (_React$Component) {
   };
 
   AccountMenu.prototype.logout = function logout() {
-    this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["b" /* logout */])());
+    this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* logout */])());
   };
 
   AccountMenu.prototype.componentWillMount = function componentWillMount() {
@@ -14397,7 +14400,8 @@ var Cart = function (_React$Component) {
         address: true,
         city: true,
         state: true,
-        zip: true
+        zip: true,
+        shipping: true
       },
       payInfo: {
         name: '',
@@ -14450,7 +14454,7 @@ var Cart = function (_React$Component) {
         this.setState({ cart: cart });
       } else {
         __WEBPACK_IMPORTED_MODULE_6_axios___default.a.put('/updateCartItem/' + id + '/' + +e.target.value + '/' + this.props.userId).then(function (res) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["a" /* updateQty */])(+res.data[0].total));
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(+res.data[0].total));
           _this2.setState({ cart: cart });
         });
       }
@@ -14515,7 +14519,7 @@ var Cart = function (_React$Component) {
 
     __WEBPACK_IMPORTED_MODULE_6_axios___default.a.delete('/deleteItem/' + id + '/' + userId).then(function (res) {
       var obj = _this3.state.cart;
-      _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["a" /* updateQty */])(+res.data[0].total));
+      _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(+res.data[0].total));
       for (var i = 0; i < _this3.state.cart.length; i++) {
         if (_this3.state.cart[i].id === id) {
           obj.splice(i, 1);
@@ -14535,6 +14539,7 @@ var Cart = function (_React$Component) {
     for (var key in validator) {
       validator[key] = true;
     }
+    if (!obj.shippingAddress.ship_first_name) validator.shipping = false;
     if (!obj.payInfo.name) validator.name = false;
     if (!obj.payInfo.cardNumber || obj.payInfo.cardNumber.length !== 16 || isNaN(obj.payInfo.cardNumber * 1)) validator.cardNumber = false;
     if (!obj.payInfo.exp_month) validator.exp_month = false;
@@ -14565,7 +14570,7 @@ var Cart = function (_React$Component) {
       __WEBPACK_IMPORTED_MODULE_6_axios___default.a.post('/createOrder', {
         data: {
           id: this.props.userId,
-          name: obj.payInfo.name,
+          name: obj.shippingAddress.ship_first_name + ' ' + obj.shippingAddress.ship_last_name,
           address: obj.payInfo.address,
           city: obj.payInfo.city,
           state: obj.payInfo.state,
@@ -14573,9 +14578,9 @@ var Cart = function (_React$Component) {
           cart: cartItems
         }
       }).then(function (res) {
-        if (res.data === "Order Complete") {
-          _this4.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["a" /* updateQty */])(0));
-          _this4.context.router.transitionTo('/');
+        if (res.data[0]) {
+          _this4.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(0));
+          _this4.context.router.transitionTo('/confirmation/' + res.data[0].id);
         } else {
           console.log('something went wrong', res);
         }
@@ -14906,6 +14911,11 @@ var Cart = function (_React$Component) {
                       'button',
                       { onClick: this.toggleAddress, className: 'btn-large-font btn-empty-cart' },
                       'USE A NEW ADDRESS'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      { className: this.state.validator.shipping ? 'hide' : 'error' },
+                      'Please enter a shipping address.'
                     )
                   ),
                   setAddress !== 'hide' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__new_address__["a" /* default */], { 'class': setAddress, exitMenu: this.toggleAddress }) : '',
@@ -14973,12 +14983,12 @@ var Cart = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
                           { value: 'January' },
-                          '01-January'
+                          'January'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
                           { value: 'February' },
-                          '02-February'
+                          'February'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                           'option',
@@ -16030,7 +16040,7 @@ var Product = function (_React$Component) {
       user = this.props.userId;
     }
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/addToCart/' + this.state.product[0].id + '/' + this.state.qty + '/' + user).then(function (res) {
-      _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* updateQty */])(res.data[0].total));
+      _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["b" /* updateQty */])(res.data[0].total));
     });
   };
 
@@ -32958,7 +32968,6 @@ var History = function (_React$Component) {
   };
 
   History.prototype.render = function render() {
-    console.log(this.state.history);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -33536,6 +33545,255 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_react_redux__["b" /* connect */])(mapStateToProps)(Account);
+
+/***/ }),
+/* 306 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var OrderSum = function (_React$Component) {
+  _inherits(OrderSum, _React$Component);
+
+  function OrderSum(props) {
+    _classCallCheck(this, OrderSum);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
+      order_no: null,
+      order: []
+    };
+
+    _this.convertMoney = _this.convertMoney.bind(_this);
+    return _this;
+  }
+
+  OrderSum.prototype.convertMoney = function convertMoney(value) {
+    value += "";
+    value = value.split('.');
+    if (value[1] && value[1].length === 1) {
+      value[1] += '0';
+    } else if (!value[1]) {
+      value[1] = '00';
+    }
+    return value.join('.');
+  };
+
+  OrderSum.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
+    __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/order/' + this.props.params.id).then(function (res) {
+      console.log(res);
+      var order_no = res.data[0].order_id;
+      _this2.setState({ order: res.data, order_no: order_no });
+    });
+  };
+
+  OrderSum.prototype.render = function render() {
+    var state = this.state;
+    var total = void 0,
+        tax = void 0;
+
+    total = +state.order.reduce(function (acc, val) {
+      return acc + val.sold_price * val.qty + val.shipping_price * val.qty;
+    }, 0).toFixed(2);
+
+    tax = +(total * .08).toFixed(2);
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__nav__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'history' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'history-wrapper' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'history-orders' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              { className: 'order' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'h1',
+                { className: 'bot-mar' },
+                'ORDER SUMMARY'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'order-sum' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  null,
+                  'Order # ',
+                  state.order_no
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  null,
+                  'Items In Order ',
+                  state.order.reduce(function (acc, val) {
+                    return acc + val.qty;
+                  }, 0)
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  null,
+                  'Order Total: $',
+                  this.convertMoney((total + tax).toFixed(2))
+                )
+              ),
+              state.order[0] ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'shipping-details' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'h2',
+                  null,
+                  'SHIPPING ADDRESS'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'p',
+                  null,
+                  state.order[0].ship_name
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'p',
+                  null,
+                  state.order[0].ship_address
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'p',
+                  null,
+                  state.order[0].ship_city,
+                  ', ',
+                  state.order[0].ship_state,
+                  ' ',
+                  state.order[0].ship_zipcode
+                )
+              ) : '',
+              state.order.map(function (item) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'line-item', key: item.product_id },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../' + item.thumb }),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'seller-price' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      '$',
+                      item.sold_price,
+                      ' ',
+                      item.name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      'Seller: ',
+                      item.seller
+                    )
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      'Quantity: ',
+                      item.qty
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      'Price: $',
+                      item.sold_price * item.qty
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      'p',
+                      null,
+                      'Shipping: $',
+                      item.shipping_price * item.qty
+                    )
+                  )
+                );
+              }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'order-pricing' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'left' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h3',
+                    null,
+                    'TOTAL BEFORE TAX:'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h3',
+                    null,
+                    'TAX:'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h4',
+                    null,
+                    'ORDER TOTAL:'
+                  )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'div',
+                  { className: 'left' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h3',
+                    null,
+                    ' $',
+                    this.convertMoney(total)
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h3',
+                    null,
+                    ' $',
+                    this.convertMoney(tax)
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h4',
+                    null,
+                    ' $',
+                    this.convertMoney((total + tax).toFixed(2))
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__footer__["a" /* default */], null)
+    );
+  };
+
+  return OrderSum;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = OrderSum;
 
 /***/ })
 /******/ ]);

@@ -852,6 +852,10 @@ b {
         }
         .new-address {
           width: calc(100% / 2);
+          .error {
+            color : red;
+            text-align:left;
+          }
           .shipping_address {
             padding: 10px 10px 0 0;
             display: flex;
@@ -1340,6 +1344,9 @@ b {
       }
       .order {
         overflow: hidden;
+      .bot-mar {
+        margin-bottom: 15px;
+      }
         .order-pricing {
           padding: 30px 10px 0 20px;
           .left {
@@ -1532,4 +1539,11 @@ b {
     font-size: 14px;
     line-height: 20px;
   }
+}
+
+.confirmation {
+  background-color: #FFF;
+  padding: 20px;
+  margin: 20px auto 40px;
+  max-width: 1300px;
 }

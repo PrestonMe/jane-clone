@@ -236,7 +236,7 @@ server.post('/createOrder', function(req, res, next) {
         iterator++
         if(iterator === data.cart.length){
           db.empty_cart(data.id, function(err, finished) {
-            res.json('Order Complete')
+            res.json(orderId)
           })
         }
       })
@@ -300,7 +300,6 @@ server.get('/getHistory/:userId', function(req, res, next) {
 })
 
 server.get('/getAccount/:id', function(req, res, next) {
-  console.log(req.params)
   db.get_account_info(req.params.id , function(err, response) {
     res.json(response)
   })
@@ -316,6 +315,30 @@ server.put('/updateAccount', function(req, res, next) {
     db.update_account([req.body.data.name, req.body.data.email, req.body.data.id], function(err, response) {
       res.json('Account Updated')
     })
+})
+
+server.get('/order/:id', function(req, res, next) {
+  db.get_order_details(req.params.id, function(err, response) {
+    db.get_ship_address(req.params.id, function(err, address) {
+      response[0].ship_name = address[0].ship_name
+      response[0].ship_address  = address[0].ship_address
+      response[0].ship_city = address[0].ship_city
+      response[0].ship_state = address[0].ship_state
+      response[0].ship_zip = address[0].ship_zipcode
+      let counter = 0;
+      for(let i = 0; i < response.length; i++) {
+        db.get_order_product_details(response[i].product_id, function(err, details) {
+          counter++
+          response[i].name = details[0].name
+          response[i].seller = details[0].seller
+          response[i].thumb = details[0].thumb
+          if(counter === response.length) {
+            res.json(response)
+          }
+        })
+      }
+    })
+  })
 })
 
 server.use((req, res) => {

@@ -9,6 +9,7 @@ import Product from '../components/product'
 import SignUp from '../components/signup'
 import History from '../components/order_history'
 import Account from '../components/account_info'
+import OrderSum from '../components/order_complete'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Match exactly pattern='/history' component={History} />
         <Match exactly pattern='/account' component={Account} />
         <Match pattern='/productpage/:id' component={Product} />
+        <Match pattern='/confirmation/:id' component={OrderSum} />
 
       </div>
     </Provider>
