@@ -2,9 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 
 class LargeProduct extends React.Component {
-  // constructor(props){
-  //   super (props)
-  // }
   render () {
     return (
       <div className='large-product-container'>

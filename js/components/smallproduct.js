@@ -2,9 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 
 class SmallProduct extends React.Component {
-  // constructor(props){
-  //   super (props)
-  // }
   render () {
     return (
       <div className='small-product-container'>
