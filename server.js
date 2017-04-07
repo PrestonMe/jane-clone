@@ -13,7 +13,7 @@ const ReactRouter = require('react-router')
 const ServerRouter = ReactRouter.ServerRouter
 const _ = require('lodash')
 // for its templating fucntion (see index.html)
-const port = 3000
+const port = process.env.port || 3000
 const fs = require('fs')
 const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
@@ -22,7 +22,6 @@ const App = require('./js/containers/App').default
 // interoperate between the two
 const connectionString = 'postgres://postgres@localhost/jane'
 const massiveInstance = massive.connectSync({connectionString: connectionString});
-
 
 const server = express()
 
@@ -34,7 +33,7 @@ var db = server.get('db')
 server.use('/public', express.static('./public'))
 
 server.use(session({
-  secret: config.secret,
+  secret: process.env.secret || config.secret,
   resave: false,
   saveUninitialized: true
 }))

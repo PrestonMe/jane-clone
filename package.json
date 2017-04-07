@@ -4,6 +4,7 @@
   "description": "Clone of jane.com to showcase my web development skills",
   "main": "index.js",
   "scripts": {
+    "production": "NODE_ENV=server webpack --progress --colors",
     "lint": "eslint js/**/*.js webpack.config.js",
     "build": "webpack",
     "watch": "npm run build -- --watch",
