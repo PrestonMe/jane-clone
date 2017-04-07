@@ -27,7 +27,7 @@ const App = () => {
         <Match exactly pattern='/new' component={AllDeals} />
         <Match exactly pattern='/ending-soon' component={AllDeals} />
         <Match exactly pattern='/popular' component={AllDeals} />
-        <Match exactly pattern='/sneak-peaks' component={AllDeals} />
+        <Match exactly pattern='/sneak-peeks' component={AllDeals} />
         <Match exactly pattern='/home-decor' component={AllDeals} />
         <Match exactly pattern='/history' component={History} />
         <Match exactly pattern='/account' component={Account} />

@@ -6,8 +6,6 @@ import Nav from './nav'
 import Footer from './footer'
 import Details from './details'
 
-
-
 class Product extends React.Component {
   constructor (props) {
     super(props)

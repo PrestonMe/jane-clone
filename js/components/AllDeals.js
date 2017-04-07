@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-// import { Link } from 'react-router'
 import Nav from './nav'
 import Footer from './footer'
 import LargeProduct from './largeproduct'

@@ -90,9 +90,15 @@ function login (req, res, response) {
 }
 
 server.get('/products', function(req, res, next) {
-  db.get_products(req.query.path, function(err, products) {
-    res.json(products);
-  })
+  if(req.query.path === '/') {
+    db.get_all_deals(function(err, products) {
+      res.json(products)
+    })
+  } else {
+    db.get_products(req.query.path, function(err, products) {
+      res.json(products);
+    })
+  }
 })
 
 server.get('/product/:id', function(req, res, next) {

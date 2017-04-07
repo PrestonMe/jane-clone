@@ -91,7 +91,7 @@ class Nav extends React.Component {
               <li><Link className={this.isActive('/new')} to='/new'>NEW DEALS</Link></li>
               <li><Link className={this.isActive('/ending-soon')} to='/ending-soon'>ENDING SOON</Link></li>
               <li><Link className={this.isActive('/popular')} to='/popular'>POPULAR</Link></li>
-              <li><Link className={this.isActive('/sneak-peaks')} to='/sneak-peaks'>SNEAK PEEKS</Link></li>
+              <li><Link className={this.isActive('/sneak-peeks')} to='/sneak-peeks'>SNEAK PEEKS</Link></li>
             </ul>
           </div>
 
