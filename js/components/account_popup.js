@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { logout } from '../actions/actionCreators'
 
+const { object } = React.PropTypes
 
 class AccountMenu extends React.Component {
   constructor (props) {
@@ -17,6 +18,7 @@ class AccountMenu extends React.Component {
 
   logout () {
     this.props.dispatch(logout())
+    this.context.router.transitionTo('/logon')
   }
 
   componentWillMount (){
@@ -48,16 +50,20 @@ class AccountMenu extends React.Component {
             </Link>
           </div>
           <div>
-            <Link className='no-pad' to='/logon'>
+            <a className='no-pad'>
               <p className='logout' onClick={this.logout}>
                 Log Out
               </p>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
     )
   }
+}
+
+AccountMenu.contextTypes = {
+  router: object
 }
 
 const mapStateToProps = (state) => {

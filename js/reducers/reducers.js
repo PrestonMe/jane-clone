@@ -18,7 +18,12 @@ const logon = (state, action) => {
                     // of an es6 default paraemeter
 const logout = (state, action) => {
   const newState = {}
-  Object.assign(newState, state, DEFAULT_STATE)
+  Object.assign(newState, state, {
+    redirectUrl: '/',
+    loggedIn: false,
+    userId: null,
+    userName: null,
+    cartItems: null})
   return newState
 }
 

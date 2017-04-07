@@ -14531,6 +14531,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+var object = __WEBPACK_IMPORTED_MODULE_0_react___default.a.PropTypes.object;
+
 var AccountMenu = function (_React$Component) {
   _inherits(AccountMenu, _React$Component);
 
@@ -14550,6 +14552,7 @@ var AccountMenu = function (_React$Component) {
 
   AccountMenu.prototype.logout = function logout() {
     this.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["a" /* logout */])());
+    this.context.router.transitionTo('/logon');
   };
 
   AccountMenu.prototype.componentWillMount = function componentWillMount() {
@@ -14603,8 +14606,8 @@ var AccountMenu = function (_React$Component) {
           'div',
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-            { className: 'no-pad', to: '/logon' },
+            'a',
+            { className: 'no-pad' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'p',
               { className: 'logout', onClick: this.logout },
@@ -14618,6 +14621,10 @@ var AccountMenu = function (_React$Component) {
 
   return AccountMenu;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+AccountMenu.contextTypes = {
+  router: object
+};
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -17384,7 +17391,12 @@ var logon = function logon(state, action) {
 // of an es6 default paraemeter
 var logout = function logout(state, action) {
   var newState = {};
-  Object.assign(newState, state, DEFAULT_STATE);
+  Object.assign(newState, state, {
+    redirectUrl: '/',
+    loggedIn: false,
+    userId: null,
+    userName: null,
+    cartItems: null });
   return newState;
 };
 
