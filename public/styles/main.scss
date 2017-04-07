@@ -111,13 +111,17 @@ b {
     background-color: #FFF;
     z-index: 5;
     height: 61px;
-    padding: 0 10vw 0 10vw;
+    padding: 0 10vw;
     display: flex;
+    margin: auto;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
     overflow: hidden;
+    @media(max-width: 1100px) {
+      padding: 0 5vw;
+    }
   }
 
   .slide-in {
@@ -244,6 +248,14 @@ b {
     margin: 15px auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    @media(max-width: 1300px) {
+      max-width: 1010px;
+    }
+    @media(max-width: 1010px) {
+      max-width: 800px;
+      justify-content: center;
+    }
     .product-summary {
       padding: 9px 20px 0px;
       height: 51px;
@@ -295,8 +307,21 @@ b {
       img {
         width: 620px;
         display: block;
+        @media(max-width: 1300px) {
+          width: 475px;
+        }
+        @media(max-width: 1010px) {
+          width: 295px;
+        }
+      }
+      @media(max-width: 1300px) {
+        width: 475px;
+      }
+      @media(max-width: 1010px) {
+        width: 295px;
       }
      }
+
      .small-product-container {
        width: 295px;
        margin: 15px 15px;
@@ -312,6 +337,13 @@ b {
   .ads {
     max-width: 1300px;
     margin: 15px auto;
+    display: flex;
+    @media(max-width: 1300px) {
+      max-width: 1010px;
+    }
+    @media(max-width: 1010px) {
+      display: none;
+    }
       .small-ad {
         width: 295px;
         margin: 0px 15px;
