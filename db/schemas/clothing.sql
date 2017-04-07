@@ -7,7 +7,7 @@ VALUES ('High Quality Short Sleeve Tunic | S-XL',
 Relaxed fit@
 95% rayon 5% spandex@
 Length of small is 27"@
-Runs true to size - for a more flowing fit size up', 19.99, 13.99, 5.99,null, 28, '/clothing', './public/img/clothing/lhqsst.jpg',
+Runs true to size - for a more flowing fit size up', 19.99, 13.99, 5.99,null, 28, '/clothing', './public/img/clothing/Lhqsst.jpg',
    null,'./public/img/clothing/thumbnails/hqsst.jpg', 712, 'Coco and Main', './public/img/vendor/coco.jpg');
 
 INSERT INTO product

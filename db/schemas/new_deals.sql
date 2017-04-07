@@ -79,75 +79,47 @@ Runs true to size', 48.99, 24.99, 3.99, null, 22, '/new' ,
 INSERT INTO product
 (name, description, details, price, sale, shipping, options, qty, type,
 bUrl, mUrl, thumb, favorites, seller, sellerImg)
-VALUES ('Handmade Roll On Bracelet Blowout',
-'Here`s how this deal works\n
+VALUES ('Denim Vest',
+'Versatile to wear with any top or tunic! \n
 
-Choose any bracelets you want for $1.99, each and for every 5 bracelets you purchase, you will receive 1 free bracelet\n
+Our Denim Vest completely transforms a basic top to add texture and visual interest! \n
 
-The pretty bracelets traveled here all the way from Nepal, where they are handmade in the Kathmandu Valley by local women artisans.\n
+Classic and always in style, make sure you add this piece to your wardrobe! Available in dark wash, medium wash, and light wash. \n
 
-Part of the businesses focus of the company is to pay the women who handcraft these bracelets more than a fair wage, so they can improve their lives and the lives of their families.\n
+*Dark Wash is also available in curvy sizes!\n
 
-They are able to work from home so they can be near to their families while earning a living that supports them. No two bracelets are exactly alike.\n
+Size Chart:\n
 
-Each bracelet is "a little piece of artwork." Bead by bead, these bracelets are hand-crocheted in every color and design imaginable. Because they roll on, they can fit on almost every wrist.\n
-
-They match everything, and look good alone, cozied up against your watch, or stacked with other bracelets.\n
-
-With over 100 choices, you are sure to find a few styles you love. So grab one one, two or ten and start your collection!',
-null, 12.00, 1.99, 1.99, null, 300, '/new' ,
-'./public/img/new-deals/', null,
-'./public/img/new-deals/thumbnails', 36,
-'Tiny But Trendy', null);
+Small: 0-4 \n
+Medium: 5-8 \n
+Larege: 8-10 \n
+XL: 12-14 \n
+2XL: 14-16 \n
+3XL: 16-18',
+null, 35.00, 18.99, 3.99, null, 127, '/new' ,
+'./public/img/new-deals/dv.jpg', null,
+'./public/img/new-deals/thumbnails/dvt.jpg', 344,
+'Paper Dolls Clothing & Accessories', './public/img/vendor/paperd.jpg');
 
 INSERT INTO product
 (name, description, details, price, sale, shipping, options, qty, type,
 bUrl, mUrl, thumb, favorites, seller, sellerImg)
-VALUES ('Patriotic Graphic Tees for Adults & Youth',
-'PRODUCT DESCRIPTION\n
+VALUES ('Long Pocket Cardigan | S-XL | 8 Colors',
+'These Long Pocket cardigans are a MUST have this fall/winter season! Not only are they so trendy but they are super comfortable. You will want one in every color! \n
 
-Show your patriotism with one of our NEW Graphic T-shirts for Youth and Adults.\n
+Sizing \n
 
-Choose from 5 Designs printed on a super comfy dri-power sport tee that comes in your choice of Heather Gray, Silver or White, in Standard T-Shirt Fit or Ladies Fit. Direct to fabric printing creates a soft design that won`t fade or crack.\n
-SHIRT STYLES & SIZING:\n
-
-YOUTH AND ADULT: Short sleeve T-shirt (standard, unisex relaxed fit) - Heather Gray, Silver or White, pre-shrunk dri-power sport (Measurements are chest width x body length hps)\n
-
-Youth Small - 16 x 20"\n
-
-Youth Medium - 17 x 22"\n
-
-Youth Large - 18 x 24"\n
-
-Youth XL - 19 x 26"\n
-
-Adult Small - 18 x 28"\n
-
-Adult Medium - 20 x 29"\n
-
-Adult Large - 22 x 30"\n
-
-Adult XL - 24 x 31"\n
-
-Adult 2XL - 26 x 32"\n
-
-LADIES FIT: slightly contoured, shorter sleeve & body length, feminine neckline - Heather Gray, Silver or White; pre-shrunk dri-power sport (Measurements are chest width x body length hps) \n
-
-Small - 17 x 25"\n
-
-Medium - 18 x 26"\n
-
-Large - 19.5 x 27"\n
-
-XL - 21 x 28"\n
-
-2XL - 22.5 x 29" \n
-
-Custom shirts are made in-house and will ship 10-14 days after the deal.',
-null, 24.00, 11.99, 3.99, null, 100, '/new' ,
-'./public/img/new-deals/pgt.jpg', null,
-'./public/img/new-deals/thumbnails/pgtt.jpg', 702,
-'Party On! Designs', './public/img/vendor/partyon.jpg');
+Small 0-4 \n
+Medium 6-8 \n
+Large 10-12 \n
+XL 12-14 \n
+Model is 5`9" wearing small',
+'Model is 5`9" wearing small@
+Fitted sleeves@
+Pocket detailing', 36.99, 22.99, 3.99, null, 43, '/new' ,
+'./public/img/new-deals/lpc.jpg', null,
+'./public/img/new-deals/thumbnails/lpct.jpg', 537,
+'Tickled Teal', './public/img/vendor/tickled.jpg');
 
 INSERT INTO product
 (name, description, details, price, sale, shipping, options, qty, type,

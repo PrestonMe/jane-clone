@@ -244,13 +244,16 @@ b {
       margin: 15px 15px; }
       .shop .products-container .large-product-container img {
         width: 620px;
+        max-height: 320px;
         display: block; }
         @media (max-width: 1300px) {
           .shop .products-container .large-product-container img {
-            width: 475px; } }
+            width: 475px;
+            max-height: 245px; } }
         @media (max-width: 1010px) {
           .shop .products-container .large-product-container img {
-            width: 295px; } }
+            width: 295px;
+            max-height: 151.97px; } }
       @media (max-width: 1300px) {
         .shop .products-container .large-product-container {
           width: 475px; } }
