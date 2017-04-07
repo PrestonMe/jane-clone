@@ -236,6 +236,8 @@ b {
     .shop .products-container .small-product-container {
       width: 295px;
       margin: 15px 15px; }
+      .shop .products-container .small-product-container .product-img {
+        max-height: 151.97px; }
       .shop .products-container .small-product-container img {
         width: 295px;
         display: block; }
@@ -310,7 +312,9 @@ b {
           font-size: 13px; }
       .shop .item-container .seller-info img {
         width: 80px;
-        border-radius: 50px; }
+        border-radius: 50px;
+        border: solid 1px #bfbdbd;
+        box-shadow: 0px 4px 5px #dbdbdb; }
     .shop .item-container .left-item img {
       width: 620px; }
     .shop .item-container .left-item .carousel {

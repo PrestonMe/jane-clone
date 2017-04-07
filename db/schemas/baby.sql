@@ -159,5 +159,5 @@ VALUES ('Spring Big Felt Hair Bow',
 null
 , 7.00, 2.99, 1.99, null, 30, '/baby',
 './public/img/baby/sbf.jpg', null,
-'./public/img/baby/thumbnails/sbg.jpg', 28, 'Think Pink Bows',
+'./public/img/baby/thumbnails/sbft.jpg', 28, 'Think Pink Bows',
 './public/img/vendor/thinkpink.jpg');

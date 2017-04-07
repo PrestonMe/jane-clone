@@ -120,7 +120,7 @@ Set-in neckline@
 Cover stitch detail at sleeve hems and bottom hem', 21.99, 11.99, 4.99, null, 28, '/clothing',
 './public/img/clothing/av.jpg',
 null,'./public/img/clothing/thumbnails/avt.jpg', 213, 'The White Wolf',
-'./public/img/vendor/');
+'./public/img/vendor/white.jpg');
 
 INSERT INTO product
 (name, description, details, price, sale, shipping, options, qty, type,

@@ -300,6 +300,9 @@ b {
      .small-product-container {
        width: 295px;
        margin: 15px 15px;
+       .product-img {
+         max-height: 151.97px;
+       }
        img {
          width: 295px;
          display: block;
@@ -397,6 +400,8 @@ b {
         img {
           width: 80px;
           border-radius: 50px;
+          border: solid 1px #bfbdbd;
+          box-shadow: 0px 4px 5px #dbdbdb;
         }
       }
       .left-item {
