@@ -13,16 +13,17 @@ const ReactRouter = require('react-router')
 const ServerRouter = ReactRouter.ServerRouter
 const _ = require('lodash')
 // for its templating fucntion (see index.html)
-const port = process.env.port || 3000
+const port = process.env.PORT || 3000
 const fs = require('fs')
 const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
 const App = require('./js/containers/App').default
 // we use .default since you export default, this is how we
 // interoperate between the two
-const connectionString = 'postgres://postgres@localhost/jane'
+// const connectionString = 'postgres://postgres@localhost/jane'
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
 const massiveInstance = massive.connectSync({connectionString: connectionString});
-
+// postgresql-regular-13626
 const server = express()
 
 server.use(bodyParser.json())
