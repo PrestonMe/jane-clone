@@ -5,7 +5,7 @@ const ReactDOMServer = require('react-dom/server')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
-// const config = require('./config')
+const config = require('./config')
 const session = require('express-session')
 // renders our entire app out to a long string which is then shipped
 // down as html
@@ -34,7 +34,8 @@ var db = server.get('db')
 server.use('/public', express.static('./public'))
 
 server.use(session({
-  secret: process.env.secret,
+  // secret: process.env.secret,
+  secret: config.secret,
   resave: false,
   saveUninitialized: true
 }))

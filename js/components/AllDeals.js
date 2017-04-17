@@ -17,23 +17,24 @@ class AllDeals extends React.Component {
 
   componentDidMount () {
     axios.get('/products', {
-        params: {
-          path: this.props.location.pathname
-        }
+      params: {
+        path: this.props.location.pathname
       }
+    }
     ).then(res => {
       const products = res.data
-      this.setState({ products });
-      })
+      this.setState({ products })
+    })
   }
 
   render () {
     const promise = this.state.products[0]
-    return !promise ?
-      (<div>
-        <Nav {...this.props.location} />
-        <Footer />
-      </div>) : (
+    return !promise
+    ? (<div>
+      <Nav {...this.props.location} />
+      <Footer />
+    </div>)
+    : (
       <div>
         <Nav {...this.props.location} />
         <div className='shop'>

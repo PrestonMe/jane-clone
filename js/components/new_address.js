@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
+const { func, number, string } = React.PropTypes
+
 class NewAddress extends React.Component {
   constructor (props) {
     super(props)
@@ -31,37 +33,36 @@ class NewAddress extends React.Component {
     e.preventDefault()
     let obj = this.state
 
-    if(obj.first && obj.last && obj.addressOne
-      && obj.city && obj.state && obj.zip) {
-        if(obj.state.length < 2) {
-          obj.validator.state = true
-          obj.validator.zip = false;
-          this.setState(obj)
-        } else if (obj.zip.length < 5 || isNaN(obj.zip * 1)) {
-          obj.validator.zip = true
-          obj.validator.state = false;
-          this.setState(obj)
-        } else {
-          axios.post('/setShipAddress', {
-            data: {
-              first: obj.first,
-              last: obj.last,
-              address: obj.addressOne + ' ' + obj.addressTwo,
-              state: obj.state,
-              city: obj.city,
-              zip: obj.zip,
-              id: this.props.userId
-            }
-          }).then(res => {
-            if(res.data[0].ship_address){
-              this.exitMenu(res.data[0])
-            } else {
-              this.exitMenu()
-            }
-
-          })
-        }
+    if (obj.first && obj.last && obj.addressOne &&
+      obj.city && obj.state && obj.zip) {
+      if (obj.state.length < 2) {
+        obj.validator.state = true
+        obj.validator.zip = false
+        this.setState(obj)
+      } else if (obj.zip.length < 5 || isNaN(obj.zip * 1)) {
+        obj.validator.zip = true
+        obj.validator.state = false
+        this.setState(obj)
+      } else {
+        axios.post('/setShipAddress', {
+          data: {
+            first: obj.first,
+            last: obj.last,
+            address: obj.addressOne + ' ' + obj.addressTwo,
+            state: obj.state,
+            city: obj.city,
+            zip: obj.zip,
+            id: this.props.userId
+          }
+        }).then(res => {
+          if (res.data[0].ship_address) {
+            this.exitMenu(res.data[0])
+          } else {
+            this.exitMenu()
+          }
+        })
       }
+    }
   }
 
   setValue (event) {
@@ -70,12 +71,12 @@ class NewAddress extends React.Component {
     this.setState(obj)
   }
 
-  componentWillMount (){
-    document.body.style.overflow = "hidden"
+  componentWillMount () {
+    document.body.style.overflow = 'hidden'
   }
 
-  componentWillUnmount(){
-    document.body.style.overflow = "scroll"
+  componentWillUnmount () {
+    document.body.style.overflow = 'scroll'
   }
 
   render () {
@@ -89,7 +90,7 @@ class NewAddress extends React.Component {
             <p>ADDRESS</p>
             <img
               onClick={this.exitMenu}
-              src='../public/img/icons/close.svg'/>
+              src='../public/img/icons/close.svg' />
           </div>
           <div className='address-input'>
             <form onSubmit={this.updateAddress}>
@@ -98,44 +99,44 @@ class NewAddress extends React.Component {
                 name='first'
                 onChange={this.setValue}
                 value={this.state.first}
-                placeholder='First Name'/>
+                placeholder='First Name' />
               <input
                 name='last'
                 onChange={this.setValue}
                 value={this.state.last}
-                placeholder='Last Name'/>
+                placeholder='Last Name' />
               <h1>Address</h1>
               <input
                 name='addressOne'
                 onChange={this.setValue}
                 value={this.state.addressOne}
-                placeholder='Address 1'/>
+                placeholder='Address 1' />
               <input
                 name='addressTwo'
                 onChange={this.setValue}
                 value={this.state.addressTwo}
-                placeholder='Address 2'/>
+                placeholder='Address 2' />
               <input
                 name='city'
                 onChange={this.setValue}
                 value={this.state.city}
-                placeholder='City'/>
+                placeholder='City' />
               <input
                 name='state'
                 onChange={this.setValue}
                 value={this.state.state}
-                placeholder='State'/>
+                placeholder='State' />
               <input
                 name='zip'
                 onChange={this.setValue}
                 value={this.state.zip}
-                placeholder='ZIP'/>
-                <div
-                  className={this.state.validator.state ? 'error' : 'hide'}
-                  >Please enter a valid state name.</div>
-                <div
-                  className={this.state.validator.zip ? 'error' : 'hide'}
-                  >Please enter a 5 digit zip code.</div>
+                placeholder='ZIP' />
+              <div
+                className={this.state.validator.state ? 'error' : 'hide'}
+                >Please enter a valid state name.</div>
+              <div
+                className={this.state.validator.zip ? 'error' : 'hide'}
+                >Please enter a 5 digit zip code.</div>
               <button>SAVE</button>
             </form>
           </div>
@@ -143,6 +144,12 @@ class NewAddress extends React.Component {
       </div>
     )
   }
+}
+
+NewAddress.propTypes = {
+  exitMenu: func,
+  userId: number,
+  class: string
 }
 
 const mapStateToProps = (state) => {

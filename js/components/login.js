@@ -7,7 +7,6 @@ import Footer from './footer'
 const { object } = React.PropTypes
 
 class MyAccount extends React.Component {
-
   render () {
     return (
       <div className='base'>

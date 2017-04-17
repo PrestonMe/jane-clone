@@ -7,11 +7,10 @@ import CreateAccount from './createAccount'
 const { object } = React.PropTypes
 
 class SignUp extends React.Component {
-
   render () {
     return (
       <div className='base'>
-        <Nav {...this.props.location}/>
+        <Nav {...this.props.location} />
         <div className='logon'>
           <div className='login-pane'>
             <img src='../../public/img/jane-logo_360.png' />
@@ -25,6 +24,10 @@ class SignUp extends React.Component {
       </div>
     )
   }
+}
+
+SignUp.propTypes = {
+  location: object
 }
 
 SignUp.contextTypes = {

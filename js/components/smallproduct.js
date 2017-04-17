@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+const { number, string } = React.PropTypes
+
 class SmallProduct extends React.Component {
   render () {
     return (
@@ -22,6 +24,15 @@ class SmallProduct extends React.Component {
       </div>
     )
   }
+}
+
+SmallProduct.propTypes = {
+  id: number,
+  burl: string,
+  name: string,
+  sale: number,
+  price: number,
+  favorites: number
 }
 
 export default SmallProduct

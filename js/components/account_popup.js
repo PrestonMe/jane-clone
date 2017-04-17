@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { logout } from '../actions/actionCreators'
 
-const { object } = React.PropTypes
+const { object, func, string } = React.PropTypes
 
 class AccountMenu extends React.Component {
   constructor (props) {
@@ -21,12 +21,12 @@ class AccountMenu extends React.Component {
     this.context.router.transitionTo('/logon')
   }
 
-  componentWillMount (){
-    document.body.style.overflow = "hidden"
+  componentWillMount () {
+    document.body.style.overflow = 'hidden'
   }
 
-  componentWillUnmount(){
-    document.body.style.overflow = "scroll"
+  componentWillUnmount () {
+    document.body.style.overflow = 'scroll'
   }
 
   render () {
@@ -40,13 +40,13 @@ class AccountMenu extends React.Component {
           <div>
             <Link to='/history'>
               <p>Order History</p>
-              <img src='../public/img/icons/clock.png'/>
+              <img src='../public/img/icons/clock.png' />
             </Link>
           </div>
           <div>
             <Link to='/account'>
               <p>View Account</p>
-              <img src='../public/img/icons/account.png'/>
+              <img src='../public/img/icons/account.png' />
             </Link>
           </div>
           <div>
@@ -60,6 +60,12 @@ class AccountMenu extends React.Component {
       </div>
     )
   }
+}
+
+AccountMenu.propTypes = {
+  exitMenu: func,
+  dispatch: func,
+  class: string
 }
 
 AccountMenu.contextTypes = {

@@ -1,7 +1,8 @@
 import React from 'react'
+const { array, string, number } = React.PropTypes
 
 class Order extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isHide: false,
@@ -11,15 +12,15 @@ class Order extends React.Component {
     this.convertMoney = this.convertMoney.bind(this)
   }
 
-  convertMoney(value) {
-      value += ""
-      value = value.split('.')
-      if(value[1] && value[1].length === 1) {
-        value[1] += '0'
-      } else if (!value[1]){
-        value[1] = '00'
-      }
-      return value.join('.')
+  convertMoney (value) {
+    value += ''
+    value = value.split('.')
+    if (value[1] && value[1].length === 1) {
+      value[1] += '0'
+    } else if (!value[1]) {
+      value[1] = '00'
+    }
+    return value.join('.')
   }
 
   toggleOrderDetails () {
@@ -33,7 +34,7 @@ class Order extends React.Component {
       return acc + (val.sold_price * val.qty) + (val.shipping_price * val.qty)
     }, 0).toFixed(2)
 
-    tax = +(total * .08).toFixed(2)
+    tax = +(total * 0.08).toFixed(2)
 
     return (
       <div className='order'>
@@ -54,8 +55,7 @@ class Order extends React.Component {
           </div>
         </div>
         {this.state.orderDetails
-        ?
-        <div>
+        ? <div>
           <div className='shipping-details'>
             <h2>SHIPPING ADDRESS</h2>
             <p>{this.props.ship_name}</p>
@@ -65,7 +65,7 @@ class Order extends React.Component {
           {this.props.order_items.map(item => {
             return (
               <div className='line-item' key={item.product_id}>
-                <img src={`../${item.thumb}`}/>
+                <img src={`../${item.thumb}`} />
                 <div className='seller-price'>
                   <p>${item.sold_price} {item.name}</p>
                   <p>Seller: {item.seller}</p>
@@ -95,6 +95,16 @@ class Order extends React.Component {
       </div>
     )
   }
+}
+
+Order.propTypes = {
+  order_items: array,
+  ship_name: string,
+  ship_address: string,
+  ship_city: string,
+  ship_state: string,
+  ship_zipcode: string,
+  id: number
 }
 
 export default Order

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import AccountMenu from './account_popup'
-const { string } = React.PropTypes
+const { string, bool } = React.PropTypes
 
 class Nav extends React.Component {
   constructor (props) {
@@ -26,9 +26,9 @@ class Nav extends React.Component {
   }
 
   toggleAccountMenu () {
-    let obj = this.state;
+    let obj = this.state
     obj.accountMenu = !this.state.accountMenu
-    this.setState(obj);
+    this.setState(obj)
   }
 
   componentDidMount () {
@@ -39,7 +39,7 @@ class Nav extends React.Component {
   }
   render () {
     let classAdd = this.state.isHide ? 'slide-in' : 'slide-out'
-    let account_menu = !this.state.accountMenu ? 'hide' : ''
+    let accountMenu = !this.state.accountMenu ? 'hide' : ''
 
     return (
       <div>
@@ -58,20 +58,17 @@ class Nav extends React.Component {
             <p><Link to='/cart'>MY BAG</Link></p>
             {this.props.cartTotal ? <h1 className='cart-qty'>{this.props.cartTotal}</h1> : ''}
             {
-              this.props.loggedIn ?
-               <span>
-                 <p
-                   className='user'
-                   onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
-                 {account_menu !== 'hide'
-                 ?
-                 <AccountMenu class={account_menu} exitMenu={this.toggleAccountMenu} />
-                 :
-                 ''
-                 }
-               </span>
-                :
-              <p className={(this.props.pathname === '/logon' || this.props.pathname === '/signup') ? 'login' : ''}><Link to='/logon' >LOG IN</Link></p>
+              this.props.loggedIn
+              ? <span>
+                <p
+                  className='user'
+                  onClick={this.toggleAccountMenu}>{this.props.userName.toUpperCase()}</p>
+                {accountMenu !== 'hide'
+                ? <AccountMenu class={accountMenu} exitMenu={this.toggleAccountMenu} />
+                : ''
+                }
+              </span>
+                : <p className={(this.props.pathname === '/logon' || this.props.pathname === '/signup') ? 'login' : ''}><Link to='/logon' >LOG IN</Link></p>
             }
           </div>
 
@@ -97,7 +94,7 @@ class Nav extends React.Component {
 
         </div>
         <div className='spacer'>
-          &nbsp;
+          &nbsp
         </div>
       </div>
     )
@@ -105,7 +102,10 @@ class Nav extends React.Component {
 }
 
 Nav.propTypes = {
-  pathname: string
+  pathname: string,
+  cartTotal: string,
+  loggedIn: bool,
+  userName: string
 }
 
 const mapStateToProps = (state) => {
