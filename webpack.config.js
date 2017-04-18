@@ -1,10 +1,12 @@
 const path = require('path')
+const webpack = require('webpack')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   context: __dirname,
   entry: './js/containers/ClientApp.js',
-  devtool: 'cheap-module-source-map',
+  // remove devtool for production build for much smaller builds
+  // devtool: 'cheap-module-source-map',
   output: {
     path: path.join(__dirname, '/public'),
     publicPath: '/public/',
@@ -13,11 +15,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    // alias: {
-    //   react: 'preact-compat',
-    //   'react-dom': 'preact-compat'
-    // },
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   stats: {
     colors: true,
@@ -28,6 +30,16 @@ module.exports = {
     publicPath: '/public/',
     historyApiFallback: true
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('server')
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        warnings: true
+      }
+    })
+  ],
   module: {
     rules: [
       {enforce: "pre", test: /\.js$/,
@@ -44,7 +56,7 @@ module.exports = {
       {test: /\.(jpe?g|png|gif|svg)$/i,
       loaders: [
         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        'image-webpack-loader?bypassOnDebug'
       ]}
     ]
   },
