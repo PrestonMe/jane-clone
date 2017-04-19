@@ -30,8 +30,8 @@ SmallProduct.propTypes = {
   id: number,
   burl: string,
   name: string,
-  sale: number,
-  price: number,
+  sale: string,
+  price: string,
   favorites: number
 }
 

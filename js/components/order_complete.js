@@ -30,7 +30,6 @@ class OrderSum extends React.Component {
   componentDidMount () {
     axios.get('/order/' + this.props.params.id)
     .then(res => {
-      console.log(res)
       let orderNo = res.data[0].order_id
       this.setState({order: res.data, orderNo: orderNo})
     })

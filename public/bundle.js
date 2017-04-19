@@ -6488,7 +6488,7 @@ var Cart = function (_React$Component) {
         }
       }).then(function (res) {
         if (res.data[0]) {
-          _this4.props.dispatch((0, _actionCreators.updateQty)(0));
+          _this4.props.dispatch((0, _actionCreators.updateQty)(null));
           _this4.context.router.transitionTo('/confirmation/' + res.data[0].id);
         } else {
           console.log('something went wrong', res);
@@ -7469,7 +7469,7 @@ Cart.propTypes = {
   userId: number,
   location: object,
   dispatch: func,
-  cart: object,
+  cart: string,
   loggedIn: bool
 };
 
@@ -7639,8 +7639,8 @@ LargeProduct.propTypes = {
   id: number,
   burl: string,
   name: string,
-  sale: number,
-  price: number,
+  sale: string,
+  price: string,
   favorites: number
 };
 
@@ -8285,7 +8285,6 @@ var OrderSum = function (_React$Component) {
     var _this2 = this;
 
     _axios2.default.get('/order/' + this.props.params.id).then(function (res) {
-      console.log(res);
       var orderNo = res.data[0].order_id;
       _this2.setState({ order: res.data, orderNo: orderNo });
     });
@@ -9167,8 +9166,8 @@ SmallProduct.propTypes = {
   id: number,
   burl: string,
   name: string,
-  sale: number,
-  price: number,
+  sale: string,
+  price: string,
   favorites: number
 };
 

@@ -204,7 +204,7 @@ class Cart extends React.Component {
         }
       }).then(res => {
         if (res.data[0]) {
-          this.props.dispatch(updateQty(0))
+          this.props.dispatch(updateQty(null))
           this.context.router.transitionTo('/confirmation/' + res.data[0].id)
         } else {
           console.log('something went wrong', res)
@@ -578,7 +578,7 @@ Cart.propTypes = {
   userId: number,
   location: object,
   dispatch: func,
-  cart: object,
+  cart: string,
   loggedIn: bool
 }
 
