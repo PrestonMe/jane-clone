@@ -243,6 +243,13 @@ b {
   position: relative;
   padding-top: 15px;
   background-color: $background;
+  @media screen and (max-width: 980px) { /* Tablet */
+    width: 95%;
+    margin: auto;
+  }
+  @media screen and (max-width: 685px) {
+    width: 95%;
+  }
   .products-container {
     max-width: 1300px;
     margin: 15px auto;
@@ -252,9 +259,12 @@ b {
     @media(max-width: 1300px) {
       max-width: 1010px;
     }
-    @media(max-width: 1010px) {
+    @media(max-width: 980px) {
       max-width: 800px;
       justify-content: center;
+    }
+    @media(max-width: 685px) {
+      width: 95%;
     }
     .product-summary {
       padding: 9px 20px 0px;
@@ -287,8 +297,8 @@ b {
           width: 180px;
         }
         .product-name {
-          font-size: 13px;
-          color: #999;
+          font-size: 19px;
+          color: #6d6c6d;
         }
       .sale-price {
         color: #FF8188;
@@ -316,24 +326,42 @@ b {
           width: 295px;
           max-height: 151.97px;
         }
+        @media(max-width: 685px) {
+          width: 100%;
+          max-height: none;
+        }
       }
       @media(max-width: 1300px) {
         width: 475px;
+        height: auto;
       }
       @media(max-width: 1010px) {
         width: 295px;
+        height: auto;
+      }
+      @media(max-width: 685px) {
+        width: 100%;
+        height: auto;
       }
      }
-
      .small-product-container {
        width: 295px;
        margin: 15px 15px;
+       @media(max-width: 685px) {
+         width: 100%;
+       }
        .product-img {
          max-height: 151.97px;
+         @media(max-width: 685px) {
+           max-height: none;
+         }
        }
        img {
          width: 295px;
          display: block;
+         @media(max-width: 685px) {
+           width: 100%;
+         }
        }
       }
     }
@@ -507,8 +535,8 @@ b {
               width: 180px;
             }
             .product-name {
-              font-size: 13px;
-              color: #999;
+              font-size: 19px;
+              color: #6d6c6d;
             }
           .sale-price {
             color: #FF8188;

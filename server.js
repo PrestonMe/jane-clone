@@ -13,15 +13,16 @@ const ReactRouter = require('react-router')
 const ServerRouter = ReactRouter.ServerRouter
 const _ = require('lodash')
 // for its templating fucntion (see index.html)
-const port = process.env.PORT || 3000
+// const port = process.env.PORT || 3000
+const port = 3000
 const fs = require('fs')
 const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
 const App = require('./js/containers/App').default
 // we use .default since you export default, this is how we
 // interoperate between the two
-// const connectionString = 'postgres://postgres@localhost/jane'
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
+const connectionString = 'postgres://postgres@localhost/jane'
+// const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
 const massiveInstance = massive.connectSync({connectionString: connectionString});
 // postgresql-regular-13626
 const server = express()
@@ -132,7 +133,7 @@ server.post('/signup', function(req, res, next) {
 })
 
 server.put('/updateCartItem/:id/:qty/:custId', function(req, res, next) {
-if(req.params.custId === 'null') {
+  if(req.params.custId === 'null') {
     db.edit_guest_cart([+req.params.qty, req.sessionID, +req.params.id], function(err, response) {
       db.get_guest_cart_total(req.sessionID, function(err, response) {
         res.json(response)
