@@ -370,22 +370,8 @@ b {
           width: 10px;
           margin-right: 2px; }
       .shop .products-container .product-summary .product-sum-left {
-        margin-top: 8px; }
-      .shop .products-container .product-summary .small {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 180px; }
-      @media (max-width: 885px) {
-        .shop .products-container .product-summary .large {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          max-width: 180px; } }
-      @media (max-width: 685px) {
-        .shop .products-container .product-summary .large {
-          min-width: 160px;
-          max-width: 300px; } }
+        margin-top: 8px;
+        width: calc(100% - 60px); }
       .shop .products-container .product-summary .product-name {
         font-size: 19px;
         color: #6d6c6d;
@@ -746,13 +732,22 @@ b {
     margin: 20px auto 40px;
     max-width: 1300px;
     display: flex; }
+    @media (max-width: 800px) {
+      .checkout .cart-wrapper {
+        display: block; } }
     .checkout .cart-wrapper .cart {
-      min-height: 195px;
+      height: 0%;
       background-color: #FFF;
       max-width: 930px;
       width: 100%;
-      padding: 20px;
+      padding: 20px 20px 40px;
       margin-right: 20px; }
+      @media (max-width: 800px) {
+        .checkout .cart-wrapper .cart {
+          margin: auto;
+          width: 90%;
+          padding: 20px 0 40px;
+          margin-bottom: 20px; } }
       .checkout .cart-wrapper .cart .cart-login-signup {
         display: flex; }
         .checkout .cart-wrapper .cart .cart-login-signup div {
@@ -1193,6 +1188,13 @@ b {
       width: 100%;
       max-width: 275px;
       max-height: 345px; }
+      @media (max-width: 800px) {
+        .checkout .cart-wrapper .j-promise {
+          width: 90%;
+          margin: auto;
+          box-sizing: border-box;
+          max-width: none;
+          max-height: none; } }
       .checkout .cart-wrapper .j-promise p {
         color: #999;
         margin: 20px 0px;
