@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import AccountMenu from './account_popup'
+import Search from './search'
 const { string, bool } = React.PropTypes
 
 class Nav extends React.Component {
@@ -9,18 +10,22 @@ class Nav extends React.Component {
     super(props)
     this.state = {
       isHide: false,
-      accountMenu: false
+      accountMenu: false,
+      search: false
     }
     this.hideBar = this.hideBar.bind(this)
     this.isActive = this.isActive.bind(this)
     this.toggleAccountMenu = this.toggleAccountMenu.bind(this)
+    this.toggleSearch = this.toggleSearch.bind(this)
   }
+
   hideBar () {
     let {isHide} = this.state
     window.scrollY > this.prev && window.scrollY > 50 ? !isHide && this.setState({isHide: true})
     : isHide && this.setState({isHide: false})
     this.prev = window.scrollY
   }
+
   isActive (value) {
     return value === this.props.pathname ? 'active' : ''
   }
@@ -31,12 +36,18 @@ class Nav extends React.Component {
     this.setState(obj)
   }
 
+  toggleSearch () {
+    this.setState({search: !this.state.search})
+  }
+
   componentDidMount () {
     window.addEventListener('scroll', this.hideBar)
   }
+
   componentWillUnmount () {
     window.removeEventListener('scroll', this.hideBar)
   }
+
   render () {
     let classAdd = this.state.isHide ? 'slide-in' : 'slide-out'
     let accountMenu = !this.state.accountMenu ? 'hide' : ''
@@ -48,7 +59,7 @@ class Nav extends React.Component {
           <div className='nav-left'>
             <img src='../public/img/icons/menu.svg' />
             <p>MENU</p>
-            <input className='search' type='text' placeholder='Search...' />
+            <Search />
           </div>
 
           <div className='nav-right'>

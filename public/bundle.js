@@ -1556,6 +1556,10 @@ var _account_popup = __webpack_require__(64);
 
 var _account_popup2 = _interopRequireDefault(_account_popup);
 
+var _search = __webpack_require__(135);
+
+var _search2 = _interopRequireDefault(_search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1578,11 +1582,13 @@ var Nav = function (_React$Component) {
 
     _this.state = {
       isHide: false,
-      accountMenu: false
+      accountMenu: false,
+      search: false
     };
     _this.hideBar = _this.hideBar.bind(_this);
     _this.isActive = _this.isActive.bind(_this);
     _this.toggleAccountMenu = _this.toggleAccountMenu.bind(_this);
+    _this.toggleSearch = _this.toggleSearch.bind(_this);
     return _this;
   }
 
@@ -1601,6 +1607,10 @@ var Nav = function (_React$Component) {
     var obj = this.state;
     obj.accountMenu = !this.state.accountMenu;
     this.setState(obj);
+  };
+
+  Nav.prototype.toggleSearch = function toggleSearch() {
+    this.setState({ search: !this.state.search });
   };
 
   Nav.prototype.componentDidMount = function componentDidMount() {
@@ -1630,7 +1640,7 @@ var Nav = function (_React$Component) {
             null,
             'MENU'
           ),
-          _react2.default.createElement('input', { className: 'search', type: 'text', placeholder: 'Search...' })
+          _react2.default.createElement(_search2.default, null)
         ),
         _react2.default.createElement(
           'div',
@@ -14250,6 +14260,176 @@ __webpack_require__(44);
   null,
   _react2.default.createElement(_App2.default, null)
 ), document.getElementById('app'));
+
+/***/ }),
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Search = function (_Component) {
+  _inherits(Search, _Component);
+
+  function Search(props) {
+    _classCallCheck(this, Search);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.state = {
+      search: false
+    };
+    _this.toggleSearch = _this.toggleSearch.bind(_this);
+    return _this;
+  }
+
+  Search.prototype.toggleSearch = function toggleSearch() {
+    this.setState({ search: !this.state.search });
+  };
+
+  Search.prototype.render = function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'search' },
+      _react2.default.createElement('img', { onClick: this.toggleSearch, className: 'mag', src: '../public/img/icons/mag.svg' }),
+      _react2.default.createElement('input', { onClick: this.toggleSearch, className: 'search-input ' + (this.state.search ? 'active-search' : ''), type: 'text', placeholder: 'Search...' }),
+      this.state.search ? _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('div', { onClick: this.toggleSearch, className: 'overlay' }),
+        _react2.default.createElement(
+          'ul',
+          { onClick: this.toggleSearch },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/clothing' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Clothing'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/accessories' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Accessories'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/home-decor' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Home Decor'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/baby' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Baby'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/kids' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Kids'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/misc' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Misc'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'All Deals'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/new' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'New Deals'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/ending-soon' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Ending Soon'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/popular' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Popular'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/sneak-peeks' },
+            _react2.default.createElement(
+              'li',
+              null,
+              'Sneak Peaks'
+            )
+          )
+        )
+      ) : ''
+    );
+  };
+
+  return Search;
+}(_react.Component);
+
+exports.default = Search;
 
 /***/ })
 /******/ ]);
