@@ -1640,7 +1640,11 @@ var Nav = function (_React$Component) {
             null,
             'MENU'
           ),
-          _react2.default.createElement(_search2.default, null)
+          _react2.default.createElement(
+            'div',
+            { className: 'header-search' },
+            _react2.default.createElement(_search2.default, null)
+          )
         ),
         _react2.default.createElement(
           'div',
@@ -1797,6 +1801,11 @@ var Nav = function (_React$Component) {
                 'SNEAK PEEKS'
               )
             )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'media-searches' },
+            _react2.default.createElement(_search2.default, { url: this.props.pathname, search: this.state.search })
           )
         )
       ),
@@ -14298,8 +14307,10 @@ var Search = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
+    console.log(props);
     _this.state = {
-      search: false
+      search: _this.props.search,
+      url: _this.props.url || ''
     };
     _this.toggleSearch = _this.toggleSearch.bind(_this);
     return _this;
@@ -14310,119 +14321,133 @@ var Search = function (_Component) {
   };
 
   Search.prototype.render = function render() {
+    console.log(this.props, this.state);
     return _react2.default.createElement(
       'div',
       { className: 'search' },
       _react2.default.createElement('img', { onClick: this.toggleSearch, className: 'mag', src: '../public/img/icons/mag.svg' }),
-      _react2.default.createElement('input', { onClick: this.toggleSearch, className: 'search-input ' + (this.state.search ? 'active-search' : ''), type: 'text', placeholder: 'Search...' }),
-      this.state.search ? _react2.default.createElement(
+      _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement('div', { onClick: this.toggleSearch, className: 'overlay' }),
-        _react2.default.createElement(
-          'ul',
-          { onClick: this.toggleSearch },
+        { className: 'media-search' },
+        _react2.default.createElement('input', { onClick: this.toggleSearch, className: 'search-input not-mobile ' + (this.state.search ? 'active-search' : ''), type: 'text', placeholder: 'Search...' }),
+        this.state.search ? _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('div', { onClick: this.toggleSearch, className: 'overlay' }),
+          _react2.default.createElement('input', { onClick: this.toggleSearch, className: 'search-input is-mobile', type: 'text', placeholder: 'Search...' }),
           _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/clothing' },
+            'ul',
+            { onClick: this.toggleSearch },
             _react2.default.createElement(
-              'li',
-              null,
-              'Clothing'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/accessories' },
+              _reactRouter.Link,
+              { to: '/clothing' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Clothing'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Accessories'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/home-decor' },
+              _reactRouter.Link,
+              { to: '/accessories' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Accessories'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Home Decor'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/baby' },
+              _reactRouter.Link,
+              { to: '/home-decor' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Home Decor'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Baby'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/kids' },
+              _reactRouter.Link,
+              { to: '/baby' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Baby'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Kids'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/misc' },
+              _reactRouter.Link,
+              { to: '/kids' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Kids'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Misc'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/' },
+              _reactRouter.Link,
+              { to: '/misc' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Misc'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'All Deals'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/new' },
+              _reactRouter.Link,
+              { to: '/' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'All Deals'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'New Deals'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/ending-soon' },
+              _reactRouter.Link,
+              { to: '/new' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'New Deals'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Ending Soon'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/popular' },
+              _reactRouter.Link,
+              { to: '/ending-soon' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Ending Soon'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Popular'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/sneak-peeks' },
+              _reactRouter.Link,
+              { to: '/popular' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Popular'
+              )
+            ),
             _react2.default.createElement(
-              'li',
-              null,
-              'Sneak Peaks'
+              _reactRouter.Link,
+              { to: '/sneak-peeks' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Sneak Peaks'
+              )
             )
           )
+        ) : _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'p',
+            { className: 'is-mobile' },
+            this.state.url !== '/' ? this.state.url.split('/').join('') : 'Shop By Category'
+          )
         )
-      ) : ''
+      )
     );
   };
 

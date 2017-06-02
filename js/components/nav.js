@@ -59,7 +59,9 @@ class Nav extends React.Component {
           <div className='nav-left'>
             <img src='../public/img/icons/menu.svg' />
             <p>MENU</p>
-            <Search />
+            <div className='header-search'>
+              <Search />
+            </div>
           </div>
 
           <div className='nav-right'>
@@ -101,6 +103,9 @@ class Nav extends React.Component {
               <li><Link className={this.isActive('/popular')} to='/popular'>POPULAR</Link></li>
               <li><Link className={this.isActive('/sneak-peeks')} to='/sneak-peeks'>SNEAK PEEKS</Link></li>
             </ul>
+            <div className={'media-searches'}>
+              <Search url={this.props.pathname} search={this.state.search} />
+            </div>
           </div>
 
         </div>
