@@ -45,6 +45,11 @@ b {
     width: 245px;
     background: #FFF;
     z-index: 10;
+    @media (max-width: 885px) {
+      height: calc(100vh - 44px);
+      left: 0px;
+      width: 100%;
+    }
   }
   li {
     line-height: 40px;
@@ -55,6 +60,15 @@ b {
     background-color: #E5E5E5;
   }
   .media-search {
+    .search-cancel {
+      display: flex;
+      align-items: center;
+      margin: 10px 10px -1px;
+      p {
+        margin: 0px 10px;
+        font-size: 16px;
+      }
+    }
     .search-input {
       border-radius: 3px;
       width: 215px;
@@ -62,7 +76,7 @@ b {
       padding: 11px 0px 11px 30px;
       border-style: none;
       @media(max-width: 885px) {
-
+        width: 100%;
       }
     }
     .not-mobile {
@@ -73,7 +87,19 @@ b {
     .is-mobile {
       display: none;
       @media(max-width: 885px) {
-        display: block;
+        display: flex;
+      }
+    }
+    .mobile-search {
+      display: none;
+      @media(max-width: 885px) {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 15px;
+        line-height: 45px;
+        img {
+          margin-right: 15px;
+        }
       }
     }
     .search-input:focus::-webkit-input-placeholder {
@@ -91,7 +117,7 @@ b {
     @media (max-width: 885px) {
       position: relative;
       background-color: #fff;
-      height: 45px;
+      min-height: 45px;
       width: 100%;
       top: -1px;
       border-top: 1px solid #e5e5e5;
@@ -208,6 +234,13 @@ b {
     .login {
       color: $highlights;
     }
+    .header-link {
+      display: flex;
+      align-items: center;
+      @media(max-width: 885px) {
+        margin-left: 15px;
+      }
+    }
   }
 
   .links {
@@ -315,10 +348,16 @@ b {
     justify-content: space-between;
     padding: 20px 30px;
     border-bottom: 1px solid #e5e5e5;
+    @media(max-width: 685px) {
+      display: block;
+    }
     .left {
-      width: 415px;
+      min-width: 50%;
       display: flex;
       justify-content: space-between;
+      @media(max-width: 685px) {
+        max-width: 600px;
+      }
       li:hover {
         color: #FF8188;
       }
@@ -329,6 +368,19 @@ b {
       justify-content: space-between;
       img {
         height: 20px;
+      }
+      svg {
+        @media(max-width: 685px) {
+          margin: 0 10px;
+        }
+      }
+      @media(max-width: 685px) {
+        margin: auto;
+        border-top: 1px solid #E5E5E5;
+        width: 100%;
+        justify-content: center;
+        padding-top: 20px;
+        margin-top: 5px;
       }
     }
   }
@@ -406,9 +458,24 @@ b {
           text-overflow: ellipsis;
           width: 180px;
         }
+        .large {
+          @media (max-width: 885px) {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 180px;
+          }
+          @media(max-width: 685px) {
+            min-width: 160px;
+            max-width: 300px
+          }
+        }
         .product-name {
           font-size: 19px;
           color: #6d6c6d;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       .sale-price {
         color: #FF8188;

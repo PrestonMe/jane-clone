@@ -18,6 +18,14 @@ class Search extends Component {
 
   render() {
     console.log(this.props, this.state)
+    let url;
+    if(this.state.url && this.state.url[1]){
+      url = this.state.url.split('/').slice(1).join('')
+      url = url.split('')
+      url[0] = url[0].toUpperCase()
+      url = url.join('')
+    }
+
     return (
 
       <div className='search'>
@@ -27,7 +35,10 @@ class Search extends Component {
           {this.state.search
            ? <div>
               <div onClick={this.toggleSearch} className='overlay' />
-              <input onClick={this.toggleSearch} className='search-input is-mobile' type='text' placeholder='Search...' />
+              <div className='search-cancel is-mobile'>
+                <input className='search-input' type='text' placeholder='Search...' />
+                <p onClick={this.toggleSearch}>Cancel</p>
+              </div>
                 <ul onClick={this.toggleSearch}>
                  <Link to='/clothing'><li>Clothing</li></Link>
                  <Link to='/accessories'><li>Accessories</li></Link>
@@ -43,10 +54,11 @@ class Search extends Component {
                </ul>
              </div>
            :
-           <div>
-            <p className='is-mobile'>
-              {this.state.url !== '/' ? this.state.url.split('/').join('') : 'Shop By Category'}
+           <div onClick={this.toggleSearch} className='mobile-search'>
+            <p>
+              {url && url[1] !== 'r' ? url : 'Shop By Category'}
             </p>
+            <img src='../public/img/icons/down_arrow.svg'/>
            </div>
           }
         </div>

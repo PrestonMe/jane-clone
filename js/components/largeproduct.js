@@ -10,7 +10,7 @@ class LargeProduct extends React.Component {
         <Link to={`/productpage/${this.props.id}`}><img src={this.props.burl} /></Link>
         <div className='product-summary'>
           <div className='product-sum-left'>
-            <Link to='/productpage'><div className='product-name'>{this.props.name}</div></Link>
+            <Link to='/productpage'><div className='product-name large'>{this.props.name}</div></Link>
             <span className='sale-price'>${this.props.sale} </span>
             <span className='retail-price'>${this.props.price}</span>
           </div>

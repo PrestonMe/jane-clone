@@ -38,18 +38,33 @@ b {
     width: 245px;
     background: #FFF;
     z-index: 10; }
+    @media (max-width: 885px) {
+      .search ul {
+        height: calc(100vh - 44px);
+        left: 0px;
+        width: 100%; } }
   .search li {
     line-height: 40px;
     padding: 0 10px 0 20px;
     font-size: 16px; }
   .search li:hover {
     background-color: #E5E5E5; }
+  .search .media-search .search-cancel {
+    display: flex;
+    align-items: center;
+    margin: 10px 10px -1px; }
+    .search .media-search .search-cancel p {
+      margin: 0px 10px;
+      font-size: 16px; }
   .search .media-search .search-input {
     border-radius: 3px;
     width: 215px;
     background: #F3F3F3 url(/public/50e09f533d0bab118cd215cc4bc2695c.svg) no-repeat scroll 11px 11px;
     padding: 11px 0px 11px 30px;
     border-style: none; }
+    @media (max-width: 885px) {
+      .search .media-search .search-input {
+        width: 100%; } }
   @media (max-width: 885px) {
     .search .media-search .not-mobile {
       display: none; } }
@@ -57,7 +72,17 @@ b {
     display: none; }
     @media (max-width: 885px) {
       .search .media-search .is-mobile {
-        display: block; } }
+        display: flex; } }
+  .search .media-search .mobile-search {
+    display: none; }
+    @media (max-width: 885px) {
+      .search .media-search .mobile-search {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 15px;
+        line-height: 45px; }
+        .search .media-search .mobile-search img {
+          margin-right: 15px; } }
   .search .media-search .search-input:focus::-webkit-input-placeholder {
     color: transparent; }
   .search .media-search .search-input:focus {
@@ -71,7 +96,7 @@ b {
     .search .media-search {
       position: relative;
       background-color: #fff;
-      height: 45px;
+      min-height: 45px;
       width: 100%;
       top: -1px;
       border-top: 1px solid #e5e5e5; } }
@@ -168,6 +193,12 @@ b {
           display: none; } }
     .nav .nav-right .login {
       color: #68D2C3; }
+    .nav .nav-right .header-link {
+      display: flex;
+      align-items: center; }
+      @media (max-width: 885px) {
+        .nav .nav-right .header-link {
+          margin-left: 15px; } }
   .nav .links {
     background-color: #FFF;
     z-index: 5;
@@ -249,10 +280,16 @@ b {
     justify-content: space-between;
     padding: 20px 30px;
     border-bottom: 1px solid #e5e5e5; }
+    @media (max-width: 685px) {
+      .footer .top {
+        display: block; } }
     .footer .top .left {
-      width: 415px;
+      min-width: 50%;
       display: flex;
       justify-content: space-between; }
+      @media (max-width: 685px) {
+        .footer .top .left {
+          max-width: 600px; } }
       .footer .top .left li:hover {
         color: #FF8188; }
     .footer .top .right {
@@ -261,6 +298,17 @@ b {
       justify-content: space-between; }
       .footer .top .right img {
         height: 20px; }
+      @media (max-width: 685px) {
+        .footer .top .right svg {
+          margin: 0 10px; } }
+      @media (max-width: 685px) {
+        .footer .top .right {
+          margin: auto;
+          border-top: 1px solid #E5E5E5;
+          width: 100%;
+          justify-content: center;
+          padding-top: 20px;
+          margin-top: 5px; } }
   .footer .bottom {
     margin: 4px 0 0 0;
     border-top: 1px solid #E5E5E5;
@@ -328,9 +376,22 @@ b {
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 180px; }
+      @media (max-width: 885px) {
+        .shop .products-container .product-summary .large {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 180px; } }
+      @media (max-width: 685px) {
+        .shop .products-container .product-summary .large {
+          min-width: 160px;
+          max-width: 300px; } }
       .shop .products-container .product-summary .product-name {
         font-size: 19px;
-        color: #6d6c6d; }
+        color: #6d6c6d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; }
       .shop .products-container .product-summary .sale-price {
         color: #FF8188;
         font-size: 12px;

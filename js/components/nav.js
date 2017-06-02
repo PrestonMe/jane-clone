@@ -67,8 +67,7 @@ class Nav extends React.Component {
           <div className='nav-right'>
             <img src='../public/img/icons/heart.svg' />
             <p>FAVORITES</p>
-            <img src='../public/img/icons/shopping-bag.svg' />
-            <p><Link to='/cart'>MY BAG</Link></p>
+            <Link className='header-link' to='/cart'><img src='../public/img/icons/shopping-bag.svg' /><p>MY BAG</p></Link>
             {this.props.cartTotal ? <h1 className='cart-qty'>{this.props.cartTotal}</h1> : ''}
             {
               this.props.loggedIn

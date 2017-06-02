@@ -1655,13 +1655,13 @@ var Nav = function (_React$Component) {
             null,
             'FAVORITES'
           ),
-          _react2.default.createElement('img', { src: '../public/img/icons/shopping-bag.svg' }),
           _react2.default.createElement(
-            'p',
-            null,
+            _reactRouter.Link,
+            { className: 'header-link', to: '/cart' },
+            _react2.default.createElement('img', { src: '../public/img/icons/shopping-bag.svg' }),
             _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/cart' },
+              'p',
+              null,
               'MY BAG'
             )
           ),
@@ -7615,7 +7615,7 @@ var LargeProduct = function (_React$Component) {
             { to: '/productpage' },
             _react2.default.createElement(
               'div',
-              { className: 'product-name' },
+              { className: 'product-name large' },
               this.props.name
             )
           ),
@@ -14322,6 +14322,14 @@ var Search = function (_Component) {
 
   Search.prototype.render = function render() {
     console.log(this.props, this.state);
+    var url = void 0;
+    if (this.state.url && this.state.url[1]) {
+      url = this.state.url.split('/').slice(1).join('');
+      url = url.split('');
+      url[0] = url[0].toUpperCase();
+      url = url.join('');
+    }
+
     return _react2.default.createElement(
       'div',
       { className: 'search' },
@@ -14334,7 +14342,16 @@ var Search = function (_Component) {
           'div',
           null,
           _react2.default.createElement('div', { onClick: this.toggleSearch, className: 'overlay' }),
-          _react2.default.createElement('input', { onClick: this.toggleSearch, className: 'search-input is-mobile', type: 'text', placeholder: 'Search...' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'search-cancel is-mobile' },
+            _react2.default.createElement('input', { className: 'search-input', type: 'text', placeholder: 'Search...' }),
+            _react2.default.createElement(
+              'p',
+              { onClick: this.toggleSearch },
+              'Cancel'
+            )
+          ),
           _react2.default.createElement(
             'ul',
             { onClick: this.toggleSearch },
@@ -14440,12 +14457,13 @@ var Search = function (_Component) {
           )
         ) : _react2.default.createElement(
           'div',
-          null,
+          { onClick: this.toggleSearch, className: 'mobile-search' },
           _react2.default.createElement(
             'p',
-            { className: 'is-mobile' },
-            this.state.url !== '/' ? this.state.url.split('/').join('') : 'Shop By Category'
-          )
+            null,
+            url && url[1] !== 'r' ? url : 'Shop By Category'
+          ),
+          _react2.default.createElement('img', { src: '../public/img/icons/down_arrow.svg' })
         )
       )
     );
