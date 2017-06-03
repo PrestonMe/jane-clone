@@ -6922,6 +6922,11 @@ var Cart = function (_React$Component) {
                     )
                   ),
                   setAddress !== 'hide' ? _react2.default.createElement(_new_address2.default, { 'class': setAddress, exitMenu: this.toggleAddress }) : '',
+                  _react2.default.createElement(
+                    'h1',
+                    { className: 'media-pay' },
+                    'PAYMENT METHOD'
+                  ),
                   !this.state.billingMenu ? _react2.default.createElement(
                     'div',
                     { className: 'payment-method' },

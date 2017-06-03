@@ -399,6 +399,7 @@ class Cart extends React.Component {
                     ? <NewAddress class={setAddress} exitMenu={this.toggleAddress} />
                     : ''
                     }
+                    <h1 className='media-pay'>PAYMENT METHOD</h1>
                     {!this.state.billingMenu
                     ? <div className='payment-method'>
                       <h1>SELECT A PAYMENT METHOD:</h1>
