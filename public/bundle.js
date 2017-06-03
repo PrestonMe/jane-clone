@@ -6675,7 +6675,7 @@ var Cart = function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: !item.edit ? 'hide' : 'clearfix' },
+                    { className: !item.edit ? 'hide' : 'clearfix not-mobile' },
                     _react2.default.createElement(
                       'div',
                       { className: 'edit-qty' },
@@ -6711,6 +6711,21 @@ var Cart = function (_React$Component) {
                             } },
                           !item.edit ? ' Edit' : ' Close'
                         )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: !item.edit ? 'hide' : 'clearfix is-mobile' },
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'edit-qty' },
+                        _react2.default.createElement('input', {
+                          id: item.product_id,
+                          value: item.qty,
+                          onChange: _this6.editQty }),
+                        _react2.default.createElement('img', { onClick: function onClick() {
+                            return _this6.removeFromCart(item.id, item.customer_id);
+                          }, src: '../../public/img/icons/cancel.svg' })
                       )
                     ),
                     _react2.default.createElement(
@@ -7464,6 +7479,15 @@ var Cart = function (_React$Component) {
                     'div',
                     { className: 'login-pane cart-reset' },
                     _react2.default.createElement(_createAccount2.default, null)
+                  ),
+                  this.state.login ? _react2.default.createElement(
+                    'h1',
+                    { className: 'media-login' },
+                    'LOG IN'
+                  ) : _react2.default.createElement(
+                    'h1',
+                    { className: 'media-login' },
+                    'ALREADY A MEMBER?'
                   ),
                   _react2.default.createElement(
                     'div',

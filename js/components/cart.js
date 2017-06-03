@@ -296,7 +296,7 @@ class Cart extends React.Component {
 
 
                       </div>
-                      <div className={!item.edit ? 'hide' : 'clearfix'}>
+                      <div className={!item.edit ? 'hide' : 'clearfix not-mobile'}>
                         <div className='edit-qty'>
                           <input
                             id={item.product_id}
@@ -314,6 +314,15 @@ class Cart extends React.Component {
                               {!item.edit ? ' Edit' : ' Close'}
                             </span>
                           </h2>
+                        </div>
+                        <div className={!item.edit ? 'hide' : 'clearfix is-mobile'}>
+                          <div className='edit-qty'>
+                            <input
+                              id={item.product_id}
+                              value={item.qty}
+                              onChange={this.editQty} />
+                            <img onClick={() => this.removeFromCart(item.id, item.customer_id)} src='../../public/img/icons/cancel.svg' />
+                          </div>
                         </div>
                         <div className='media-cart-line border-bot'>
                           <p>SHIPPING</p>
@@ -559,6 +568,10 @@ class Cart extends React.Component {
                     <div className='login-pane cart-reset'>
                       <CreateAccount />
                     </div>
+                    {this.state.login
+                    ? <h1 className='media-login'>LOG IN</h1>
+                    : <h1 className='media-login'>ALREADY A MEMBER?</h1>
+                    }
                     <div className='login-pane cart-reset cart-reset-login'>
                       {this.state.login
                       ? ''
