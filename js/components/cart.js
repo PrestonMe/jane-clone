@@ -263,7 +263,7 @@ class Cart extends React.Component {
               <h1>YOUR CART</h1>
               {this.props.cart
               ? <div>
-                <div className='item-header'>
+                <div className='item-header media-hide'>
                   <div className='item-left'>
                     <h2>DESCRIPTION</h2>
                   </div>
@@ -293,6 +293,8 @@ class Cart extends React.Component {
                           <h2>${item.shipping}</h2>
                           <h2>${item.sale}</h2>
                         </div>
+
+
                       </div>
                       <div className={!item.edit ? 'hide' : 'clearfix'}>
                         <div className='edit-qty'>
@@ -303,12 +305,34 @@ class Cart extends React.Component {
                           <img onClick={() => this.removeFromCart(item.id, item.customer_id)} src='../../public/img/icons/cancel.svg' />
                         </div>
                       </div>
+
+                      <div className='media-cart'>
+                        <div className='media-cart-line border-bot'>
+                          <p>QTY</p>
+                          <h2>{item.qty} |
+                            <span onClick={() => this.toggleEdit(item.edit, item.product_id)}>
+                              {!item.edit ? ' Edit' : ' Close'}
+                            </span>
+                          </h2>
+                        </div>
+                        <div className='media-cart-line border-bot'>
+                          <p>SHIPPING</p>
+                          <h2>${item.shipping}</h2>
+                        </div>
+                      </div>
+
                       <div className='cart-item-bottom'>
                         <div className='price-ship-details'>
                           <h2>Estimate to ship by Tue, Mar 28.</h2>
-                          <h2>${this.convertMoney(((item.sale * item.qty) + (item.shipping * item.qty)).toFixed(2))}</h2>
+                          <h2 className='media-cart-bot'>${this.convertMoney(((item.sale * item.qty) + (item.shipping * item.qty)).toFixed(2))}</h2>
                         </div>
                         <p>Seller usually ships within 2 business days.</p>
+                      </div>
+                      <div className='media-cart'>
+                        <div className='media-cart-line border-top'>
+                          <p>DEAL TOTAL</p>
+                          <h2>${this.convertMoney(((item.sale * item.qty) + (item.shipping * item.qty)).toFixed(2))}</h2>
+                        </div>
                       </div>
                     </div>
                   )

@@ -6583,7 +6583,7 @@ var Cart = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'div',
-                { className: 'item-header' },
+                { className: 'item-header media-hide' },
                 _react2.default.createElement(
                   'div',
                   { className: 'item-left' },
@@ -6690,6 +6690,47 @@ var Cart = function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'div',
+                    { className: 'media-cart' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'media-cart-line border-bot' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'QTY'
+                      ),
+                      _react2.default.createElement(
+                        'h2',
+                        null,
+                        item.qty,
+                        ' |',
+                        _react2.default.createElement(
+                          'span',
+                          { onClick: function onClick() {
+                              return _this6.toggleEdit(item.edit, item.product_id);
+                            } },
+                          !item.edit ? ' Edit' : ' Close'
+                        )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'media-cart-line border-bot' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'SHIPPING'
+                      ),
+                      _react2.default.createElement(
+                        'h2',
+                        null,
+                        '$',
+                        item.shipping
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
                     { className: 'cart-item-bottom' },
                     _react2.default.createElement(
                       'div',
@@ -6701,7 +6742,7 @@ var Cart = function (_React$Component) {
                       ),
                       _react2.default.createElement(
                         'h2',
-                        null,
+                        { className: 'media-cart-bot' },
                         '$',
                         _this6.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))
                       )
@@ -6710,6 +6751,25 @@ var Cart = function (_React$Component) {
                       'p',
                       null,
                       'Seller usually ships within 2 business days.'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'media-cart' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'media-cart-line border-top' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'DEAL TOTAL'
+                      ),
+                      _react2.default.createElement(
+                        'h2',
+                        null,
+                        '$',
+                        _this6.convertMoney((item.sale * item.qty + item.shipping * item.qty).toFixed(2))
+                      )
                     )
                   )
                 );

@@ -2,3 +2,4 @@ node_modules
 project_plans
 config.js
 public/bundle.js
+public/styles.css
