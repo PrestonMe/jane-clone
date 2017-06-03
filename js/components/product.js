@@ -77,7 +77,7 @@ class Product extends React.Component {
                   <span className='retail-price'>${this.state.product[0].price}</span>
                 </div>
                 <div className='product-sum-right'>
-                  <button className='like'>
+                  <button className='like media-product'>
                     <img src='../public/img/icons/heart.svg' />
                     <span>{this.state.product[0].favorites}</span>
                   </button>
@@ -145,7 +145,7 @@ class Product extends React.Component {
                 })}
               </div>
               {this.state.product[0].details
-              ? <div className='product-details'>
+              ? <div className='product-details media-only'>
                 <p>PRODUCT DETAILS</p>
                 <ul>
                   {this.state.product[0].details.split('@').map(detail => {
@@ -159,14 +159,14 @@ class Product extends React.Component {
               }
             </div>
             <div className='seller-info'>
-              <h1>SELLER</h1>
-              <div className='seller'>
+              <h1 className='media-only'>SELLER</h1>
+              <div className='seller media-only'>
                 <img src={seller} />
                 <span>{this.state.product[0].seller}</span>
               </div>
-              <h1>SHIPPING</h1>
+              <h1 className='border-desc-top'>SHIPPING</h1>
               <p>$4.99 for the first item and $3.99 for each additional item. US only. Estimated to ship by Mon, Mar 20. Seller usually ships within 4 business days.</p>
-              <h1>FINE PRINT</h1>
+              <h1 className='border-desc-top'>FINE PRINT</h1>
               <p>Please make sure that your size and color is correct since we can't make changes to the order. Note that colors may be slightly due to individual monitor settings. See Jane's return policy.</p>
             </div>
           </div>
