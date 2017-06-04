@@ -828,6 +828,12 @@ b {
   min-height: 429px;
   padding: 30px 40px 40px 40px;
   margin: 30px auto;
+  @media(max-width: 900px) {
+    padding: 20px 30px 30px;
+  }
+  @media(max-width: 400px) {
+    padding: 10px 20px 20px;
+  }
   .fb-button {
     width: 100%;
   }
@@ -1802,12 +1808,15 @@ b {
     max-width: 1300px;
     background-color: #FFF;
     .history-orders {
-      width: 100%;
+      width: 95%;
       padding: 20px;
       box-sizing: border-box;
       h1{
         padding-bottom: 20px;
         border-bottom: 1px solid #1c1c1c;
+        @media(max-width: 900px) {
+          text-align: center;
+        }
       }
       .order {
         overflow: hidden;
@@ -1836,10 +1845,23 @@ b {
           display: flex;
           padding: 20px 0 20px 10px;
           border-bottom: 1px dashed #868181;
+          @media(max-width: 900px) {
+            display: block;
+          }
+          .media-line {
+            @media(max-width: 900px) {
+              display: none;
+            }
+          }
           p {
             color: #7a7979;
             font-size: 14px;
             margin-bottom: 5px;
+          }
+          p:nth-child(1) {
+            @media(max-width: 900px) {
+              margin-top: 10px;
+            }
           }
           .seller-price {
             p:nth-child(1) {
@@ -1848,9 +1870,15 @@ b {
           }
           div:nth-child(2) {
             width: calc(100% / 3);
+            @media(max-width: 900px) {
+              width: auto;
+            }
           }
           div {
             margin-left: 20px;
+            @media(max-width: 900px) {
+              margin-left: 10px;
+            }
           }
           img {
             height: 51px;
@@ -1862,11 +1890,19 @@ b {
         border-bottom: 1px solid #1c1c1c;
         .order-sum {
           display: flex;
+          @media(max-width: 900px) {
+            justify-content: space-between;
+          }
           div {
             width: calc(100% / 5);
           }
           div:nth-child(1) {
             padding-left: 2px;
+          }
+          .media-history {
+            @media(max-width: 900px) {
+              display: none;
+            }
           }
         }
         .shipping-details {
@@ -1877,7 +1913,7 @@ b {
           }
           h2 {
             margin-bottom: 5px;
-            font-weight: bold
+            font-weight: bold;
           }
         }
         div:nth-child(1) {
@@ -1910,6 +1946,9 @@ b {
   margin: 20px auto 40px;
   max-width: 1300px;
   display: flex;
+  @media(max-width: 800px) {
+    display: block;
+  }
   .clearfix {
     display: block;
     margin: 10px 0 15px;
@@ -1947,6 +1986,11 @@ b {
     margin-right: 10px;
     padding: 20px;
     background-color: #FFF;
+    @media(max-width: 800px) {
+      width: 98%;
+      margin: auto;
+      box-sizing: border-box;
+    }
     .success {
       background-color: #DFF0D8;
       padding: 10px;
@@ -1998,7 +2042,12 @@ b {
     margin-left: 10px;
     padding: 20px;
     background-color: #FFF;
-    max-height: 120px;
+    height: 0%;
+    @media(max-width: 800px){
+      margin: 20px auto 0;
+      width: 98%;
+      box-sizing: border-box;
+    }
   }
   p {
     color: #999;

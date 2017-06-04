@@ -42,12 +42,12 @@ class Order extends React.Component {
           <div>
             Order #{this.props.id}
           </div>
-          <div>
+          <div className='media-history'>
             Items In Order {this.props.order_items.reduce((acc, val) => {
               return acc + val.qty
             }, 0)}
           </div>
-          <div>
+          <div className='media-history'>
             Order Total: ${this.convertMoney((total + tax).toFixed(2))}
           </div>
           <div className='show-order-items' onClick={this.toggleOrderDetails}>
@@ -72,7 +72,7 @@ class Order extends React.Component {
                 </div>
                 <div>
                   <p>Quantity: {item.qty}</p>
-                  <p>Price: ${item.sold_price * item.qty}</p>
+                  <p className='media-line'>Price: ${item.sold_price * item.qty}</p>
                   <p>Shipping: ${item.shipping_price * item.qty}</p>
                 </div>
               </div>

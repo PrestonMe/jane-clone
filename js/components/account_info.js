@@ -96,9 +96,7 @@ class Account extends React.Component {
             id: this.props.userId
           }
         }).then(res => {
-          console.log(res.data)
           if (res.data === 'Account Updated') {
-            console.log('running')
             this.setState({updateSuccess: true})
             let that = this
             setTimeout(function () {
@@ -130,7 +128,6 @@ class Account extends React.Component {
   }
 
   render () {
-    console.log(this.state.updateSuccess)
     return (
       <div>
         <Nav />

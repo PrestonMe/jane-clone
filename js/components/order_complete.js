@@ -57,12 +57,12 @@ class OrderSum extends React.Component {
                   <div>
                     Order # {state.orderNo}
                   </div>
-                  <div>
+                  <div className='media-history'>
                     Items In Order {state.order.reduce((acc, val) => {
                       return acc + val.qty
                     }, 0)}
                   </div>
-                  <div>
+                  <div className='media-history'>
                     Order Total: ${this.convertMoney((total + tax).toFixed(2))}
                   </div>
                 </div>

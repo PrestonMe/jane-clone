@@ -81,27 +81,27 @@ class SignIn extends React.Component {
   }
 
   componentDidMount() {
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '432409103793644',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v2.8'
-      });
-      FB.AppEvents.logPageView()
-      FB.getLoginStatus(function(response) {
-        console.log(response)
-        // statusChangeCallback(response);
-      });
-    };
-
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '432409103793644',
+    //     cookie     : true,
+    //     xfbml      : true,
+    //     version    : 'v2.8'
+    //   });
+    //   FB.AppEvents.logPageView()
+    //   FB.getLoginStatus(function(response) {
+    //     console.log(response)
+    //     // statusChangeCallback(response);
+    //   });
+    // };
+    //
+    // (function(d, s, id){
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) {return;}
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/en_US/sdk.js";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //  }(document, 'script', 'facebook-jssdk'));
 
   }
 
@@ -111,10 +111,10 @@ class SignIn extends React.Component {
         {this.props.pathname === '/logon'
         ? <div>
           <div className='fb-wrapper'>
-            <div class="fb-login-button" data-width="270" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
-            {/* <button className='fb-auth'>
+            {/* <div class="fb-login-button" data-width="270" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div> */}
+            <button className='fb-auth'>
               LOG IN WITH FACEBOOK
-            </button> */}
+            </button>
             <div>
               <p className='or'>or</p>
             </div>

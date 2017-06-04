@@ -677,6 +677,12 @@ b {
   min-height: 429px;
   padding: 30px 40px 40px 40px;
   margin: 30px auto; }
+  @media (max-width: 900px) {
+    .login-pane {
+      padding: 20px 30px 30px; } }
+  @media (max-width: 400px) {
+    .login-pane {
+      padding: 10px 20px 20px; } }
   .login-pane .fb-button {
     width: 100%; }
   .login-pane img {
@@ -1474,12 +1480,15 @@ b {
   max-width: 1300px;
   background-color: #FFF; }
   .history .history-wrapper .history-orders {
-    width: 100%;
+    width: 95%;
     padding: 20px;
     box-sizing: border-box; }
     .history .history-wrapper .history-orders h1 {
       padding-bottom: 20px;
       border-bottom: 1px solid #1c1c1c; }
+      @media (max-width: 900px) {
+        .history .history-wrapper .history-orders h1 {
+          text-align: center; } }
     .history .history-wrapper .history-orders .order {
       overflow: hidden;
       padding: 30px 0px;
@@ -1504,26 +1513,47 @@ b {
         display: flex;
         padding: 20px 0 20px 10px;
         border-bottom: 1px dashed #868181; }
+        @media (max-width: 900px) {
+          .history .history-wrapper .history-orders .order .line-item {
+            display: block; } }
+        @media (max-width: 900px) {
+          .history .history-wrapper .history-orders .order .line-item .media-line {
+            display: none; } }
         .history .history-wrapper .history-orders .order .line-item p {
           color: #7a7979;
           font-size: 14px;
           margin-bottom: 5px; }
+        @media (max-width: 900px) {
+          .history .history-wrapper .history-orders .order .line-item p:nth-child(1) {
+            margin-top: 10px; } }
         .history .history-wrapper .history-orders .order .line-item .seller-price p:nth-child(1) {
           color: #6b6a6a; }
         .history .history-wrapper .history-orders .order .line-item div:nth-child(2) {
           width: calc(100% / 3); }
+          @media (max-width: 900px) {
+            .history .history-wrapper .history-orders .order .line-item div:nth-child(2) {
+              width: auto; } }
         .history .history-wrapper .history-orders .order .line-item div {
           margin-left: 20px; }
+          @media (max-width: 900px) {
+            .history .history-wrapper .history-orders .order .line-item div {
+              margin-left: 10px; } }
         .history .history-wrapper .history-orders .order .line-item img {
           height: 51px;
           width: 100px;
           padding-left: 10px; }
       .history .history-wrapper .history-orders .order .order-sum {
         display: flex; }
+        @media (max-width: 900px) {
+          .history .history-wrapper .history-orders .order .order-sum {
+            justify-content: space-between; } }
         .history .history-wrapper .history-orders .order .order-sum div {
           width: calc(100% / 5); }
         .history .history-wrapper .history-orders .order .order-sum div:nth-child(1) {
           padding-left: 2px; }
+        @media (max-width: 900px) {
+          .history .history-wrapper .history-orders .order .order-sum .media-history {
+            display: none; } }
       .history .history-wrapper .history-orders .order .shipping-details {
         padding: 30px 0 30px 10px;
         border-bottom: 1px dashed #868181; }
@@ -1555,6 +1585,9 @@ b {
   margin: 20px auto 40px;
   max-width: 1300px;
   display: flex; }
+  @media (max-width: 800px) {
+    .account {
+      display: block; } }
   .account .clearfix {
     display: block;
     margin: 10px 0 15px; }
@@ -1587,6 +1620,11 @@ b {
     margin-right: 10px;
     padding: 20px;
     background-color: #FFF; }
+    @media (max-width: 800px) {
+      .account .update_profile {
+        width: 98%;
+        margin: auto;
+        box-sizing: border-box; } }
     .account .update_profile .success {
       background-color: #DFF0D8;
       padding: 10px;
@@ -1630,7 +1668,12 @@ b {
     margin-left: 10px;
     padding: 20px;
     background-color: #FFF;
-    max-height: 120px; }
+    height: 0%; }
+    @media (max-width: 800px) {
+      .account .support {
+        margin: 20px auto 0;
+        width: 98%;
+        box-sizing: border-box; } }
   .account p {
     color: #999;
     margin-top: 20px;

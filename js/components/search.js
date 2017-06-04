@@ -4,7 +4,6 @@ import { Link } from 'react-router'
 class Search extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       search: this.props.search,
       url: this.props.url || ''
@@ -17,7 +16,6 @@ class Search extends Component {
   }
 
   render() {
-    console.log(this.props, this.state)
     let url;
     if(this.state.url && this.state.url[1]){
       url = this.state.url.split('/').slice(1).join('')
