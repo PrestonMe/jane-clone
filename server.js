@@ -28,7 +28,7 @@ var db = server.get('db')
 server.use('/public', express.static('./public'))
 
 server.use(session({
-  secret: process.env.secret,
+  secret: config.secret,
   resave: false,
   saveUninitialized: true
 }))
