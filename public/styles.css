@@ -677,6 +677,8 @@ b {
   min-height: 429px;
   padding: 30px 40px 40px 40px;
   margin: 30px auto; }
+  .login-pane .fb-button {
+    width: 100%; }
   .login-pane img {
     display: block;
     width: 180px;

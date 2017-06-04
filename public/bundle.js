@@ -3474,6 +3474,33 @@ var SignIn = function (_React$Component) {
     return value === false ? 'invalid' : '';
   };
 
+  SignIn.prototype.componentDidMount = function componentDidMount() {
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '432409103793644',
+        cookie: true,
+        xfbml: true,
+        version: 'v2.8'
+      });
+      FB.AppEvents.logPageView();
+      FB.getLoginStatus(function (response) {
+        console.log(response);
+        // statusChangeCallback(response);
+      });
+    };
+
+    (function (d, s, id) {
+      var js,
+          fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  };
+
   SignIn.prototype.render = function render() {
     return _react2.default.createElement(
       'div',
@@ -3484,11 +3511,7 @@ var SignIn = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'fb-wrapper' },
-          _react2.default.createElement(
-            'button',
-            { className: 'fb-auth' },
-            'LOG IN WITH FACEBOOK'
-          ),
+          _react2.default.createElement('div', { 'class': 'fb-login-button', 'data-width': '270', 'data-max-rows': '1', 'data-size': 'large', 'data-button-type': 'login_with', 'data-show-faces': 'false', 'data-auto-logout-link': 'true', 'data-use-continue-as': 'false' }),
           _react2.default.createElement(
             'div',
             null,
@@ -4785,34 +4808,52 @@ var _order_complete2 = _interopRequireDefault(_order_complete);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App() {
-  return _react2.default.createElement(
-    _reactRedux.Provider,
-    { store: _store2.default },
-    _react2.default.createElement(
-      'div',
-      { className: 'main' },
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/cart', component: _cart2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/logon', component: _login2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/signup', component: _signup2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/clothing', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/accessories', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/baby', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/kids', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/misc', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/new', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/ending-soon', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/popular', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/sneak-peeks', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/home-decor', component: _AllDeals2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/history', component: _order_history2.default }),
-      _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/account', component: _account_info2.default }),
-      _react2.default.createElement(_reactRouter.Match, { pattern: '/productpage/:id', component: _product2.default }),
-      _react2.default.createElement(_reactRouter.Match, { pattern: '/confirmation/:id', component: _order_complete2.default })
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_Component) {
+  _inherits(App, _Component);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  App.prototype.render = function render() {
+    return _react2.default.createElement(
+      _reactRedux.Provider,
+      { store: _store2.default },
+      _react2.default.createElement(
+        'div',
+        { className: 'main' },
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/cart', component: _cart2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/logon', component: _login2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/signup', component: _signup2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/clothing', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/accessories', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/baby', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/kids', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/misc', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/new', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/ending-soon', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/popular', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/sneak-peeks', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/home-decor', component: _AllDeals2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/history', component: _order_history2.default }),
+        _react2.default.createElement(_reactRouter.Match, { exactly: true, pattern: '/account', component: _account_info2.default }),
+        _react2.default.createElement(_reactRouter.Match, { pattern: '/productpage/:id', component: _product2.default }),
+        _react2.default.createElement(_reactRouter.Match, { pattern: '/confirmation/:id', component: _order_complete2.default })
+      )
+    );
+  };
+
+  return App;
+}(_react.Component);
 
 exports.default = App;
 

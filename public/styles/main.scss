@@ -828,6 +828,9 @@ b {
   min-height: 429px;
   padding: 30px 40px 40px 40px;
   margin: 30px auto;
+  .fb-button {
+    width: 100%;
+  }
   img {
     display: block;
     width: 180px;
@@ -1091,7 +1094,6 @@ b {
         .media-pay {
           display: none;
           padding-top: 15px;
-          // border-top: 1px solid #E5E5E5;
           margin-left: 10px;
           @media(max-width: 800px) {
             display: block;
