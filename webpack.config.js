@@ -42,7 +42,7 @@ module.exports = {
       loader: "eslint-loader", exclude: /node_modules/},
       {test: /\.css$/, use: ['style-loader', {loader: 'css-loader',
       options: {url: false}}]},
-      {test: /\.js?$/, loader: 'babel-loader', exclude: /node_modules/, include: [
+      {test: /\.js?$/, loader: 'babel-loader', include: [
       path.resolve('js'), path.resolve('node_modules/preact-compat/src')]},
       {test: /\.scss$/, use: ExtractTextPlugin.extract({
         fallback: "style-loader",
