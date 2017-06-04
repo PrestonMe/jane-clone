@@ -16,7 +16,7 @@ const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
 const App = require('./js/containers/App').default
 // const connectionString = 'postgres://postgres@localhost/jane'
-const connectionString = process.env.DATABASE_URL
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
 const massiveInstance = massive.connectSync({connectionString: connectionString})
 const server = express()
 
