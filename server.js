@@ -7,24 +7,17 @@ const bodyParser = require('body-parser')
 const massive = require('massive')
 const config = require('./config')
 const session = require('express-session')
-// renders our entire app out to a long string which is then shipped
-// down as html
 const ReactRouter = require('react-router')
 const ServerRouter = ReactRouter.ServerRouter
 const _ = require('lodash')
-// for its templating fucntion (see index.html)
-// const port = process.env.PORT || 3000
-const port = 3000
+const port = process.env.PORT || 3000
 const fs = require('fs')
 const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
 const App = require('./js/containers/App').default
-// we use .default since you export default, this is how we
-// interoperate between the two
 const connectionString = 'postgres://postgres@localhost/jane'
-// const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
-const massiveInstance = massive.connectSync({connectionString: connectionString});
-// postgresql-regular-13626
+const connectionString = process.env.DATABASE_URL
+const massiveInstance = massive.connectSync({connectionString: connectionString})
 const server = express()
 
 server.use(bodyParser.json())
@@ -35,8 +28,7 @@ var db = server.get('db')
 server.use('/public', express.static('./public'))
 
 server.use(session({
-  // secret: process.env.secret,
-  secret: config.secret,
+  secret: process.env.secret,
   resave: false,
   saveUninitialized: true
 }))
@@ -62,7 +54,6 @@ function login (req, res, response) {
             db.cleanup_cart(req.sessionID, function(err, cleaned) {
               db.get_cart_total_items(['0', response[0].id], function(err, rep) {
                 response[0].total = rep[0].total
-
                 res.json(response)
               })
             })
@@ -351,9 +342,6 @@ server.get('/order/:id', function(req, res, next) {
 
 server.use((req, res) => {
   const context = ReactRouter.createServerRenderContext()
-  // used for react router v4 server side rendering, you can
-  // use the above to handle redirects and 404's, but is not implemented
-  // in this example
   let body = ReactDOMServer.renderToString(
     React.createElement(ServerRouter, {location: req.url, context: context},
       React.createElement(App)

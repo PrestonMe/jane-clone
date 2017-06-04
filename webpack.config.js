@@ -5,13 +5,9 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin")
 module.exports = {
   context: __dirname,
   entry: './js/containers/ClientApp.js',
-  // remove devtool for production build for much smaller builds
-  // devtool: 'cheap-module-source-map',
   output: {
     path: path.join(__dirname, '/public'),
     publicPath: '/public/',
-    // publicPath lets webpack know where to get additional bundles once you've downloaded
-    // part of code-splitting
     filename: 'bundle.js'
   },
   resolve: {
