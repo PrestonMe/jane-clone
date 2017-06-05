@@ -5690,10 +5690,10 @@ var AllDeals = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'div',
           { className: 'products-container' },
-          this.state.products.splice(0, 2).map(function (product) {
+          this.state.products.slice(0, 2).map(function (product) {
             return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_4__largeproduct__["a" /* default */], _extends({}, product, { key: product.id }));
           }),
-          this.state.products.map(function (product) {
+          this.state.products.slice(2).map(function (product) {
             return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_5__smallproduct__["a" /* default */], _extends({}, product, { key: product.id }));
           })
         )

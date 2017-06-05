@@ -50,12 +50,12 @@ class AllDeals extends React.Component {
             </div>
           </div>
           <div className='products-container'>
-            {this.state.products.splice(0, 2).map((product) => {
+            {this.state.products.slice(0, 2).map((product) => {
               return (
                 <LargeProduct {...product} key={product.id} />
               )
             })}
-            {this.state.products.map(product => {
+            {this.state.products.slice(2).map(product => {
               return (
                 <SmallProduct {...product} key={product.id} />
               )
