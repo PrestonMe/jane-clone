@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import axios from 'axios'
+
+const { object } = React.PropTypes
 
 class Search extends Component {
   constructor(props) {
@@ -9,10 +12,18 @@ class Search extends Component {
       url: this.props.url || ''
     }
     this.toggleSearch = this.toggleSearch.bind(this)
+    this.submitSearch = this.submitSearch.bind(this)
   }
 
   toggleSearch () {
     this.setState({search: !this.state.search})
+  }
+
+  submitSearch(e) {
+    if(e.key === 'Enter') {
+      this.context.router.transitionTo('/search/' + e.target.value)
+    }
+
   }
 
   render() {
@@ -29,12 +40,12 @@ class Search extends Component {
       <div className='search'>
         <img onClick={this.toggleSearch} className='mag' src='../public/img/icons/mag.svg' />
         <div className='media-search'>
-          <input onClick={this.toggleSearch} className={'search-input not-mobile ' + (this.state.search ? 'active-search' : '')} type='text' placeholder='Search...' />
+          <input onKeyPress={this.submitSearch} onClick={this.toggleSearch} className={'search-input not-mobile ' + (this.state.search ? 'active-search' : '')} type='text' placeholder='Search...' />
           {this.state.search
            ? <div>
               <div onClick={this.toggleSearch} className='overlay' />
               <div className='search-cancel is-mobile'>
-                <input className='search-input' type='text' placeholder='Search...' />
+                <input onKeyPress={this.submitSearch} className='search-input' type='text' placeholder='Search...' />
                 <p onClick={this.toggleSearch}>Cancel</p>
               </div>
                 <ul onClick={this.toggleSearch}>
@@ -63,6 +74,10 @@ class Search extends Component {
       </div>
     )
   }
+}
+
+Search.contextTypes = {
+  router: object
 }
 
 export default Search

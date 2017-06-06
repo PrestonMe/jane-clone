@@ -407,6 +407,7 @@ b {
   position: relative;
   padding-top: 15px;
   background-color: $background;
+  min-height: 80vh;
   @media screen and (max-width: 980px) { /* Tablet */
     width: 95%;
     margin: auto;
@@ -420,6 +421,17 @@ b {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    .search-results {
+      color: #666;
+      font-size: 24px;
+      padding-bottom: 30px;
+      margin: 10px 0 20px 0;
+      border-bottom: 2px solid #E5E5E5;
+      width: 100%;
+    }
+    .search-term {
+      color: #000;
+    }
     @media(max-width: 1300px) {
       max-width: 1010px;
     }

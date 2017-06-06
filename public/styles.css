@@ -327,7 +327,8 @@ b {
 .shop {
   position: relative;
   padding-top: 15px;
-  background-color: #F3F3F3; }
+  background-color: #F3F3F3;
+  min-height: 80vh; }
   @media screen and (max-width: 980px) {
     .shop {
       /* Tablet */
@@ -342,6 +343,15 @@ b {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between; }
+    .shop .products-container .search-results {
+      color: #666;
+      font-size: 24px;
+      padding-bottom: 30px;
+      margin: 10px 0 20px 0;
+      border-bottom: 2px solid #E5E5E5;
+      width: 100%; }
+    .shop .products-container .search-term {
+      color: #000; }
     @media (max-width: 1300px) {
       .shop .products-container {
         max-width: 1010px; } }

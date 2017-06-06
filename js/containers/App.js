@@ -10,6 +10,7 @@ import SignUp from '../components/signup'
 import History from '../components/order_history'
 import Account from '../components/account_info'
 import OrderSum from '../components/order_complete'
+import SearchResults from '../components/search_results'
 
 class App extends Component {
 
@@ -33,6 +34,7 @@ class App extends Component {
           <Match exactly pattern='/home-decor' component={AllDeals} />
           <Match exactly pattern='/history' component={History} />
           <Match exactly pattern='/account' component={Account} />
+          <Match pattern='/search/:term' component={SearchResults} />
           <Match pattern='/productpage/:id' component={Product} />
           <Match pattern='/confirmation/:id' component={OrderSum} />
 

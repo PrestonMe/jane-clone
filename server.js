@@ -86,8 +86,9 @@ function login (req, res, response) {
 
 server.get('/products', function(req, res, next) {
   if(req.query.path === '/') {
+    console.log('getting all products')
     db.get_all_deals(function(err, products) {
-      res.json(products.length)
+      res.json(products)
     })
   } else {
     db.get_products(req.query.path, function(err, products) {
@@ -339,6 +340,13 @@ server.get('/order/:id', function(req, res, next) {
         })
       }
     })
+  })
+})
+
+server.get('/search', function(req, res, next) {
+  const searchTerm = `%${req.query.searchTerm}%`
+  db.search_products(searchTerm, function(err, response) {
+    res.json(response)
   })
 })
 

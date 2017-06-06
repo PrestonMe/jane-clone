@@ -7,7 +7,7 @@ class SmallProduct extends React.Component {
   render () {
     return (
       <div className='small-product-container'>
-        <Link to={`/productpage/${this.props.id}`}><img className='product-img' src={this.props.burl} /></Link>
+        <Link to={`/productpage/${this.props.id}`}><img className='product-img' src={`.${this.props.burl}`} /></Link>
         <div className='product-summary'>
           <div className='product-sum-left'>
             <Link to={`/productpage/${this.props.id}`}><div className='product-name small'>{this.props.name}</div></Link>
