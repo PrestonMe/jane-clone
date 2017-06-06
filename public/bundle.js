@@ -5663,6 +5663,11 @@ var AllDeals = function (_React$Component) {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_2__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
+        'div',
+        { className: 'shop' },
+        __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('div', { className: 'loader' })
+      ),
       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)
     ) : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
       'div',
@@ -8609,6 +8614,7 @@ var Product = function (_React$Component) {
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_4__nav__["a" /* default */], this.props.location),
+      __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('div', { className: 'loader' }),
       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_5__footer__["a" /* default */], null)
     ) : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
       'div',
@@ -14400,7 +14406,7 @@ var SearchResults = function (_Component) {
           ),
           this.state.results[0] ? this.state.results.map(function (product) {
             return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_5__smallproduct__["a" /* default */], _extends({}, product, { key: product.id }));
-          }) : ''
+          }) : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('div', { className: 'loader' })
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_3__footer__["a" /* default */], null)

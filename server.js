@@ -86,7 +86,6 @@ function login (req, res, response) {
 
 server.get('/products', function(req, res, next) {
   if(req.query.path === '/') {
-    console.log('getting all products')
     db.get_all_deals(function(err, products) {
       res.json(products)
     })

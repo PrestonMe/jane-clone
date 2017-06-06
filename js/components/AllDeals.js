@@ -32,6 +32,9 @@ class AllDeals extends React.Component {
     return !promise
     ? (<div>
       <Nav {...this.props.location} />
+      <div className='shop'>
+        <div className='loader'></div>
+      </div>
       <Footer />
     </div>)
     : (

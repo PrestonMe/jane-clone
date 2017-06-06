@@ -50,7 +50,7 @@ class SearchResults extends Component {
                     <SmallProduct {...product} key={product.id} />
                   )
                 })
-                : ''
+                : <div className='loader'></div>
               }
             </div>
           </div>

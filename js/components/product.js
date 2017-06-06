@@ -60,6 +60,7 @@ class Product extends React.Component {
     return !this.state.product[0]
     ? (<div>
       <Nav {...this.props.location} />
+        <div className='loader'></div>
       <Footer />
     </div>) : (
       <div>
