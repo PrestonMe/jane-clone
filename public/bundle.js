@@ -1611,12 +1611,6 @@ var Nav = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'div',
           { className: 'nav-left' },
-          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('img', { src: '../public/img/icons/menu.svg' }),
-          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-            'p',
-            null,
-            'MENU'
-          ),
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
             'div',
             { className: 'header-search' },
@@ -1626,12 +1620,6 @@ var Nav = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'div',
           { className: 'nav-right' },
-          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('img', { src: '../public/img/icons/heart.svg' }),
-          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-            'p',
-            null,
-            'FAVORITES'
-          ),
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
             { className: 'header-link', to: '/cart' },
@@ -1671,7 +1659,11 @@ var Nav = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'div',
           { className: 'logo' },
-          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('img', { src: '../public/img/jane-logo_360.png' })
+          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
+            { to: '/' },
+            __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('img', { src: '../public/img/jane-logo_360.png' })
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'div',
@@ -3557,11 +3549,7 @@ var SignIn = function (_React$Component) {
               { className: 'btn', onClick: this.login },
               'LOG IN'
             ),
-            !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              'p',
-              null,
-              'Forgot your password?'
-            )
+            !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('p', null)
           )
         ),
         !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
@@ -6240,6 +6228,7 @@ var Cart = function (_React$Component) {
     _this.updateBillAddress = _this.updateBillAddress.bind(_this);
     _this.updateInput = _this.updateInput.bind(_this);
     _this.submitOrder = _this.submitOrder.bind(_this);
+    _this.shopDeals = _this.shopDeals.bind(_this);
     return _this;
   }
 
@@ -6403,6 +6392,10 @@ var Cart = function (_React$Component) {
     } else {
       this.setState(obj);
     }
+  };
+
+  Cart.prototype.shopDeals = function shopDeals() {
+    this.context.router.transitionTo('/');
   };
 
   Cart.prototype.componentDidMount = function componentDidMount() {
@@ -7410,12 +7403,8 @@ var Cart = function (_React$Component) {
                 { className: 'btn-wrapper' },
                 __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
                   'button',
-                  { className: 'btn-empty-cart' },
-                  __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                    __WEBPACK_IMPORTED_MODULE_8_react_router__["Link"],
-                    { to: '/' },
-                    'SHOP TODAY\'S DEALS!'
-                  )
+                  { onClick: this.shopDeals, className: 'btn-empty-cart' },
+                  'SHOP TODAY\'S DEALS!'
                 )
               )
             )
@@ -7471,6 +7460,7 @@ Cart.propTypes = {
 Cart.contextTypes = {
   router: object
 };
+
 var mapStateToProps = function mapStateToProps(state) {
   return {
     cart: state.cartItems,

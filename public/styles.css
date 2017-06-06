@@ -16,7 +16,6 @@ b {
       .search .mag {
         position: fixed;
         top: 10px;
-        left: 35px;
         display: block;
         margin-left: 15px; } }
   .search .overlay {

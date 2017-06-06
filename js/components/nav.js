@@ -57,16 +57,16 @@ class Nav extends React.Component {
         <div className='nav'>
 
           <div className='nav-left'>
-            <img src='../public/img/icons/menu.svg' />
-            <p>MENU</p>
+            {/* <img src='../public/img/icons/menu.svg' />
+            <p>MENU</p> */}
             <div className='header-search'>
               <Search />
             </div>
           </div>
 
           <div className='nav-right'>
-            <img src='../public/img/icons/heart.svg' />
-            <p>FAVORITES</p>
+            {/* <img src='../public/img/icons/heart.svg' />
+            <p>FAVORITES</p> */}
             <Link className='header-link' to='/cart'><img src='../public/img/icons/shopping-bag.svg' /><p>MY BAG</p></Link>
             {this.props.cartTotal ? <h1 className='cart-qty'>{this.props.cartTotal}</h1> : ''}
             {
@@ -85,7 +85,7 @@ class Nav extends React.Component {
           </div>
 
           <div className='logo'>
-            <img src='../public/img/jane-logo_360.png' />
+            <Link to='/'><img src='../public/img/jane-logo_360.png' /></Link>
           </div>
 
           <div>

@@ -155,7 +155,9 @@ class SignIn extends React.Component {
                       <button className='btn' onClick={this.login}>LOG IN</button>
                       {!this.state.cartLogin
                       ? ''
-                      : <p>Forgot your password?</p>
+                      : <p>
+                        {/* Forgot your password? */}
+                      </p>
                       }
                     </form>
                   </div>

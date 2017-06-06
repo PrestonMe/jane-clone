@@ -55,6 +55,7 @@ class Cart extends React.Component {
     this.updateBillAddress = this.updateBillAddress.bind(this)
     this.updateInput = this.updateInput.bind(this)
     this.submitOrder = this.submitOrder.bind(this)
+    this.shopDeals = this.shopDeals.bind(this)
   }
 
   toggleAddress (e) {
@@ -213,6 +214,10 @@ class Cart extends React.Component {
     } else {
       this.setState(obj)
     }
+  }
+
+  shopDeals () {
+    this.context.router.transitionTo('/')
   }
 
   componentDidMount () {
@@ -591,7 +596,7 @@ class Cart extends React.Component {
               Let's help you get this baby loaded!
             </p>
             <div className='btn-wrapper'>
-              <button className='btn-empty-cart'><Link to='/'>SHOP TODAY'S DEALS!</Link></button>
+              <button onClick={this.shopDeals} className='btn-empty-cart'>SHOP TODAY'S DEALS!</button>
             </div>
           </div>
         }
@@ -623,6 +628,7 @@ Cart.propTypes = {
 Cart.contextTypes = {
   router: object
 }
+
 const mapStateToProps = state => {
   return {
     cart: state.cartItems,
