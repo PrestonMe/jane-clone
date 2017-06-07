@@ -25,6 +25,7 @@ class SignIn extends React.Component {
     this.submit = this.submit.bind(this)
     this.handleFieldChange = this.handleFieldChange.bind(this)
     this.isInvalid = this.isInvalid.bind(this)
+    this.fbLogin = this.fbLogin.bind(this)
   }
 
   login () {
@@ -80,13 +81,64 @@ class SignIn extends React.Component {
     return value === false ? 'invalid' : ''
   }
 
+  fbLogin () {
+    FB.login(function(response) {
+      const accessToken = response.authResponse.accessToken
+      axios.get(`https://graph.facebook.com/v2.9/me?access_token=${accessToken}&fields=name,email`)
+        .then(res => {
+          console.log(res.data)
+          axios.get('/login', {
+            data: {
+              name: res.data.name,
+              email: res.data.email,
+              id: res.data.id
+            }
+          }).then(res => {
+            let user = res.data[0]
+            if (user.fullname) {
+              this.props.dispatch(login(true, user.fullname, user.id, user.total))
+              this.context.router.transitionTo('/')
+            } else {
+              obj.validator.login = true
+              this.setState(obj)
+            }
+          })
+        })
+    },{scope: 'public_profile,email'})
+  }
+
+  componentDidMount() {
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '432409103793644',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.9'
+      });
+      FB.AppEvents.logPageView()
+      FB.getLoginStatus(function(response) {
+        // statusChangeCallback(response);
+
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+  }
   render () {
     return (
       <div>
         {this.props.pathname === '/logon'
         ? <div>
           <div className='fb-wrapper'>
-            <button className='fb-auth'>
+            <button onClick={this.fbLogin} className='fb-auth'>
+              <div class="fb-login-button" data-width="270" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
               LOG IN WITH FACEBOOK
             </button>
             <div>

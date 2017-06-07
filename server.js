@@ -5,19 +5,19 @@ const ReactDOMServer = require('react-dom/server')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
-// const config = require('./config')
+const config = require('./config')
 const session = require('express-session')
 const ReactRouter = require('react-router')
 const ServerRouter = ReactRouter.ServerRouter
 const _ = require('lodash')
-const port = process.env.PORT || 3000
-// const port = 3000
+// const port = process.env.PORT || 3000
+const port = 3000
 const fs = require('fs')
 const baseTemplate = fs.readFileSync('./index.html')
 const template = _.template(baseTemplate)
 const App = require('./js/containers/App').default
-// const connectionString = 'postgres://postgres@localhost/jane'
-const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
+const connectionString = 'postgres://postgres@localhost/jane'
+// const connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost/jane'
 const massiveInstance = massive.connectSync({connectionString: connectionString})
 const server = express()
 
@@ -29,8 +29,8 @@ var db = server.get('db')
 server.use('/public', express.static('./public'))
 
 server.use(session({
-  // secret: config.secret,
-  secret: process.env.secret,
+  secret: config.secret,
+  // secret: process.env.secret,
   resave: false,
   saveUninitialized: true
 }))
@@ -103,6 +103,15 @@ server.get('/product/:id', function(req, res, next) {
 })
 
 server.get('/login/:email/:password', function(req, res, next) {
+  if(req.body.data.id) {
+    db.find_account(req.body.data.email, function(err, response) {
+      if(!response.length) {
+        db.create_fb_account(req.body.data.name, req.body.data.email, function(err, response) {
+          
+        })
+      }
+    }
+  }
   db.login([req.params.email, req.params.password], function(err, response) {
     if(response.length === 0) {
       res.json('Login Failed')
@@ -111,7 +120,6 @@ server.get('/login/:email/:password', function(req, res, next) {
     }
   })
 })
-
 
 server.post('/signup', function(req, res, next) {
   db.find_account(req.body.data.email, function(err, response) {
