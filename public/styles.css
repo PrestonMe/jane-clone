@@ -47,7 +47,8 @@ b {
     padding: 0 10px 0 20px;
     font-size: 16px; }
   .search li:hover {
-    background-color: #E5E5E5; }
+    background-color: #E5E5E5;
+    cursor: pointer; }
   .search .media-search .search-cancel {
     display: flex;
     align-items: center;

@@ -38,7 +38,7 @@ class App extends Component {
           <Match pattern='/search/:term' component={SearchResults} />
           <Match pattern='/productpage/:id' component={Product} />
           <Match pattern='/confirmation/:id' component={OrderSum} />
-          <Match pattern="*" component={NotFound} />
+          {/* <Match pattern="*" component={NotFound} /> */}
         </div>
       </Provider>
 

@@ -30,7 +30,8 @@ class Search extends Component {
   }
 
   render() {
-    let url;
+    let url
+
     if(this.state.url && this.state.url[1]){
       url = this.state.url.split('/').slice(1).join('')
       url = url.split('')
