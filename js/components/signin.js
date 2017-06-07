@@ -82,12 +82,12 @@ class SignIn extends React.Component {
   }
 
   fbLogin () {
+    let that = this;
     FB.login(function(response) {
       const accessToken = response.authResponse.accessToken
       axios.get(`https://graph.facebook.com/v2.9/me?access_token=${accessToken}&fields=name,email`)
         .then(res => {
-          console.log(res.data)
-          axios.get('/login', {
+          axios.post('/signup', {
             data: {
               name: res.data.name,
               email: res.data.email,
@@ -96,11 +96,11 @@ class SignIn extends React.Component {
           }).then(res => {
             let user = res.data[0]
             if (user.fullname) {
-              this.props.dispatch(login(true, user.fullname, user.id, user.total))
-              this.context.router.transitionTo('/')
+              that.props.dispatch(login(true, user.fullname, user.id, user.total))
+              that.context.router.transitionTo('/')
             } else {
               obj.validator.login = true
-              this.setState(obj)
+              that.setState(obj)
             }
           })
         })
@@ -129,8 +129,8 @@ class SignIn extends React.Component {
        js.src = "//connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
-
   }
+
   render () {
     return (
       <div>
@@ -138,7 +138,6 @@ class SignIn extends React.Component {
         ? <div>
           <div className='fb-wrapper'>
             <button onClick={this.fbLogin} className='fb-auth'>
-              <div class="fb-login-button" data-width="270" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
               LOG IN WITH FACEBOOK
             </button>
             <div>
@@ -205,12 +204,6 @@ class SignIn extends React.Component {
                       </div>
                       }
                       <button className='btn' onClick={this.login}>LOG IN</button>
-                      {!this.state.cartLogin
-                      ? ''
-                      : <p>
-                        {/* Forgot your password? */}
-                      </p>
-                      }
                     </form>
                   </div>
 
@@ -220,7 +213,7 @@ class SignIn extends React.Component {
                   <div>
                     <p className='or'>or</p>
                   </div>
-                  <button className='fb-auth'>
+                  <button onClick={this.fbLogin} className='fb-auth'>
                     LOG IN WITH FACEBOOK
                   </button>
                 </div>

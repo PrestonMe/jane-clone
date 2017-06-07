@@ -26,6 +26,7 @@ class CreateAccount extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this)
     this.isInvalid = this.isInvalid.bind(this)
     this.buttonSubmitOnly = this.buttonSubmitOnly.bind(this)
+    this.fbSignup = this.fbSignup.bind(this)
   }
 
   handleFieldChange (e) {
@@ -143,11 +144,61 @@ class CreateAccount extends React.Component {
     return value === false ? 'invalid' : ''
   }
 
+  fbSignup () {
+      let that = this;
+      FB.login(function(response) {
+        const accessToken = response.authResponse.accessToken
+        axios.get(`https://graph.facebook.com/v2.9/me?access_token=${accessToken}&fields=name,email`)
+          .then(res => {
+            axios.post('/signup', {
+              data: {
+                name: res.data.name,
+                email: res.data.email,
+                id: res.data.id
+              }
+            }).then(res => {
+              let user = res.data[0]
+              if (user.fullname) {
+                that.props.dispatch(login(true, user.fullname, user.id, user.total))
+                that.context.router.transitionTo('/')
+              } else {
+                obj.validator.login = true
+                that.setState(obj)
+              }
+            })
+          })
+      },{scope: 'public_profile,email'})
+  }
+
+  componentDidMount() {
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '432409103793644',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.9'
+      });
+      FB.AppEvents.logPageView()
+      FB.getLoginStatus(function(response) {
+        // statusChangeCallback(response);
+
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  }
+
   render () {
     return (
       <div>
         <div className='fb-wrapper'>
-          <button className='fb-auth'>
+          <button onClick={this.fbSignup} className='fb-auth'>
             SIGN UP WITH FACEBOOK
           </button>
           <div>

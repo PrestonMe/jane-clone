@@ -103,34 +103,37 @@ server.get('/product/:id', function(req, res, next) {
 })
 
 server.get('/login/:email/:password', function(req, res, next) {
+    db.login([req.params.email, req.params.password], function(err, response) {
+      if(response.length === 0) {
+        res.json('Login Failed')
+      } else {
+        login(req, res, response)
+      }
+    })
+})
+
+server.post('/signup', function(req, res, next) {
   if(req.body.data.id) {
     db.find_account(req.body.data.email, function(err, response) {
       if(!response.length) {
         db.create_fb_account(req.body.data.name, req.body.data.email, function(err, response) {
-          
+          login(req, res, response)
         })
-      }
-    }
-  }
-  db.login([req.params.email, req.params.password], function(err, response) {
-    if(response.length === 0) {
-      res.json('Login Failed')
-    } else {
-      login(req, res, response)
-    }
-  })
-})
-
-server.post('/signup', function(req, res, next) {
-  db.find_account(req.body.data.email, function(err, response) {
-    if(response.length === 0) {
-      db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
+      } else {
         login(req, res, response)
-      })
-    } else {
-      res.json('Account Already Exists!')
-    }
-  })
+      }
+    })
+  } else {
+    db.find_account(req.body.data.email, function(err, response) {
+      if(response.length === 0) {
+        db.create_account([req.body.data.name, req.body.data.email, req.body.data.password], function(err, response) {
+          login(req, res, response)
+        })
+      } else {
+        res.json('Account Already Exists!')
+      }
+    })
+  }
 })
 
 server.put('/updateCartItem/:id/:qty/:custId', function(req, res, next) {

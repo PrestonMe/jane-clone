@@ -3058,6 +3058,7 @@ var CreateAccount = function (_React$Component) {
     _this.handleFieldChange = _this.handleFieldChange.bind(_this);
     _this.isInvalid = _this.isInvalid.bind(_this);
     _this.buttonSubmitOnly = _this.buttonSubmitOnly.bind(_this);
+    _this.fbSignup = _this.fbSignup.bind(_this);
     return _this;
   }
 
@@ -3176,6 +3177,58 @@ var CreateAccount = function (_React$Component) {
     return value === false ? 'invalid' : '';
   };
 
+  CreateAccount.prototype.fbSignup = function fbSignup() {
+    var that = this;
+    FB.login(function (response) {
+      var accessToken = response.authResponse.accessToken;
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('https://graph.facebook.com/v2.9/me?access_token=' + accessToken + '&fields=name,email').then(function (res) {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/signup', {
+          data: {
+            name: res.data.name,
+            email: res.data.email,
+            id: res.data.id
+          }
+        }).then(function (res) {
+          var user = res.data[0];
+          if (user.fullname) {
+            that.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
+            that.context.router.transitionTo('/');
+          } else {
+            obj.validator.login = true;
+            that.setState(obj);
+          }
+        });
+      });
+    }, { scope: 'public_profile,email' });
+  };
+
+  CreateAccount.prototype.componentDidMount = function componentDidMount() {
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '432409103793644',
+        cookie: true,
+        xfbml: true,
+        version: 'v2.9'
+      });
+      FB.AppEvents.logPageView();
+      FB.getLoginStatus(function (response) {
+        // statusChangeCallback(response);
+
+      });
+    };
+
+    (function (d, s, id) {
+      var js,
+          fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  };
+
   CreateAccount.prototype.render = function render() {
     return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
       'div',
@@ -3185,7 +3238,7 @@ var CreateAccount = function (_React$Component) {
         { className: 'fb-wrapper' },
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
           'button',
-          { className: 'fb-auth' },
+          { onClick: this.fbSignup, className: 'fb-auth' },
           'SIGN UP WITH FACEBOOK'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
@@ -3518,13 +3571,11 @@ var SignIn = function (_React$Component) {
   };
 
   SignIn.prototype.fbLogin = function fbLogin() {
+    var that = this;
     FB.login(function (response) {
-      var _this3 = this;
-
       var accessToken = response.authResponse.accessToken;
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('https://graph.facebook.com/v2.9/me?access_token=' + accessToken + '&fields=name,email').then(function (res) {
-        console.log(res.data);
-        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/login', {
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/signup', {
           data: {
             name: res.data.name,
             email: res.data.email,
@@ -3533,11 +3584,11 @@ var SignIn = function (_React$Component) {
         }).then(function (res) {
           var user = res.data[0];
           if (user.fullname) {
-            _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
-            _this3.context.router.transitionTo('/');
+            that.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__actions_actionCreators__["c" /* login */])(true, user.fullname, user.id, user.total));
+            that.context.router.transitionTo('/');
           } else {
             obj.validator.login = true;
-            _this3.setState(obj);
+            that.setState(obj);
           }
         });
       });
@@ -3584,7 +3635,6 @@ var SignIn = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
             'button',
             { onClick: this.fbLogin, className: 'fb-auth' },
-            __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('div', { 'class': 'fb-login-button', 'data-width': '270', 'data-max-rows': '1', 'data-size': 'large', 'data-button-type': 'login_with', 'data-show-faces': 'false', 'data-auto-logout-link': 'true', 'data-use-continue-as': 'false' }),
             'LOG IN WITH FACEBOOK'
           ),
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
@@ -3704,8 +3754,7 @@ var SignIn = function (_React$Component) {
               'button',
               { className: 'btn', onClick: this.login },
               'LOG IN'
-            ),
-            !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('p', null)
+            )
           )
         ),
         !this.state.cartLogin ? '' : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
@@ -3722,7 +3771,7 @@ var SignIn = function (_React$Component) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
             'button',
-            { className: 'fb-auth' },
+            { onClick: this.fbLogin, className: 'fb-auth' },
             'LOG IN WITH FACEBOOK'
           )
         )
