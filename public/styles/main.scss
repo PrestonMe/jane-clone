@@ -408,6 +408,17 @@ b {
   padding-top: 15px;
   background-color: $background;
   min-height: 80vh;
+  .not-found {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    img {
+      @media(max-width: 460px) {
+        width: 300px;
+      }
+    }
+  }
   @media screen and (max-width: 980px) { /* Tablet */
     width: 95%;
     margin: auto;

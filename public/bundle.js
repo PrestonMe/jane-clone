@@ -4989,11 +4989,13 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_account_info__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_order_complete__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_search_results__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_not_found__ = __webpack_require__(137);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -5043,7 +5045,8 @@ var App = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { exactly: true, pattern: '/account', component: __WEBPACK_IMPORTED_MODULE_10__components_account_info__["a" /* default */] }),
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/search/:term', component: __WEBPACK_IMPORTED_MODULE_12__components_search_results__["a" /* default */] }),
         __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/productpage/:id', component: __WEBPACK_IMPORTED_MODULE_7__components_product__["a" /* default */] }),
-        __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/confirmation/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_order_complete__["a" /* default */] })
+        __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '/confirmation/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_order_complete__["a" /* default */] }),
+        __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1_react_router__["Match"], { pattern: '*', component: __WEBPACK_IMPORTED_MODULE_13__components_not_found__["a" /* default */] })
       )
     );
   };
@@ -9104,7 +9107,9 @@ var Search = function (_Component) {
 
   Search.prototype.submitSearch = function submitSearch(e) {
     if (e.key === 'Enter' && e.target.value.length > 0) {
-      this.context.router.transitionTo('/search/' + e.target.value);
+      this.setState({ search: false }, function () {
+        this.context.router.transitionTo('/search/' + e.target.value);
+      });
     }
   };
 
@@ -14465,6 +14470,60 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPA
   null,
   __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_3__App__["a" /* default */], null)
 ), document.getElementById('app'));
+
+/***/ }),
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__nav__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__footer__ = __webpack_require__(6);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var NotFound = function (_Component) {
+  _inherits(NotFound, _Component);
+
+  function NotFound() {
+    _classCallCheck(this, NotFound);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  NotFound.prototype.render = function render() {
+    return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
+      'div',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_1__nav__["a" /* default */], null),
+      __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
+        'div',
+        { className: 'shop' },
+        __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
+          'div',
+          { className: 'not-found' },
+          __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('img', { src: '../public/img/404.jpg' })
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_2__footer__["a" /* default */], null)
+    );
+  };
+
+  return NotFound;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = NotFound;
 
 /***/ })
 /******/ ]);

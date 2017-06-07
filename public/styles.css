@@ -328,6 +328,14 @@ b {
   padding-top: 15px;
   background-color: #F3F3F3;
   min-height: 80vh; }
+  .shop .not-found {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    @media (max-width: 460px) {
+      .shop .not-found img {
+        width: 300px; } }
   @media screen and (max-width: 980px) {
     .shop {
       /* Tablet */

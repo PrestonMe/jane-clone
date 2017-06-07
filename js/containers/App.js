@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Match } from 'react-router'
+import { Match, Route } from 'react-router'
 import { Provider } from 'react-redux'
 import store from '../store'
 import AllDeals from '../components/AllDeals'
@@ -11,6 +11,7 @@ import History from '../components/order_history'
 import Account from '../components/account_info'
 import OrderSum from '../components/order_complete'
 import SearchResults from '../components/search_results'
+import NotFound from '../components/not_found'
 
 class App extends Component {
 
@@ -37,7 +38,7 @@ class App extends Component {
           <Match pattern='/search/:term' component={SearchResults} />
           <Match pattern='/productpage/:id' component={Product} />
           <Match pattern='/confirmation/:id' component={OrderSum} />
-
+          <Match pattern="*" component={NotFound} />
         </div>
       </Provider>
 

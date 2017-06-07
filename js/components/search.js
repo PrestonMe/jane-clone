@@ -23,7 +23,9 @@ class Search extends Component {
 
   submitSearch(e) {
     if(e.key === 'Enter' && e.target.value.length > 0) {
-      this.context.router.transitionTo('/search/' + e.target.value)
+      this.setState({search: false}, function() {
+        this.context.router.transitionTo('/search/' + e.target.value)
+      })
     }
   }
 
