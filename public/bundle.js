@@ -6563,7 +6563,7 @@ var Cart = function (_React$Component) {
         this.setState({ cart: cart });
       } else {
         __WEBPACK_IMPORTED_MODULE_6_axios___default.a.put('/updateCartItem/' + id + '/' + +e.target.value + '/' + this.props.userId).then(function (res) {
-          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(+res.data[0].total));
+          _this2.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(res.data[0].total));
           _this2.setState({ cart: cart });
         });
       }
@@ -6628,7 +6628,7 @@ var Cart = function (_React$Component) {
 
     __WEBPACK_IMPORTED_MODULE_6_axios___default.a.delete('/deleteItem/' + id + '/' + userId).then(function (res) {
       var obj = _this3.state.cart;
-      _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(+res.data[0].total));
+      _this3.props.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_actionCreators__["b" /* updateQty */])(res.data[0].total));
       for (var i = 0; i < _this3.state.cart.length; i++) {
         if (_this3.state.cart[i].id === id) {
           obj.splice(i, 1);
@@ -9096,12 +9096,14 @@ var Search = function (_Component) {
     return _this;
   }
 
-  Search.prototype.toggleSearch = function toggleSearch() {
-    this.setState({ search: !this.state.search });
+  Search.prototype.toggleSearch = function toggleSearch(url) {
+    this.setState({ search: !this.state.search }, function () {
+      this.context.router.transitionTo(url);
+    });
   };
 
   Search.prototype.submitSearch = function submitSearch(e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.target.value.length > 0) {
       this.context.router.transitionTo('/search/' + e.target.value);
     }
   };
@@ -9139,105 +9141,61 @@ var Search = function (_Component) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
             'ul',
-            { onClick: this.toggleSearch },
+            null,
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/clothing' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Clothing'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/clothing') },
+              'Clothing'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/accessories' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Accessories'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/accessories') },
+              'Accessories'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/home-decor' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Home Decor'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/home-decor') },
+              'Home Decor'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/baby' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Baby'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/baby') },
+              'Baby'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/kids' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Kids'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/kids') },
+              'Kids'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/misc' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Misc'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/misc') },
+              'Misc'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'All Deals'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/') },
+              'All Deals'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/new' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'New Deals'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/new') },
+              'New Deals'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/ending-soon' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Ending Soon'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/ending-soon') },
+              'Ending Soon'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/popular' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Popular'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/popular') },
+              'Popular'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router__["Link"],
-              { to: '/sneak-peeks' },
-              __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                'li',
-                null,
-                'Sneak Peaks'
-              )
+              'li',
+              { onClick: this.toggleSearch.bind(this, '/sneak-peeks') },
+              'Sneak Peeks'
             )
           )
         ) : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
@@ -9299,7 +9257,8 @@ var SearchResults = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.state = {
-      results: []
+      results: [],
+      searchComplete: false
     };
     return _this;
   }
@@ -9312,7 +9271,7 @@ var SearchResults = function (_Component) {
         searchTerm: nextProps.params.term
       }
     }).then(function (res) {
-      _this2.setState({ results: res.data });
+      _this2.setState({ results: res.data, searchComplete: true });
     });
   };
 
@@ -9324,7 +9283,7 @@ var SearchResults = function (_Component) {
         searchTerm: this.props.params.term
       }
     }).then(function (res) {
-      _this3.setState({ results: res.data });
+      _this3.setState({ results: res.data, searchComplete: true });
     });
   };
 
@@ -9351,7 +9310,7 @@ var SearchResults = function (_Component) {
             ),
             '"'
           ),
-          this.state.results[0] ? this.state.results.map(function (product) {
+          this.state.searchComplete ? this.state.results.map(function (product) {
             return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_5__smallproduct__["a" /* default */], _extends({}, product, { key: product.id }));
           }) : __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('div', { className: 'loader' })
         )
@@ -9472,9 +9431,7 @@ var logon = function logon(state, action) {
   Object.assign(newState, state, { loggedIn: action.loggedIn, userName: action.userName, userId: action.userId, cartItems: action.cartItems });
   return newState;
 };
-// vv if state is undefined then set state
-// to default_state, this is an example
-// of an es6 default paraemeter
+
 var logout = function logout(state, action) {
   var newState = {};
   Object.assign(newState, state, {

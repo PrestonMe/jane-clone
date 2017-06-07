@@ -9,7 +9,8 @@ class SearchResults extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      results : []
+      results : [],
+      searchComplete: false
     }
   }
 
@@ -20,7 +21,7 @@ class SearchResults extends Component {
           searchTerm: nextProps.params.term
         }
       }).then(res => {
-        this.setState({results: res.data})
+        this.setState({results: res.data, searchComplete: true})
       })
   }
 
@@ -30,7 +31,7 @@ class SearchResults extends Component {
         searchTerm: this.props.params.term
       }
     }).then(res => {
-      this.setState({results: res.data})
+      this.setState({results: res.data, searchComplete: true})
     })
   }
 
@@ -44,7 +45,7 @@ class SearchResults extends Component {
                 <span className='search-term'>{this.props.params.term}
                 </span>"
               </p>
-              {this.state.results[0]
+              {this.state.searchComplete
                 ? this.state.results.map(product => {
                   return (
                     <SmallProduct {...product} key={product.id} />

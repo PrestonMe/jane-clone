@@ -13,9 +13,7 @@ const logon = (state, action) => {
   Object.assign(newState, state, {loggedIn: action.loggedIn, userName: action.userName, userId: action.userId, cartItems: action.cartItems})
   return newState
 }
-                    // vv if state is undefined then set state
-                    // to default_state, this is an example
-                    // of an es6 default paraemeter
+
 const logout = (state, action) => {
   const newState = {}
   Object.assign(newState, state, {

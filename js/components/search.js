@@ -15,15 +15,16 @@ class Search extends Component {
     this.submitSearch = this.submitSearch.bind(this)
   }
 
-  toggleSearch () {
-    this.setState({search: !this.state.search})
+  toggleSearch (url) {
+    this.setState({search: !this.state.search}, function() {
+      this.context.router.transitionTo(url)
+    })
   }
 
   submitSearch(e) {
-    if(e.key === 'Enter') {
+    if(e.key === 'Enter' && e.target.value.length > 0) {
       this.context.router.transitionTo('/search/' + e.target.value)
     }
-
   }
 
   render() {
@@ -48,18 +49,18 @@ class Search extends Component {
                 <input onKeyPress={this.submitSearch} className='search-input' type='text' placeholder='Search...' />
                 <p onClick={this.toggleSearch}>Cancel</p>
               </div>
-                <ul onClick={this.toggleSearch}>
-                 <Link to='/clothing'><li>Clothing</li></Link>
-                 <Link to='/accessories'><li>Accessories</li></Link>
-                 <Link to='/home-decor'><li>Home Decor</li></Link>
-                 <Link to='/baby'><li>Baby</li></Link>
-                 <Link to='/kids'><li>Kids</li></Link>
-                 <Link to='/misc'><li>Misc</li></Link>
-                 <Link to='/'><li>All Deals</li></Link>
-                 <Link to='/new'><li>New Deals</li></Link>
-                 <Link to='/ending-soon'><li>Ending Soon</li></Link>
-                 <Link to='/popular'><li>Popular</li></Link>
-                 <Link to='/sneak-peeks'><li>Sneak Peaks</li></Link>
+                <ul>
+                 <li onClick={this.toggleSearch.bind(this, '/clothing')}>Clothing</li>
+                 <li onClick={this.toggleSearch.bind(this, '/accessories')}>Accessories</li>
+                 <li onClick={this.toggleSearch.bind(this, '/home-decor')}>Home Decor</li>
+                 <li onClick={this.toggleSearch.bind(this, '/baby')}>Baby</li>
+                 <li onClick={this.toggleSearch.bind(this, '/kids')}>Kids</li>
+                 <li onClick={this.toggleSearch.bind(this, '/misc')}>Misc</li>
+                 <li onClick={this.toggleSearch.bind(this, '/')}>All Deals</li>
+                 <li onClick={this.toggleSearch.bind(this, '/new')}>New Deals</li>
+                 <li onClick={this.toggleSearch.bind(this, '/ending-soon')}>Ending Soon</li>
+                 <li onClick={this.toggleSearch.bind(this, '/popular')}>Popular</li>
+                 <li onClick={this.toggleSearch.bind(this, '/sneak-peeks')}>Sneak Peeks</li>
                </ul>
              </div>
            :

@@ -83,7 +83,7 @@ class Cart extends React.Component {
       } else {
         axios.put('/updateCartItem/' + id + '/' + +e.target.value + '/' + this.props.userId)
         .then(res => {
-          this.props.dispatch(updateQty(+res.data[0].total))
+          this.props.dispatch(updateQty(res.data[0].total))
           this.setState({cart: cart})
         })
       }
@@ -147,7 +147,7 @@ class Cart extends React.Component {
     axios.delete('/deleteItem/' + id + '/' + userId)
     .then(res => {
       let obj = this.state.cart
-      this.props.dispatch(updateQty(+res.data[0].total))
+      this.props.dispatch(updateQty(res.data[0].total))
       for (let i = 0; i < this.state.cart.length; i++) {
         if (this.state.cart[i].id === id) {
           obj.splice(i, 1)
