@@ -371,7 +371,7 @@ server.use((req, res) => {
   res.end()
 })
 
-setInterval(function() => {
+setInterval(function() {
   server.get('https://jane-clone.herokuapp.com');
 }, 300000);  // keeping app awake
 console.log('listening on ' + port)
