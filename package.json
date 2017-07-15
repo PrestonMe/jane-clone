@@ -13,10 +13,6 @@
     "update-test": "npm run test -- -u",
     "cover": "npm run test -- --coverage"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PrestonMecham/jane-clone.git"
-  },
   "author": "",
   "license": "ISC",
   "bugs": {
