@@ -372,7 +372,8 @@ server.use((req, res) => {
 })
 
 setInterval(function() {
+  console.log('pinging server')
   server.get('https://jane-clone.herokuapp.com');
-}, 300000);  // keeping app awake
+}, 30000);  // keeping app awake
 console.log('listening on ' + port)
 server.listen(port)
