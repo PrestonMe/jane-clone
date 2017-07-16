@@ -1,3 +1,4 @@
+require('newrelic')
 require('babel-register')
 const express = require('express')
 const React = require('react')
@@ -371,9 +372,10 @@ server.use((req, res) => {
   res.end()
 })
 
+let min = 0;
 setInterval(function() {
-  console.log('pinging server')
-  server.get('https://jane-clone.herokuapp.com');
-}, 30000);  // keeping app awake
+  min++;
+  console.log(`${min} minutes passed`)
+}, 60000);  // keeping app awake
 console.log('listening on ' + port)
 server.listen(port)
