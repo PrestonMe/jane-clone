@@ -1,4 +1,4 @@
-require('newrelic')
+var nr = require('newrelic');
 require('babel-register')
 const express = require('express')
 const React = require('react')
