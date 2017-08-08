@@ -26,7 +26,7 @@ function AuthController(){
 
     function getIndex(req, res) {
       if(req.user.isAuthorized('admin')) {
-        res.render('index');
+        return res.render('index');
       }
         res.render('error')
       // res.render('index'); //all getIndex does is send a response to .render
