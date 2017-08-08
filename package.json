@@ -11,7 +11,8 @@
     "dev": "webpack-dev-server",
     "test": "NODE_ENV=test jest",
     "update-test": "npm run test -- -u",
-    "cover": "npm run test -- --coverage"
+    "cover": "npm run test -- --coverage",
+    "mtest": "mocha \"./test/**/*.spec.js\""
   },
   "author": "",
   "license": "ISC",
@@ -25,12 +26,15 @@
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.23.0",
     "body-parser": "^1.17.1",
+    "chai": "^4.1.1",
+    "chai-as-promised": "^7.1.1",
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "history": "^4.5.1",
     "lodash": "^4.17.4",
     "massive": "^2.6.0",
+    "mocha": "^3.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
@@ -38,7 +42,8 @@
     "react-router-dom": "^4.1.1",
     "react-scroll": "^1.4.7",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sinon": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
