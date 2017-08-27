@@ -465,6 +465,7 @@ class Cart extends React.Component {
                           <option value='2026'>2026</option>
                         </select>
                         <input onChange={this.updateInput}
+                          maxLength='3'
                           value={this.state.payInfo.cvv}
                           name='cvv'
                           className={this.state.validator.cvv ? 'cvv' : 'cvv invalid'}
@@ -547,6 +548,7 @@ class Cart extends React.Component {
                           <option value='AE'>Armed Forces Others</option>
                         </select>
                         <input onChange={this.updateInput}
+                          maxLength='9'
                           name='zip'
                           value={this.state.payInfo.zip}
                           className={this.state.validator.zip ? 'input-text' : 'input-text invalid'}
