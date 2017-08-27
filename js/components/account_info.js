@@ -169,6 +169,7 @@ class Account extends React.Component {
                   </span>
                 </div>
                 <input placeholder='Password'
+                  type='password'
                   onChange={this.setValue}
                   name='password'
                   value={this.state.password}
@@ -178,6 +179,7 @@ class Account extends React.Component {
                 ? <p className='invalid'>Password must be at least 8 characters in length.</p>
                 : ''}
                 <input placeholder='Confirm Password'
+                  type='password'
                   onChange={this.setValue}
                   name='confirmPassword'
                   value={this.state.confirmPassword}

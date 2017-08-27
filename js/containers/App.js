@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Match, Route } from 'react-router'
+import { Match } from 'react-router'
 import { Provider } from 'react-redux'
 import store from '../store'
 import AllDeals from '../components/AllDeals'
@@ -11,11 +11,9 @@ import History from '../components/order_history'
 import Account from '../components/account_info'
 import OrderSum from '../components/order_complete'
 import SearchResults from '../components/search_results'
-import NotFound from '../components/not_found'
 
 class App extends Component {
-
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <div className='main'>
@@ -43,7 +41,6 @@ class App extends Component {
       </Provider>
 
     )
-
   }
 }
 

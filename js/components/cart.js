@@ -299,7 +299,6 @@ class Cart extends React.Component {
                           <h2>${item.sale}</h2>
                         </div>
 
-
                       </div>
                       <div className={!item.edit ? 'hide' : 'clearfix not-mobile'}>
                         <div className='edit-qty'>
@@ -424,6 +423,8 @@ class Cart extends React.Component {
                           className={this.state.validator.name ? 'input-text' : 'input-text invalid'}
                           placeholder='Cardholder Name' />
                         <input onChange={this.updateInput}
+                          maxLength='16'
+                          type='password'
                           name='cardNumber'
                           value={this.state.payInfo.cardNumber}
                           className={this.state.validator.cardNumber ? 'input-text' : 'input-text invalid'}

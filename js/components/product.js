@@ -60,7 +60,7 @@ class Product extends React.Component {
     return !this.state.product[0]
     ? (<div>
       <Nav {...this.props.location} />
-        <div className='loader'></div>
+      <div className='loader' />
       <Footer />
     </div>) : (
       <div>
@@ -128,6 +128,9 @@ class Product extends React.Component {
                       <Details detail={detail} key={detail} />
                     )
                   })}
+                  this.state.rates.map(detail => {
+                    <p>detail.rates</p>
+                  })
                 </ul>
               </div>
               : ''
@@ -190,4 +193,5 @@ const mapStateToProps = state => {
     userId: state.userId
   }
 }
+
 export default connect(mapStateToProps)(Product)
