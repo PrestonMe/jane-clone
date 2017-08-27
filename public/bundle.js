@@ -7303,6 +7303,7 @@ var Cart = function (_React$Component) {
                         )
                       ),
                       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('input', { onChange: this.updateInput,
+                        maxLength: '3',
                         value: this.state.payInfo.cvv,
                         name: 'cvv',
                         className: this.state.validator.cvv ? 'cvv' : 'cvv invalid',
@@ -7614,6 +7615,7 @@ var Cart = function (_React$Component) {
                         )
                       ),
                       __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement('input', { onChange: this.updateInput,
+                        maxLength: '9',
                         name: 'zip',
                         value: this.state.payInfo.zip,
                         className: this.state.validator.zip ? 'input-text' : 'input-text invalid',
