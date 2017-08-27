@@ -351,14 +351,14 @@ b {
     justify-content: space-between;
     padding: 20px 30px;
     border-bottom: 1px solid #e5e5e5;
-    @media(max-width: 685px) {
+    @media(max-width: 701px) {
       display: block;
     }
     .left {
       min-width: 50%;
       display: flex;
       justify-content: space-between;
-      @media(max-width: 685px) {
+      @media(max-width: 701px) {
         max-width: 600px;
       }
       li:hover {
@@ -373,11 +373,11 @@ b {
         height: 20px;
       }
       svg {
-        @media(max-width: 685px) {
+        @media(max-width: 701px) {
           margin: 0 10px;
         }
       }
-      @media(max-width: 685px) {
+      @media(max-width: 701px) {
         margin: auto;
         border-top: 1px solid #E5E5E5;
         width: 100%;
@@ -424,7 +424,7 @@ b {
     width: 95%;
     margin: auto;
   }
-  @media screen and (max-width: 685px) {
+  @media screen and (max-width: 701px) {
     width: 95%;
   }
   .products-container {
@@ -451,7 +451,7 @@ b {
       max-width: 800px;
       justify-content: center;
     }
-    @media(max-width: 685px) {
+    @media(max-width: 701px) {
       width: 95%;
     }
     .product-summary {
@@ -514,7 +514,7 @@ b {
           width: 295px;
           max-height: 151.97px;
         }
-        @media(max-width: 685px) {
+        @media(max-width: 701px) {
           width: 100%;
           max-height: none;
         }
@@ -527,7 +527,7 @@ b {
         width: 295px;
         height: auto;
       }
-      @media(max-width: 685px) {
+      @media(max-width: 701px) {
         width: 100%;
         height: auto;
       }
@@ -535,19 +535,19 @@ b {
      .small-product-container {
        width: 295px;
        margin: 15px 15px;
-       @media(max-width: 685px) {
+       @media(max-width: 701px) {
          width: 100%;
        }
        .product-img {
          max-height: 151.97px;
-         @media(max-width: 685px) {
+         @media(max-width: 701px) {
            max-height: none;
          }
        }
        img {
          width: 295px;
          display: block;
-         @media(max-width: 685px) {
+         @media(max-width: 701px) {
            width: 100%;
          }
        }
