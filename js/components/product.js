@@ -128,9 +128,6 @@ class Product extends React.Component {
                       <Details detail={detail} key={detail} />
                     )
                   })}
-                  this.state.rates.map(detail => {
-                    <p>detail.rates</p>
-                  })
                 </ul>
               </div>
               : ''

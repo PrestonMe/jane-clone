@@ -8958,14 +8958,7 @@ var Product = function (_React$Component) {
                 null,
                 this.state.product[0].details.split('@').map(function (detail) {
                   return __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(__WEBPACK_IMPORTED_MODULE_6__details__["a" /* default */], { detail: detail, key: detail });
-                }),
-                'this.state.rates.map(detail => ',
-                __WEBPACK_IMPORTED_MODULE_0_react__["default"].createElement(
-                  'p',
-                  null,
-                  'detail.rates'
-                ),
-                ')'
+                })
               )
             ) : ''
           )
