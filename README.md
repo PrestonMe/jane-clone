@@ -1,12 +1,12 @@
 # Jane Clone
 
-OVERVIEW
+## OVERVIEW
 
 Jane-Clone is a clone of the popular e-commerce site Jane.Com, developed to showcase my web development skills.
 
 The live clone is hosted and can be viewed <a href="https://www.jane-clone.com">here</a>
 
-MAIN TECHNOLOGIES
+## MAIN TECHNOLOGIES
 
 <ul>
   <li>React</li>
