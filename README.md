@@ -4,7 +4,7 @@
 
 Jane-Clone is a clone of the popular e-commerce site Jane.Com, developed to showcase my web development skills.
 
-The live clone is hosted and can be viewed <a href="https://www.jane-clone.com">here</a>
+The live clone is hosted and can be viewed <a href="https://www.jane-clone.com" target="_blank">here</a>
 
 ## MAIN TECHNOLOGIES
 
@@ -59,7 +59,7 @@ I created a search bar that does a simple search based on a search term.  Below 
 
 ## BACKEND
 
-All product, user, and order information is stored in a Postgres database.  The backend includes end points that use over 30 queries, uses server side routing, and sets up user sessions.  
+All product, user, and order information is stored in a Postgres database.  The backend includes end points that use over 30 queries, uses server side routing, and sets up user sessions.  The database is provisioned with 100 products.
 
 ## DISCLAIMER
 
