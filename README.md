@@ -4,7 +4,7 @@
 
 Jane-Clone is a clone of the popular e-commerce site Jane.Com, developed to showcase my web development skills.
 
-The live clone is hosted and can be viewed <a href="https://www.jane-clone.com" target="_blank">here</a>
+The live clone is hosted and can be viewed <a href="https://www.jane-clone.com">here</a>
 
 ## MAIN TECHNOLOGIES
 
@@ -25,7 +25,7 @@ Jane-Clone was built using React Components.  Redux was used for cleaner state m
 
 ## DYNAMIC CART SYSTEM
 
-The cart will display different information and components based on multiple factors.  Factors include whether or not there are items in the cart, only 1 unique item, multiple unique items, and whether or not a user is logged in.  Users can remove items and change the quantity of items in the cart.  Users can also login or sign up for an account from this page as well. Users can place mock orders by selecting to pay by credit card and filling out the payment information.  As these are mock orders no credit card information is stored, and any 16 digit number can be used to pass data validation.  
+The cart will display different information and components based on multiple factors.  Factors include whether or not there are items in the cart, only 1 unique item, multiple unique items, and whether or not a user is logged in.  Users can remove items and change the quantity of items in the cart.  Users can also login or sign up for an account from this page. Users can place mock orders by selecting to pay by credit card and filling out the payment information.  As these are mock orders no credit card information is stored, and any 16 digit number can be used to pass data validation.  
 
 <img src="/public/img/readme/cart.jpg" />
 
@@ -63,6 +63,6 @@ All product, user, and order information is stored in a Postgres database.  The 
 
 ## DISCLAIMER
 
-Jane-Clone is a non-commercial personal project meant to mimic some of features and appearance of Jane.Com.  Jane-Clone is not affiliated with Jane.Com and claims no rights or ownership of any of Jane.Com's trademarks or copyrighted works.
+Jane-Clone is a non-commercial personal project meant to mimic some of the features and appearance of Jane.Com.  Jane-Clone is not affiliated with Jane.Com and claims no rights or ownership of any of Jane.Com's trademarks or copyrighted works.
 
 Jane.Com's official site can be found here: <a href='https://www.jane.com/'>Jane</a>
