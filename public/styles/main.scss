@@ -516,7 +516,6 @@ b {
         }
         @media(max-width: 701px) {
           width: 100%;
-          margin: 15px 0;
           max-height: none;
         }
       }
@@ -530,6 +529,7 @@ b {
       }
       @media(max-width: 701px) {
         width: 100%;
+        margin: 15px 0;
         height: auto;
       }
      }

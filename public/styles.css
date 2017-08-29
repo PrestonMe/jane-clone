@@ -424,7 +424,6 @@ b {
         @media (max-width: 701px) {
           .shop .products-container .large-product-container img {
             width: 100%;
-            margin: 15px 0;
             max-height: none; } }
       @media (max-width: 1300px) {
         .shop .products-container .large-product-container {
@@ -437,6 +436,7 @@ b {
       @media (max-width: 701px) {
         .shop .products-container .large-product-container {
           width: 100%;
+          margin: 15px 0;
           height: auto; } }
     .shop .products-container .small-product-container {
       width: 295px;
