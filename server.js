@@ -373,9 +373,9 @@ server.use((req, res) => {
 })
 
 // keeps app from going idle
-setInterval(function() {
-  https.get('https://jane-clone.herokuapp.com/');
-}, 300000);  
+setInterval(function () {
+  https.get('https://jane-clone.herokuapp.com/')
+}, 300000)
 
 console.log('listening on ' + port)
 server.listen(port)

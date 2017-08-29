@@ -6,7 +6,6 @@ import CreateAccount from './createAccount'
 import NewAddress from './new_address'
 import axios from 'axios'
 import { updateQty } from '../actions/actionCreators'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 const { string, object, number, func, bool } = React.PropTypes
