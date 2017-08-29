@@ -424,6 +424,7 @@ b {
         @media (max-width: 701px) {
           .shop .products-container .large-product-container img {
             width: 100%;
+            margin: 15px 0;
             max-height: none; } }
       @media (max-width: 1300px) {
         .shop .products-container .large-product-container {
@@ -442,7 +443,8 @@ b {
       margin: 15px 15px; }
       @media (max-width: 701px) {
         .shop .products-container .small-product-container {
-          width: 100%; } }
+          width: 100%;
+          margin: 15px 0; } }
       .shop .products-container .small-product-container .product-img {
         max-height: 151.97px; }
         @media (max-width: 701px) {
