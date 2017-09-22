@@ -24,7 +24,7 @@ const server = express()
 
 server.use(bodyParser.json())
 server.use(cors())
-server.set('db', massiveInstance);
+server.set('db', massiveInstance)
 var db = server.get('db')
 
 server.use('/public', express.static('./public'))
@@ -372,9 +372,8 @@ server.use((req, res) => {
   res.end()
 })
 
-// keeps app from going idle
 setInterval(function () {
-  https.get('https://jane-clone.herokuapp.com/')
+  https.get('https://www.jane-clone.com/')
 }, 300000)
 
 console.log('listening on ' + port)

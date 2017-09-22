@@ -63,6 +63,6 @@ All product, user, and order information is stored in a Postgres database.  The 
 
 ## DISCLAIMER
 
-Jane-Clone is a non-commercial personal project meant to mimic some of the features and appearance of Jane.Com.  Jane-Clone is not affiliated with Jane.Com and claims no rights or ownership of any of Jane.Com's trademarks or copyrighted works.
+Jane-Clone is a non-commercial personal project designed to mimic some of the features and appearance of Jane.Com.  Jane-Clone is not affiliated with Jane.Com and claims no rights or ownership of any of Jane.Com's trademarks or copyrighted works.
 
 Jane.Com's official site can be found here: <a href='https://www.jane.com/'>Jane</a>
